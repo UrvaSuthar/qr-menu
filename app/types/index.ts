@@ -26,6 +26,9 @@ export interface Restaurant {
   slug: string;
   description: string | null;
   logo_url: string | null;
+  logo_storage_path: string | null;
+  menu_pdf_url: string | null;
+  menu_pdf_storage_path: string | null;
   address: string | null;
   phone: string | null;
   is_active: boolean;

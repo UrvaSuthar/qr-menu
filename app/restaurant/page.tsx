@@ -77,23 +77,29 @@ export default function RestaurantDashboard() {
                         Quick Actions
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <button className="p-4 border-2 border-indigo-200 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition text-left">
-                            <div className="text-2xl mb-2">➕</div>
+                        <a
+                            href="/restaurant/settings"
+                            className="p-4 border-2 border-indigo-200 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition text-left block"
+                        >
+                            <div className="text-2xl mb-2">📁</div>
                             <div className="font-semibold text-gray-900">
-                                Create Restaurant
+                                Manage Restaurant
                             </div>
                             <div className="text-sm text-gray-600">
-                                Set up a new restaurant profile
+                                Upload logo, menu PDF, and update details
                             </div>
-                        </button>
+                        </a>
 
-                        <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition text-left opacity-50 cursor-not-allowed">
-                            <div className="text-2xl mb-2">🍕</div>
-                            <div className="font-semibold text-gray-900">Add Menu Items</div>
+                        <a
+                            href="/restaurant/qr-code"
+                            className="p-4 border-2 border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition text-left block"
+                        >
+                            <div className="text-2xl mb-2">📱</div>
+                            <div className="font-semibold text-gray-900">Generate QR Code</div>
                             <div className="text-sm text-gray-600">
-                                Create restaurant first
+                                Download QR code for your menu
                             </div>
-                        </button>
+                        </a>
                     </div>
                 </div>
 
