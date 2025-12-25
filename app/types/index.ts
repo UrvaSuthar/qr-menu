@@ -22,6 +22,8 @@ export interface UserProfile {
 export interface Restaurant {
   id: string;
   owner_id: string;
+  parent_food_court_id: string | null;  // Links to parent food court (if sub-restaurant)
+  is_food_court: boolean;                // True if this is a food court
   name: string;
   slug: string;
   description: string | null;
@@ -34,6 +36,14 @@ export interface Restaurant {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+}
+
+/**
+ * Food Court with sub-restaurants populated
+ */
+export interface FoodCourtWithSubs extends Restaurant {
+  is_food_court: true;
+  sub_restaurants: Restaurant[];
 }
 
 /**
