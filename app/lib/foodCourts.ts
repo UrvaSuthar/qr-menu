@@ -93,14 +93,27 @@ export async function addSubRestaurant(
         throw new Error('This URL slug is already taken. Please choose another.');
     }
 
+    // Get the food court's owner_id (sub-restaurants inherit ownership)
+    const { data: foodCourt, error: fcError } = await supabase
+        .from('restaurants')
+        .select('owner_id')
+        .eq('id', foodCourtId)
+        .eq('is_food_court', true)
+        .single();
+
+    if (fcError || !foodCourt) {
+        throw new Error('Food court not found');
+    }
+
+    // Create sub-restaurant with inherited owner_id
     const { data: restaurant, error } = await supabase
         .from('restaurants')
         .insert({
             ...data,
             parent_food_court_id: foodCourtId,
+            owner_id: foodCourt.owner_id,  // ✓ Inherit from food court
             is_food_court: false,
             is_active: true,
-            owner_id: foodCourtId, // Sub-restaurants inherit food court's owner
         })
         .select()
         .single();
