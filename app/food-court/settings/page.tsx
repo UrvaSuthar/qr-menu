@@ -161,7 +161,6 @@ export default function FoodCourtSettingsPage() {
                                 value={slug}
                                 onChange={(e) => setSlug(generateSlug(e.target.value))}
                                 required
-                                pattern="[a-z0-9-]+"
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                 placeholder="downtown-food-court"
                             />
