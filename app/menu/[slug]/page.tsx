@@ -4,10 +4,13 @@ import { notFound } from 'next/navigation';
 export default async function PublicMenuPage({
     params,
 }: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }) {
+    // Await params (Next.js 16 requirement)
+    const { slug } = await params;
+
     // Fetch restaurant data
-    const restaurant = await getRestaurantBySlug(params.slug);
+    const restaurant = await getRestaurantBySlug(slug);
 
     if (!restaurant) {
         notFound();
@@ -113,9 +116,12 @@ export default async function PublicMenuPage({
 export async function generateMetadata({
     params,
 }: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }) {
-    const restaurant = await getRestaurantBySlug(params.slug);
+    // Await params (Next.js 16 requirement)
+    const { slug } = await params;
+
+    const restaurant = await getRestaurantBySlug(slug);
 
     if (!restaurant) {
         return {
