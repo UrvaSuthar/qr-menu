@@ -32,6 +32,7 @@ export async function createRestaurant(data: {
         .insert({
             ...data,
             owner_id: user.id,
+            is_active: true, // Make restaurant publicly visible by default
         })
         .select()
         .single();
