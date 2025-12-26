@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 
 export async function signInAction(email: string, password: string) {
-    const supabase = createClient();
+    const supabase = await createClient();
 
     // Sign in server-side
     const { error } = await supabase.auth.signInWithPassword({
