@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { FileUpload } from '@/components/FileUpload';
 import { getMyRestaurant, createRestaurant, updateRestaurant } from '@/lib/restaurants';
 import { Restaurant } from '@/types';
+import { Loader2 } from 'lucide-react';
 
 export default function RestaurantSettingsPage() {
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
@@ -108,7 +109,7 @@ export default function RestaurantSettingsPage() {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
-                    <div className="text-4xl mb-4">⏳</div>
+                    <Loader2 size={48} className="mx-auto mb-4 text-gray-400 animate-spin" />
                     <p className="text-gray-600">Loading...</p>
                 </div>
             </div>

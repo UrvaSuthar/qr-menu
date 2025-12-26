@@ -1,6 +1,7 @@
 import { getFoodCourtById } from '@/lib/foodCourts';
 import { RestaurantGrid } from '@/components/RestaurantGrid';
 import { notFound } from 'next/navigation';
+import { MapPin, Phone } from 'lucide-react';
 
 export default async function FoodCourtGridByIdPage({
     params,
@@ -36,16 +37,16 @@ export default async function FoodCourtGridByIdPage({
                             <div className="mt-4 flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-600">
                                 {foodCourt.address && (
                                     <div className="flex items-center gap-1.5">
-                                        <span>📍</span>
+                                        <MapPin size={14} className="text-gray-400" />
                                         <span>{foodCourt.address}</span>
                                     </div>
                                 )}
                                 {foodCourt.phone && (
                                     <a
                                         href={`tel:${foodCourt.phone}`}
-                                        className="flex items-center gap-1.5 hover:text-green-600 font-medium"
+                                        className="flex items-center gap-1.5 hover:text-red-600 font-medium"
                                     >
-                                        <span>📞</span>
+                                        <Phone size={14} className="text-gray-400" />
                                         <span>{foodCourt.phone}</span>
                                     </a>
                                 )}
