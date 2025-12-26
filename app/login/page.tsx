@@ -1,9 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/contexts/AuthContext';
-import { createClient } from '@/lib/supabase/client';
+import { signInAction } from '@/actions/auth';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -11,49 +9,24 @@ export default function LoginPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const { signIn, profile } = useAuth();
-    const router = useRouter();
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         setLoading(true);
 
         try {
-            await signIn(email, password);
+            const result = await signInAction(email, password);
 
-            // Force Next.js to refresh the server session
-            // This ensures middleware has access to the updated session
-            router.refresh();
-
-            // Wait a moment for refresh to complete
-            await new Promise(resolve => setTimeout(resolve, 300));
-
-            // Fetch profile to get role
-            const supabase = createClient();
-            const { data: { user } } = await supabase.auth.getUser();
-
-            if (user) {
-                const { data: userProfile } = await supabase
-                    .from('user_profiles')
-                    .select('role')
-                    .eq('user_id', user.id)
-                    .single();
-
-                // Now redirect based on role
-                if (userProfile?.role === 'restaurant') {
-                    router.push('/restaurant');
-                } else if (userProfile?.role === 'food_court') {
-                    router.push('/food-court');
-                } else {
-                    router.push('/restaurant');
-                }
+            if (result?.error) {
+                setError(result.error);
+                setLoading(false);
             }
+            // If no error, server action redirected successfully
+            // Page will navigate automatically
         } catch (err: any) {
-            setError(err.message || 'Invalid email or password');
+            setError(err.message || 'Login failed');
             setLoading(false);
         }
-        // Don't set loading to false - redirecting
     };
 
     return (
