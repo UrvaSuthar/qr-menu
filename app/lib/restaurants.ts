@@ -148,6 +148,27 @@ export async function getRestaurantBySlug(slug: string) {
 }
 
 /**
+ * Get a restaurant by ID (for public menu page)
+ */
+export async function getRestaurantById(id: string) {
+    const supabase = createClient();
+
+    const { data, error } = await supabase
+        .from('restaurants')
+        .select('*')
+        .eq('id', id)
+        .eq('is_active', true)
+        .single();
+
+    if (error) {
+        if (error.code === 'PGRST116') return null;
+        throw error;
+    }
+
+    return data as Restaurant;
+}
+
+/**
  * Log a QR scan for analytics
  */
 export async function logQRScan(restaurantId: string) {

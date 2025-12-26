@@ -46,9 +46,9 @@ export default function FoodCourtQRCodePage() {
         return null;
     }
 
-    // Food court QR should point to /fc/[slug] instead of /menu/[slug]
+    // Food court QR should point to /menu/fc/[id] (ID-based, not slug)
     const publicUrl = typeof window !== 'undefined'
-        ? `${window.location.origin}/fc/${foodCourt.slug}`
+        ? `${window.location.origin}/menu/fc/${foodCourt.id}`
         : '';
 
     return (

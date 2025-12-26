@@ -202,3 +202,33 @@ export async function getFoodCourtBySlug(slug: string): Promise<FoodCourtWithSub
         sub_restaurants: subRestaurants,
     } as FoodCourtWithSubs;
 }
+
+/**
+ * Get food court by ID with sub-restaurants (for public page)
+ */
+export async function getFoodCourtById(id: string): Promise<FoodCourtWithSubs | null> {
+    const supabase = createClient();
+
+    // Get food court by ID
+    const { data: foodCourt, error } = await supabase
+        .from('restaurants')
+        .select('*')
+        .eq('id', id)
+        .eq('is_food_court', true)
+        .eq('is_active', true)
+        .single();
+
+    if (error) {
+        if (error.code === 'PGRST116') return null;
+        throw error;
+    }
+
+    // Get sub-restaurants
+    const subRestaurants = await getSubRestaurants(foodCourt.id);
+
+    return {
+        ...foodCourt,
+        is_food_court: true,
+        sub_restaurants: subRestaurants,
+    } as FoodCourtWithSubs;
+}
