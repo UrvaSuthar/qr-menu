@@ -16,60 +16,51 @@ export default async function RestaurantMenuByIdPage({
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-            {/* Header */}
-            <header className="bg-white shadow-sm">
-                <div className="max-w-4xl mx-auto px-4 py-6">
-                    <div className="flex items-center gap-4">
-                        {restaurant.logo_url && (
-                            <img
-                                src={restaurant.logo_url}
-                                alt={restaurant.name}
-                                className="w-16 h-16 object-cover rounded-lg"
-                            />
-                        )}
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-900">
-                                {restaurant.name}
-                            </h1>
-                            {restaurant.description && (
-                                <p className="text-sm text-gray-600 mt-1">
-                                    {restaurant.description}
-                                </p>
+        <div className="min-h-screen bg-gray-50">
+            {/* Sticky Header - Always Visible */}
+            <header className="sticky top-0 z-50 bg-white shadow-md">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
+                    <div className="flex items-center justify-between gap-4">
+                        {/* Logo + Name */}
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                            {restaurant.logo_url && (
+                                <img
+                                    src={restaurant.logo_url}
+                                    alt={restaurant.name}
+                                    className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-lg flex-shrink-0"
+                                />
                             )}
+                            <div className="min-w-0">
+                                <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">
+                                    {restaurant.name}
+                                </h1>
+                                {restaurant.address && (
+                                    <p className="text-xs text-gray-500 truncate hidden sm:block">
+                                        📍 {restaurant.address}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Contact Info */}
-                    {(restaurant.address || restaurant.phone) && (
-                        <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
-                            {restaurant.address && (
-                                <div className="flex items-start gap-2 text-sm text-gray-600">
-                                    <span>📍</span>
-                                    <span>{restaurant.address}</span>
-                                </div>
-                            )}
-                            {restaurant.phone && (
-                                <div className="flex items-center gap-2 text-sm text-gray-600">
-                                    <span>📞</span>
-                                    <a href={`tel:${restaurant.phone}`} className="hover:text-indigo-600">
-                                        {restaurant.phone}
-                                    </a>
-                                </div>
-                            )}
-                        </div>
-                    )}
+                        {/* Call CTA - Prominent */}
+                        {restaurant.phone && (
+                            <a
+                                href={`tel:${restaurant.phone}`}
+                                className="flex-shrink-0 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all text-sm sm:text-base"
+                            >
+                                <span className="hidden sm:inline">📞 Call</span>
+                                <span className="sm:hidden">📞</span>
+                            </a>
+                        )}
+                    </div>
                 </div>
             </header>
 
-            {/* Menu Display */}
-            <main className="max-w-4xl mx-auto px-4 py-8">
+            {/* Menu Display - Full Focus */}
+            <main className="max-w-4xl mx-auto px-0 sm:px-4 pb-6 sm:pb-8">
                 {restaurant.menu_pdf_url ? (
-                    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <div className="p-4 bg-indigo-600 text-white font-semibold">
-                            📄 Menu
-                        </div>
-                        <div className="w-full" style={{ height: 'calc(100vh - 300px)', minHeight: '600px' }}>
+                    <div className="bg-white sm:rounded-xl sm:shadow-xl overflow-hidden sm:mt-4">
+                        <div className="w-full" style={{ height: 'calc(100vh - 100px)', minHeight: '500px' }}>
                             <iframe
                                 src={restaurant.menu_pdf_url}
                                 className="w-full h-full border-0"
@@ -78,32 +69,27 @@ export default async function RestaurantMenuByIdPage({
                         </div>
                     </div>
                 ) : (
-                    <div className="bg-white rounded-lg shadow-lg p-12 text-center">
-                        <div className="text-6xl mb-4">📋</div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    /* Empty State - Clear CTA */
+                    <div className="bg-white sm:rounded-xl sm:shadow-xl p-8 sm:p-16 text-center sm:mt-4 mx-4 sm:mx-0">
+                        <div className="text-7xl sm:text-8xl mb-6">📋</div>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
                             Menu Coming Soon
                         </h2>
-                        <p className="text-gray-600">
-                            The restaurant is still setting up their menu. Please check back later!
-                        </p>
-                        {restaurant.phone && (
-                            <div className="mt-6">
-                                <a
-                                    href={`tel:${restaurant.phone}`}
-                                    className="inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
-                                >
-                                    📞 Call to Order
-                                </a>
-                            </div>
+                        {restaurant.phone ? (
+                            <a
+                                href={`tel:${restaurant.phone}`}
+                                className="inline-block px-8 py-4 bg-green-600 hover:bg-green-700 text-white text-lg rounded-xl font-bold shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all"
+                            >
+                                📞 Call to Order Now
+                            </a>
+                        ) : (
+                            <p className="text-gray-600 text-lg">
+                                Please check back later
+                            </p>
                         )}
                     </div>
                 )}
             </main>
-
-            {/* Footer */}
-            <footer className="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-gray-500">
-                <p>Powered by QR Menu Platform</p>
-            </footer>
         </div>
     );
 }
