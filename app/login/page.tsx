@@ -33,21 +33,22 @@ export default function LoginPage() {
                     .eq('user_id', user.id)
                     .single();
 
-                // Redirect based on role
+                // Use window.location.href for full page reload
+                // This ensures session cookies are properly set before middleware runs
                 if (userProfile?.role === 'restaurant') {
-                    router.push('/restaurant');
+                    window.location.href = '/restaurant';
                 } else if (userProfile?.role === 'food_court') {
-                    router.push('/food-court');
+                    window.location.href = '/food-court';
                 } else {
                     // Fallback to restaurant if role is unclear
-                    router.push('/restaurant');
+                    window.location.href = '/restaurant';
                 }
             }
         } catch (err: any) {
             setError(err.message || 'Invalid email or password');
-        } finally {
             setLoading(false);
         }
+        // Don't set loading to false here - page is redirecting
     };
 
     return (
