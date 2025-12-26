@@ -79,7 +79,7 @@ export default async function PublicMenuPage({
                         </div>
                         <div style={{ width: '100%', height: 'calc(100vh - 300px)', minHeight: '600px' }}>
                             <iframe
-                                src={restaurant.menu_pdf_url}
+                                src={`${restaurant.menu_pdf_url}#view=FitH&pagemode=none&toolbar=0&navpanes=0`}
                                 style={{ width: '100%', height: '100%', border: 'none' }}
                                 title="Restaurant Menu"
                             />

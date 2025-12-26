@@ -5,16 +5,45 @@ import { useRouter } from 'next/navigation';
 import { Settings, QrCode, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import '@/styles/app.css';
-import { Banner, Steps, Card } from '@/components/ui';
+import { Banner, Steps, Card, LoadingSpinner } from '@/components/ui';
+import { useEffect, useState } from 'react';
+import { getMyRestaurant } from '@/lib/restaurants';
 
 export default function RestaurantDashboard() {
     const { profile, signOut } = useAuth();
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        checkRestaurant();
+    }, []);
+
+    const checkRestaurant = async () => {
+        try {
+            const restaurant = await getMyRestaurant();
+            if (!restaurant) {
+                router.push('/onboarding');
+            } else {
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error('Error checking restaurant:', error);
+            setLoading(false);
+        }
+    };
 
     const handleLogout = async () => {
         await signOut();
         router.push('/');
     };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <LoadingSpinner />
+            </div>
+        );
+    }
 
     return (
         <div className="app-page">

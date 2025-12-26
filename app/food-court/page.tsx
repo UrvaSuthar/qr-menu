@@ -5,16 +5,45 @@ import { useRouter } from 'next/navigation';
 import { Store, FolderOpen, QrCode, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import '@/styles/app.css';
-import { Banner, Steps } from '@/components/ui';
+import { Banner, Steps, LoadingSpinner } from '@/components/ui';
+import { useEffect, useState } from 'react';
+import { getMyFoodCourt } from '@/lib/foodCourts';
 
 export default function FoodCourtDashboard() {
     const { profile, signOut } = useAuth();
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        checkFoodCourt();
+    }, []);
+
+    const checkFoodCourt = async () => {
+        try {
+            const foodCourt = await getMyFoodCourt();
+            if (!foodCourt) {
+                router.push('/onboarding');
+            } else {
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error('Error checking food court:', error);
+            setLoading(false);
+        }
+    };
 
     const handleLogout = async () => {
         await signOut();
         router.push('/');
     };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <LoadingSpinner />
+            </div>
+        );
+    }
 
     return (
         <div className="app-page">

@@ -98,7 +98,7 @@ export function Card({ children, className = '', interactive = false, as = 'div'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
-    size?: 'sm' | 'md';
+    size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
     loading?: boolean;
     children: ReactNode;
@@ -118,6 +118,7 @@ export function Button({
         'app-button',
         `app-button--${variant}`,
         size === 'sm' && 'app-button--sm',
+        size === 'lg' && 'app-button--lg',
         fullWidth && 'app-button--full',
         className,
     ]
@@ -307,17 +308,28 @@ export function Banner({ title, children }: BannerProps) {
 
 interface StepsProps {
     items: string[];
+    currentStep?: number;
 }
 
-export function Steps({ items }: StepsProps) {
+export function Steps({ items, currentStep = 1 }: StepsProps) {
     return (
         <ol className="app-steps">
-            {items.map((item, index) => (
-                <li key={index} className="app-step">
-                    <span className="app-step__number">{index + 1}</span>
-                    <span>{item}</span>
-                </li>
-            ))}
+            {items.map((item, index) => {
+                const stepNum = index + 1;
+                const isActive = stepNum === currentStep;
+                const isCompleted = stepNum < currentStep;
+
+                let className = 'app-step';
+                if (isActive) className += ' app-step--active';
+                if (isCompleted) className += ' app-step--completed';
+
+                return (
+                    <li key={index} className={className}>
+                        <span className="app-step__number">{stepNum}</span>
+                        <span>{item}</span>
+                    </li>
+                );
+            })}
         </ol>
     );
 }
