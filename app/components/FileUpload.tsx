@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { uploadFile, deleteFile } from '@/lib/restaurants';
+import { FileText, ImageIcon } from 'lucide-react';
 
 interface FileUploadProps {
     accept: string;
@@ -132,8 +133,8 @@ export function FileUpload({
                             className="w-32 h-32 object-cover rounded-lg border-2 border-gray-200"
                         />
                     ) : (
-                        <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
-                            <div className="text-3xl">📄</div>
+                        <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <FileText size={32} className="text-gray-400" />
                             <div className="flex-1">
                                 <p className="text-sm font-medium text-gray-900">Uploaded</p>
                                 <p className="text-xs text-gray-500">Click to replace</p>
@@ -179,7 +180,7 @@ export function FileUpload({
                 />
 
                 <div className="space-y-2">
-                    <div className="text-4xl">{accept.includes('image') ? '🖼️' : '📄'}</div>
+                    {accept.includes('image') ? <ImageIcon size={40} className="mx-auto text-gray-400" /> : <FileText size={40} className="mx-auto text-gray-400" />}
                     <div className="text-sm text-gray-600">
                         {uploading ? (
                             <p className="font-medium">Uploading...</p>

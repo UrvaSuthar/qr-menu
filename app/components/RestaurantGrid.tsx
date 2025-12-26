@@ -1,6 +1,7 @@
 'use client';
 
 import { Restaurant } from '@/types';
+import { UtensilsCrossed, FileText } from 'lucide-react';
 
 interface RestaurantGridProps {
     restaurants: Restaurant[];
@@ -10,8 +11,8 @@ export function RestaurantGrid({ restaurants }: RestaurantGridProps) {
     if (restaurants.length === 0) {
         return (
             <div className="text-center py-20">
-                <div className="text-8xl mb-6">🍽️</div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-3">
+                <UtensilsCrossed size={64} className="mx-auto mb-6 text-gray-400" strokeWidth={1} />
+                <h3 className="text-3xl font-semibold text-black mb-3">
                     No Restaurants Yet
                 </h3>
                 <p className="text-gray-600 text-lg">
@@ -27,38 +28,39 @@ export function RestaurantGrid({ restaurants }: RestaurantGridProps) {
                 <a
                     key={restaurant.id}
                     href={`/menu/r/${restaurant.id}`}
-                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1 active:translate-y-0"
+                    className="group bg-white border border-gray-200 rounded-lg hover:border-black transition-all duration-200 overflow-hidden"
                 >
-                    {/* Logo Section - Larger on mobile for better visibility */}
-                    <div className="aspect-square bg-gradient-to-br from-gray-50 via-white to-gray-50 p-6 sm:p-8 flex items-center justify-center relative">
+                    {/* Logo Section */}
+                    <div className="aspect-square bg-gray-50 p-6 sm:p-8 flex items-center justify-center relative">
                         {restaurant.logo_url ? (
                             <img
                                 src={restaurant.logo_url}
                                 alt={restaurant.name}
-                                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
                             />
                         ) : (
-                            <div className="text-7xl sm:text-8xl">🍽️</div>
+                            <UtensilsCrossed size={64} className="text-gray-300" strokeWidth={1} />
                         )}
 
                         {/* Menu Available Indicator */}
                         {restaurant.menu_pdf_url && (
-                            <div className="absolute top-3 right-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
-                                📄 Menu
+                            <div className="absolute top-3 right-3 bg-black text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+                                <FileText size={12} />
+                                <span>Menu</span>
                             </div>
                         )}
                     </div>
 
-                    {/* Name Section - Larger for readability */}
-                    <div className="p-4 sm:p-5 bg-white">
-                        <h3 className="text-xl sm:text-lg font-bold text-gray-900 text-center group-hover:text-green-600 transition-colors line-clamp-2">
+                    {/* Name Section */}
+                    <div className="p-4 sm:p-5 bg-white border-t border-gray-100">
+                        <h3 className="text-lg font-semibold text-black text-center group-hover:text-red-600 transition-colors line-clamp-2">
                             {restaurant.name}
                         </h3>
                     </div>
 
-                    {/* CTA - Always visible on mobile, hover on desktop */}
+                    {/* CTA */}
                     <div className="px-4 pb-4 sm:pb-5">
-                        <div className="text-center text-sm sm:text-base text-green-600 font-semibold py-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                        <div className="text-center text-sm text-red-600 font-semibold py-2 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                             View Menu →
                         </div>
                     </div>

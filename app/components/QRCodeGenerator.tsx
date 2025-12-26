@@ -2,6 +2,7 @@
 
 import { QRCodeSVG } from 'qrcode.react';
 import { useState } from 'react';
+import { Check, Copy, Download, Printer, Smartphone } from 'lucide-react';
 
 interface QRCodeGeneratorProps {
     slug: string;
@@ -147,9 +148,9 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
                     />
                     <button
                         onClick={copyUrl}
-                        className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                        className="px-4 py-2 border border-gray-300 hover:border-black rounded-lg transition flex items-center gap-2"
                     >
-                        {copied ? '✅ Copied!' : '📋 Copy'}
+                        {copied ? <><Check size={16} /> Copied</> : <><Copy size={16} /> Copy</>}
                     </button>
                 </div>
             </div>
@@ -158,22 +159,22 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
             <div className="grid grid-cols-2 gap-3">
                 <button
                     onClick={downloadQR}
-                    className="px-4 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+                    className="px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition flex items-center justify-center gap-2"
                 >
-                    ⬇️ Download PNG
+                    <Download size={18} /> Download PNG
                 </button>
                 <button
                     onClick={printQR}
-                    className="px-4 py-3 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition"
+                    className="px-4 py-3 border border-gray-300 hover:border-black text-black rounded-lg font-semibold transition flex items-center justify-center gap-2"
                 >
-                    🖨️ Print
+                    <Printer size={18} /> Print
                 </button>
             </div>
 
             {/* Usage Instructions */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h3 className="font-semibold text-blue-900 mb-2">📱 How to use:</h3>
-                <ul className="text-sm text-blue-800 space-y-1">
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <h3 className="font-semibold text-black mb-2 flex items-center gap-2"><Smartphone size={18} /> How to use:</h3>
+                <ul className="text-sm text-gray-600 space-y-1">
                     <li>1. Download or print the QR code</li>
                     <li>2. Place it on tables, menus, or storefront</li>
                     <li>3. Customers scan with their phone camera</li>

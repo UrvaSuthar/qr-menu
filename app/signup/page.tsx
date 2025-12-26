@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserRole } from '@/types';
+import { QrCode, UtensilsCrossed, Building2 } from 'lucide-react';
 
 export default function SignupPage() {
     const [email, setEmail] = useState('');
@@ -24,7 +25,6 @@ export default function SignupPage() {
         try {
             await signUp(email, password, fullName, role);
 
-            // Redirect based on role
             if (role === 'restaurant') {
                 router.push('/restaurant');
             } else if (role === 'food_court') {
@@ -38,11 +38,14 @@ export default function SignupPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-            <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+            <div className="max-w-md w-full bg-white border border-gray-200 rounded-lg p-8">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    <div className="inline-flex w-12 h-12 items-center justify-center border-2 border-black rounded-lg mb-4">
+                        <QrCode size={24} className="text-black" strokeWidth={2} />
+                    </div>
+                    <h1 className="text-3xl font-semibold text-black mb-2">
                         Create Account
                     </h1>
                     <p className="text-gray-600">Join the QR Menu platform</p>
@@ -51,7 +54,7 @@ export default function SignupPage() {
                 {/* Error Message */}
                 {error && (
                     <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-red-800 text-sm">{error}</p>
+                        <p className="text-red-900 text-sm">{error}</p>
                     </div>
                 )}
 
@@ -59,7 +62,7 @@ export default function SignupPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Full Name */}
                     <div>
-                        <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="fullName" className="block text-sm font-semibold text-black mb-2">
                             Full Name
                         </label>
                         <input
@@ -68,14 +71,14 @@ export default function SignupPage() {
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition"
                             placeholder="John Doe"
                         />
                     </div>
 
                     {/* Email */}
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="email" className="block text-sm font-semibold text-black mb-2">
                             Email Address
                         </label>
                         <input
@@ -84,14 +87,14 @@ export default function SignupPage() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition"
                             placeholder="you@example.com"
                         />
                     </div>
 
                     {/* Password */}
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="password" className="block text-sm font-semibold text-black mb-2">
                             Password
                         </label>
                         <input
@@ -101,14 +104,14 @@ export default function SignupPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             minLength={6}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition"
                             placeholder="Minimum 6 characters"
                         />
                     </div>
 
                     {/* Role Selection */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-3">
+                        <label className="block text-sm font-semibold text-black mb-3">
                             I am a...
                         </label>
                         <div className="grid grid-cols-2 gap-4">
@@ -117,13 +120,13 @@ export default function SignupPage() {
                                 type="button"
                                 onClick={() => setRole('restaurant')}
                                 className={`p-4 border-2 rounded-lg transition ${role === 'restaurant'
-                                        ? 'border-indigo-500 bg-indigo-50'
-                                        : 'border-gray-200 hover:border-gray-300'
+                                    ? 'border-red-600 bg-red-50'
+                                    : 'border-gray-200 hover:border-black'
                                     }`}
                             >
                                 <div className="text-center">
-                                    <div className="text-2xl mb-2">🍽️</div>
-                                    <div className="font-semibold text-gray-900">Restaurant</div>
+                                    <UtensilsCrossed size={28} className={`mx-auto mb-2 ${role === 'restaurant' ? 'text-red-600' : 'text-gray-400'}`} />
+                                    <div className="font-semibold text-black">Restaurant</div>
                                     <div className="text-xs text-gray-500 mt-1">Single venue</div>
                                 </div>
                             </button>
@@ -133,13 +136,13 @@ export default function SignupPage() {
                                 type="button"
                                 onClick={() => setRole('food_court')}
                                 className={`p-4 border-2 rounded-lg transition ${role === 'food_court'
-                                        ? 'border-indigo-500 bg-indigo-50'
-                                        : 'border-gray-200 hover:border-gray-300'
+                                    ? 'border-red-600 bg-red-50'
+                                    : 'border-gray-200 hover:border-black'
                                     }`}
                             >
                                 <div className="text-center">
-                                    <div className="text-2xl mb-2">🏢</div>
-                                    <div className="font-semibold text-gray-900">Food Court</div>
+                                    <Building2 size={28} className={`mx-auto mb-2 ${role === 'food_court' ? 'text-red-600' : 'text-gray-400'}`} />
+                                    <div className="font-semibold text-black">Food Court</div>
                                     <div className="text-xs text-gray-500 mt-1">Multiple vendors</div>
                                 </div>
                             </button>
@@ -150,7 +153,7 @@ export default function SignupPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-red-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-red-700 focus:ring-4 focus:ring-red-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? 'Creating account...' : 'Create Account'}
                     </button>
@@ -160,7 +163,7 @@ export default function SignupPage() {
                 <div className="mt-6 text-center">
                     <p className="text-sm text-gray-600">
                         Already have an account?{' '}
-                        <a href="/login" className="text-indigo-600 hover:text-indigo-700 font-medium">
+                        <a href="/login" className="text-red-600 hover:text-red-700 font-semibold">
                             Log in
                         </a>
                     </p>
