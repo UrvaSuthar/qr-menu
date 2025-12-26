@@ -59,7 +59,7 @@ export async function middleware(request: NextRequest) {
         const { data: profile } = await supabase
             .from('user_profiles')
             .select('role')
-            .eq('id', session.user.id)
+            .eq('user_id', session.user.id)
             .single();
 
         // Restaurant route - require restaurant role
