@@ -1,6 +1,6 @@
 import { getRestaurantBySlug, logQRScan } from '@/lib/restaurants';
 import { notFound } from 'next/navigation';
-import { MapPin, Phone, FileText, ClipboardList } from 'lucide-react';
+import { MapPin, Phone, FileText, ClipboardList, UtensilsCrossed } from 'lucide-react';
 
 export default async function PublicMenuPage({
     params,
@@ -22,12 +22,17 @@ export default async function PublicMenuPage({
             <header className="bg-white border-b border-gray-200">
                 <div className="max-w-4xl mx-auto px-4 py-6">
                     <div className="flex items-center gap-4">
-                        {restaurant.logo_url && (
+                        {/* Logo or placeholder */}
+                        {restaurant.logo_url ? (
                             <img
                                 src={restaurant.logo_url}
                                 alt={restaurant.name}
                                 className="w-16 h-16 object-cover rounded-lg border border-gray-200"
                             />
+                        ) : (
+                            <div className="w-16 h-16 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center">
+                                <UtensilsCrossed size={28} className="text-gray-300" strokeWidth={1.5} />
+                            </div>
                         )}
                         <div>
                             <h1 className="text-2xl font-semibold text-black">
