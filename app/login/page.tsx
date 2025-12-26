@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { createClient } from '@/utils/supabase/client';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -21,16 +22,27 @@ export default function LoginPage() {
         try {
             await signIn(email, password);
 
-            // Wait a moment for profile to load, then redirect based on role
-            setTimeout(() => {
-                if (profile?.role === 'restaurant') {
+            // Fetch profile to get the user's role, then redirect
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+
+            if (user) {
+                const { data: userProfile } = await supabase
+                    .from('user_profiles')
+                    .select('role')
+                    .eq('user_id', user.id)
+                    .single();
+
+                // Redirect based on role
+                if (userProfile?.role === 'restaurant') {
                     router.push('/restaurant');
-                } else if (profile?.role === 'food_court') {
+                } else if (userProfile?.role === 'food_court') {
                     router.push('/food-court');
                 } else {
-                    router.push('/');
+                    // Fallback to restaurant if role is unclear
+                    router.push('/restaurant');
                 }
-            }, 500);
+            }
         } catch (err: any) {
             setError(err.message || 'Invalid email or password');
         } finally {
