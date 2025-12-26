@@ -3,8 +3,8 @@ import type { NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
 /**
- * Middleware to protect routes - authentication only
- * Role checking is done client-side to avoid cookie race conditions
+ * Middleware to protect routes based on user role
+ * Runs on Edge runtime for fast response times
  */
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
@@ -26,35 +26,53 @@ export async function middleware(request: NextRequest) {
                     return request.cookies.getAll();
                 },
                 setAll(cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value }) =>
+                    cookiesToSet.forEach(({ name, value, options }) =>
                         request.cookies.set(name, value)
                     );
                     response = NextResponse.next({
                         request,
                     });
-                    cookiesToSet.forEach(({ name, value, options }) =>
-                        response.cookies.set(name, value, options)
-                    );
                 },
             },
         }
     );
 
-    // Refresh session if needed
-    const { data: { user } } = await supabase.auth.getUser();
+    // Get session
+    const {
+        data: { session },
+    } = await supabase.auth.getSession();
 
     // Protected routes that require authentication
     const isProtectedRoute =
         pathname.startsWith('/restaurant') || pathname.startsWith('/food-court');
 
-    // If accessing protected route without auth, redirect to login
-    if (isProtectedRoute && !user) {
+    // If accessing protected route without session, redirect to login
+    if (isProtectedRoute && !session) {
         const loginUrl = new URL('/login', request.url);
         loginUrl.searchParams.set('redirect', pathname);
         return NextResponse.redirect(loginUrl);
     }
 
-    // Allow access - role checking is done in the page itself
+    // If user is authenticated and accessing a protected route, verify role
+    if (isProtectedRoute && session) {
+        // Fetch user profile to get role
+        const { data: profile } = await supabase
+            .from('user_profiles')
+            .select('role')
+            .eq('user_id', session.user.id)
+            .single();
+
+        // Restaurant route - require restaurant role
+        if (pathname.startsWith('/restaurant') && profile?.role !== 'restaurant') {
+            return NextResponse.redirect(new URL('/unauthorized', request.url));
+        }
+
+        // Food court route - require food_court role
+        if (pathname.startsWith('/food-court') && profile?.role !== 'food_court') {
+            return NextResponse.redirect(new URL('/unauthorized', request.url));
+        }
+    }
+
     return response;
 }
 
@@ -67,4 +85,3 @@ export const config = {
         '/food-court/:path*',
     ],
 };
-
