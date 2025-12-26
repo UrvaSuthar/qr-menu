@@ -5,12 +5,16 @@ import { useRouter } from 'next/navigation';
 import { QRCodeGenerator } from '@/components/QRCodeGenerator';
 import { getMyFoodCourt } from '@/lib/foodCourts';
 import { Restaurant } from '@/types';
-import { Loader2 } from 'lucide-react';
+import { Info } from 'lucide-react';
+import '@/styles/app.css';
+import { LoadingSpinner, PageHeader, Card, Alert } from '@/components/ui';
+import { useToast } from '@/contexts/ToastContext';
 
 export default function FoodCourtQRCodePage() {
     const [foodCourt, setFoodCourt] = useState<Restaurant | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const { showToast } = useToast();
 
     useEffect(() => {
         loadFoodCourt();
@@ -22,7 +26,7 @@ export default function FoodCourtQRCodePage() {
             setFoodCourt(data);
 
             if (!data) {
-                alert('Please create a food court first');
+                showToast('Please create a food court first', 'info');
                 router.push('/food-court/settings');
             }
         } catch (err) {
@@ -33,14 +37,7 @@ export default function FoodCourtQRCodePage() {
     };
 
     if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <Loader2 size={48} className="mx-auto mb-4 text-gray-400 animate-spin" />
-                    <p className="text-gray-600">Loading...</p>
-                </div>
-            </div>
-        );
+        return <LoadingSpinner />;
     }
 
     if (!foodCourt) {
@@ -48,45 +45,47 @@ export default function FoodCourtQRCodePage() {
     }
 
     // Food court QR should point to /menu/fc/[id] (ID-based, not slug)
-    const publicUrl = typeof window !== 'undefined'
-        ? `${window.location.origin}/menu/fc/${foodCourt.id}`
-        : '';
+    const baseUrl = typeof window !== 'undefined'
+        ? window.location.origin
+        : (process.env.NEXT_PUBLIC_APP_URL || 'https://qr-menu-sigma.vercel.app');
+
+    const publicUrl = `${baseUrl}/menu/fc/${foodCourt.id}`;
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="app-page app-page--alt">
             {/* Header */}
-            <header className="bg-white shadow">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => router.push('/food-court')}
-                            className="text-gray-600 hover:text-gray-900"
-                        >
-                            ← Back to Dashboard
-                        </button>
-                        <h1 className="text-2xl font-bold text-gray-900">Food Court QR Code</h1>
-                    </div>
+            <header className="app-header">
+                <div className="app-container app-container--narrow">
+                    <PageHeader
+                        title="Food Court QR Code"
+                        backHref="/food-court"
+                        backLabel="Back to Dashboard"
+                    />
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="bg-white rounded-lg shadow p-6 mb-6">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                        <h3 className="font-semibold text-blue-900 mb-2">ℹ️ Food Court QR Code</h3>
-                        <p className="text-sm text-blue-800">
-                            This QR code links to your food court's restaurant grid, where customers can browse all your sub-restaurants and select which menu to view.
-                        </p>
-                        <p className="text-sm text-blue-800 mt-2">
-                            <strong>URL:</strong> {publicUrl}
-                        </p>
+            <main className="app-container app-container--narrow app-main">
+                <Card>
+                    <div style={{ marginBottom: 'var(--space-6)' }}>
+                        <Alert type="info" icon={<Info size={18} />}>
+                            <div>
+                                <strong>Food Court QR Code</strong>
+                                <p style={{ marginTop: '4px', opacity: 0.9 }}>
+                                    This QR code links to your food court's restaurant grid, where customers can browse all your sub-restaurants and select which menu to view.
+                                </p>
+                                <p style={{ marginTop: '8px', fontSize: '0.875rem' }}>
+                                    <strong>URL:</strong> {publicUrl}
+                                </p>
+                            </div>
+                        </Alert>
                     </div>
 
                     <QRCodeGenerator
                         slug={publicUrl}
                         restaurantName={foodCourt.name}
                     />
-                </div>
+                </Card>
             </main>
         </div>
     );

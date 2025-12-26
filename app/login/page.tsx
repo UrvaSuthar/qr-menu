@@ -4,12 +4,22 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { createClient } from '@/lib/supabase/client';
+import { Mail, Lock, AlertCircle } from 'lucide-react';
+import Link from 'next/link';
+
+import '@/styles/auth.css';
+import {
+    AuthBackground,
+    AuthInput,
+    AuthButton,
+} from '@/components/auth';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const { signIn } = useAuth();
     const router = useRouter();
@@ -33,15 +43,19 @@ export default function LoginPage() {
                     .eq('id', user.id)
                     .single();
 
-                // Redirect based on role
-                if (profile?.role === 'restaurant') {
-                    router.push('/restaurant');
-                } else if (profile?.role === 'food_court') {
-                    router.push('/food-court');
-                } else {
-                    // Default to home if no role
-                    router.push('/');
-                }
+                setSuccess(true);
+
+                // Brief delay to show success state
+                setTimeout(() => {
+                    // Redirect based on role
+                    if (profile?.role === 'restaurant') {
+                        router.push('/restaurant');
+                    } else if (profile?.role === 'food_court') {
+                        router.push('/food-court');
+                    } else {
+                        router.push('/');
+                    }
+                }, 500);
             }
         } catch (err: any) {
             setError(err.message || 'Invalid email or password');
@@ -50,82 +64,92 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-            <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
-                {/* Header */}
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                        Welcome Back
+        <div className="auth-page">
+            <AuthBackground />
+
+            <div className="auth-container">
+                {/* Brand Zone - Left side on desktop */}
+                <div className="auth-brand">
+                    <h1 className="auth-brand-title">
+                        QR Menu
                     </h1>
-                    <p className="text-gray-600">Log in to your account</p>
+                    <p className="auth-brand-tagline">
+                        Digital menus for modern restaurants.
+                        Create, customize, and share your menu with a single QR code.
+                    </p>
                 </div>
 
-                {/* Error Message */}
-                {error && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-red-800 text-sm">{error}</p>
+                {/* Form Zone */}
+                <div className="auth-form-zone">
+                    <div className="auth-card">
+                        {/* Header */}
+                        <div className="auth-card-header">
+                            <h2 className="auth-card-title">Welcome back</h2>
+                            <p className="auth-card-subtitle">Enter your credentials to continue</p>
+                        </div>
+
+                        {/* Error Alert */}
+                        {error && (
+                            <div className="auth-error-alert" role="alert">
+                                <AlertCircle className="auth-error-alert-icon" size={18} />
+                                <span className="auth-error-alert-text">{error}</span>
+                            </div>
+                        )}
+
+                        {/* Login Form */}
+                        <form onSubmit={handleSubmit} className="auth-form">
+                            <AuthInput
+                                id="email"
+                                type="email"
+                                label="Email"
+                                icon={<Mail size={18} />}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="you@example.com"
+                                required
+                                autoComplete="email"
+                                disabled={loading || success}
+                            />
+
+                            <AuthInput
+                                id="password"
+                                type="password"
+                                label="Password"
+                                icon={<Lock size={18} />}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter your password"
+                                required
+                                autoComplete="current-password"
+                                showPasswordToggle
+                                disabled={loading || success}
+                            />
+
+                            {/* Forgot Password Link */}
+                            <Link href="#" className="auth-link auth-forgot-link">
+                                Forgot password?
+                            </Link>
+
+                            {/* Submit Button */}
+                            <AuthButton
+                                type="submit"
+                                loading={loading}
+                                success={success}
+                            >
+                                Log in
+                            </AuthButton>
+                        </form>
+
+                        {/* Footer */}
+                        <div className="auth-footer">
+                            <p className="auth-footer-text">
+                                Don&apos;t have an account?
+                                <Link href="/signup" className="auth-footer-link">
+                                    Sign up
+                                </Link>
+                            </p>
+                        </div>
                     </div>
-                )}
-
-                {/* Login Form */}
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Email */}
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                            Email Address
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-                            placeholder="you@example.com"
-                        />
-                    </div>
-
-                    {/* Password */}
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
-                            placeholder="Enter your password"
-                        />
-                    </div>
-
-                    {/* Forgot Password */}
-                    <div className="text-right">
-                        <a href="#" className="text-sm text-indigo-600 hover:text-indigo-700">
-                            Forgot password?
-                        </a>
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        {loading ? 'Logging in...' : 'Log In'}
-                    </button>
-                </form>
-
-                {/* Footer */}
-                <div className="mt-6 text-center">
-                    <p className="text-sm text-gray-600">
-                        Don&apos;t have an account?{' '}
-                        <a href="/signup" className="text-indigo-600 hover:text-indigo-700 font-medium">
-                            Sign up
-                        </a>
-                    </p>
                 </div>
             </div>
         </div>

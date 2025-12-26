@@ -1,6 +1,7 @@
 import { getRestaurantBySlug, logQRScan } from '@/lib/restaurants';
 import { notFound } from 'next/navigation';
 import { MapPin, Phone, FileText, ClipboardList, UtensilsCrossed } from 'lucide-react';
+import '@/styles/app.css';
 
 export default async function PublicMenuPage({
     params,
@@ -17,29 +18,29 @@ export default async function PublicMenuPage({
     logQRScan(restaurant.id).catch(console.error);
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="food-page">
             {/* Header */}
-            <header className="bg-white border-b border-gray-200">
-                <div className="max-w-4xl mx-auto px-4 py-6">
-                    <div className="flex items-center gap-4">
+            <header className="food-header">
+                <div className="food-header__inner">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
                         {/* Logo or placeholder */}
                         {restaurant.logo_url ? (
                             <img
                                 src={restaurant.logo_url}
                                 alt={restaurant.name}
-                                className="w-16 h-16 object-cover rounded-lg border border-gray-200"
+                                className="food-header__logo"
                             />
                         ) : (
-                            <div className="w-16 h-16 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center">
-                                <UtensilsCrossed size={28} className="text-gray-300" strokeWidth={1.5} />
+                            <div className="food-header__logo-placeholder">
+                                <UtensilsCrossed size={28} strokeWidth={1.5} />
                             </div>
                         )}
                         <div>
-                            <h1 className="text-2xl font-semibold text-black">
+                            <h1 className="food-header__title">
                                 {restaurant.name}
                             </h1>
                             {restaurant.description && (
-                                <p className="text-sm text-gray-600 mt-1">
+                                <p className="food-header__description">
                                     {restaurant.description}
                                 </p>
                             )}
@@ -48,17 +49,17 @@ export default async function PublicMenuPage({
 
                     {/* Contact Info */}
                     {(restaurant.address || restaurant.phone) && (
-                        <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
+                        <div className="food-header__meta">
                             {restaurant.address && (
-                                <div className="flex items-start gap-2 text-sm text-gray-600">
-                                    <MapPin size={16} className="mt-0.5 text-gray-400" />
+                                <div className="food-header__meta-item">
+                                    <MapPin size={16} style={{ color: 'var(--app-text-disabled)' }} />
                                     <span>{restaurant.address}</span>
                                 </div>
                             )}
                             {restaurant.phone && (
-                                <div className="flex items-center gap-2 text-sm text-gray-600">
-                                    <Phone size={16} className="text-gray-400" />
-                                    <a href={`tel:${restaurant.phone}`} className="hover:text-red-600">
+                                <div className="food-header__meta-item">
+                                    <Phone size={16} style={{ color: 'var(--app-text-disabled)' }} />
+                                    <a href={`tel:${restaurant.phone}`} className="food-header__meta-link">
                                         {restaurant.phone}
                                     </a>
                                 </div>
@@ -69,28 +70,28 @@ export default async function PublicMenuPage({
             </header>
 
             {/* Menu Display */}
-            <main className="max-w-4xl mx-auto px-4 py-8">
+            <main style={{ maxWidth: '56rem', margin: '0 auto', padding: 'var(--space-8) var(--space-4)' }}>
                 {restaurant.menu_pdf_url ? (
-                    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                        <div className="p-4 bg-black text-white font-semibold flex items-center gap-2">
+                    <div className="food-menu-card">
+                        <div className="food-menu-header">
                             <FileText size={18} />
                             <span>Menu</span>
                         </div>
-                        <div className="w-full" style={{ height: 'calc(100vh - 300px)', minHeight: '600px' }}>
+                        <div style={{ width: '100%', height: 'calc(100vh - 300px)', minHeight: '600px' }}>
                             <iframe
                                 src={restaurant.menu_pdf_url}
-                                className="w-full h-full border-0"
+                                style={{ width: '100%', height: '100%', border: 'none' }}
                                 title="Restaurant Menu"
                             />
                         </div>
                     </div>
                 ) : (
-                    <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
-                        <ClipboardList size={64} className="mx-auto mb-4 text-gray-300" strokeWidth={1} />
-                        <h2 className="text-2xl font-semibold text-black mb-2">
+                    <div className="food-menu-card food-empty">
+                        <ClipboardList size={64} className="food-empty__icon" strokeWidth={1} />
+                        <h2 className="food-empty__title">
                             Menu Coming Soon
                         </h2>
-                        <p className="text-gray-600">
+                        <p className="food-empty__description">
                             The restaurant is working on uploading their menu.
                         </p>
                     </div>
@@ -98,7 +99,7 @@ export default async function PublicMenuPage({
             </main>
 
             {/* Footer */}
-            <footer className="border-t border-gray-200 py-6 text-center text-sm text-gray-500">
+            <footer className="food-footer">
                 Powered by QR Menu
             </footer>
         </div>

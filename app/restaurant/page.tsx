@@ -3,6 +3,9 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Settings, QrCode, LogOut } from 'lucide-react';
+import Link from 'next/link';
+import '@/styles/app.css';
+import { Banner, Steps, Card } from '@/components/ui';
 
 export default function RestaurantDashboard() {
     const { profile, signOut } = useAuth();
@@ -14,22 +17,22 @@ export default function RestaurantDashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="app-page">
             {/* Header */}
-            <header className="border-b border-gray-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:  px-8">
-                    <div className="flex justify-between items-center py-6">
+            <header className="app-header">
+                <div className="app-container">
+                    <div className="app-header__inner">
                         <div>
-                            <h1 className="text-2xl font-semibold text-black">
+                            <h1 className="app-header__title">
                                 Restaurant Dashboard
                             </h1>
-                            <p className="text-sm text-gray-600 mt-1">
+                            <p className="app-header__subtitle">
                                 Welcome, {profile?.full_name || 'Restaurant Owner'}!
                             </p>
                         </div>
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-2 px-4 py-2 border border-gray-300 hover:border-black text-black rounded-lg transition font-medium"
+                            className="app-button app-button--secondary app-button--sm"
                         >
                             <LogOut size={18} />
                             <span className="hidden sm:inline">Logout</span>
@@ -39,65 +42,43 @@ export default function RestaurantDashboard() {
             </header>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <main className="app-container app-main">
                 {/* Onboarding Banner */}
-                <div className="mb-12 p-8 bg-gray-50 border border-gray-200 rounded-lg">
-                    <h2 className="text-xl font-semibold text-black mb-4">
-                        Get Started in 3 Steps
-                    </h2>
-                    <ol className="space-y-3 text-gray-600">
-                        <li className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                            <span>Set up your restaurant details and upload menu PDF</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                            <span>Generate and download your unique QR code</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                            <span>Print and place QR codes on your tables</span>
-                        </li>
-                    </ol>
+                <div className="app-section">
+                    <Banner title="Get Started in 3 Steps">
+                        <Steps items={[
+                            'Set up your restaurant details and upload menu PDF',
+                            'Generate and download your unique QR code',
+                            'Print and place QR codes on your tables'
+                        ]} />
+                    </Banner>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="mb-8">
-                    <h2 className="text-xl font-semibold text-black mb-6">
-                        Quick Actions
-                    </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="app-section">
+                    <h2 className="app-section__title">Quick Actions</h2>
+                    <div className="app-grid app-grid--2">
                         {/* Primary: Manage Restaurant */}
-                        <a
-                            href="/restaurant/settings"
-                            className="group p-8 border-2 border-gray-200 hover:border-black bg-white rounded-lg transition-all"
-                        >
-                            <div className="flex items-start justify-between mb-4">
-                                <Settings size={32} className="text-red-600" strokeWidth={1.5} />
+                        <Link href="/restaurant/settings" className="app-card app-card--interactive group">
+                            <div className="app-card__header">
+                                <Settings size={32} strokeWidth={1.5} className="app-card__icon" />
                             </div>
-                            <h3 className="text-xl font-semibold text-black mb-2 group-hover:text-red-600 transition">
-                                Manage Restaurant
-                            </h3>
-                            <p className="text-gray-600">
+                            <h3 className="app-card__title">Manage Restaurant</h3>
+                            <p className="app-card__description">
                                 Update details, upload menu PDF, and customize your page
                             </p>
-                        </a>
+                        </Link>
 
                         {/* Secondary: QR Code */}
-                        <a
-                            href="/restaurant/qr-code"
-                            className="group p-8 border-2 border-gray-200 hover:border-black bg-white rounded-lg transition-all"
-                        >
-                            <div className="flex items-start justify-between mb-4">
-                                <QrCode size={32} className="text-black" strokeWidth={1.5} />
+                        <Link href="/restaurant/qr-code" className="app-card app-card--interactive group">
+                            <div className="app-card__header">
+                                <QrCode size={32} strokeWidth={1.5} className="app-card__icon" />
                             </div>
-                            <h3 className="text-xl font-semibold text-black mb-2 group-hover:text-red-600 transition">
-                                Generate QR Code
-                            </h3>
-                            <p className="text-gray-600">
+                            <h3 className="app-card__title">Generate QR Code</h3>
+                            <p className="app-card__description">
                                 Download QR code to share your digital menu
                             </p>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </main>

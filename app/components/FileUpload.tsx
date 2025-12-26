@@ -2,7 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { uploadFile, deleteFile } from '@/lib/restaurants';
-import { FileText, ImageIcon } from 'lucide-react';
+import { FileText, ImageIcon, X } from 'lucide-react';
+import '@/styles/app.css';
+import { useToast } from '@/contexts/ToastContext';
 
 interface FileUploadProps {
     accept: string;
@@ -29,6 +31,7 @@ export function FileUpload({
     const [error, setError] = useState('');
     const [dragActive, setDragActive] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const { showConfirm } = useToast();
 
     const validateFile = (file: File): string | null => {
         if (file.size > maxSize) {
@@ -48,14 +51,11 @@ export function FileUpload({
 
         setUploading(true);
         try {
-            // Generate unique file path
             const timestamp = Date.now();
             const fileExt = file.name.split('.').pop();
             const storagePath = `${timestamp}.${fileExt}`;
 
-            // Upload file
             const publicUrl = await uploadFile(bucket, storagePath, file);
-
             onUploadComplete(publicUrl, storagePath);
         } catch (err: any) {
             setError(err.message || 'Failed to upload file');
@@ -94,11 +94,17 @@ export function FileUpload({
     const handleDelete = async () => {
         if (!currentUrl || !onDelete) return;
 
-        if (!confirm('Are you sure you want to delete this file?')) return;
+        const confirmed = await showConfirm({
+            title: 'Delete file?',
+            description: 'Are you sure you want to delete this file?',
+            confirmLabel: 'Delete',
+            destructive: true,
+        });
+
+        if (!confirmed) return;
 
         setUploading(true);
         try {
-            // Extract path from URL
             const urlParts = currentUrl.split('/');
             const path = urlParts[urlParts.length - 1];
 
@@ -112,12 +118,12 @@ export function FileUpload({
     };
 
     return (
-        <div className="space-y-4">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             {/* Label */}
-            <label className="block text-sm font-medium text-gray-900">
+            <label className="app-label">
                 {label}
                 {description && (
-                    <span className="block text-xs font-normal text-gray-500 mt-1">
+                    <span style={{ display: 'block', fontWeight: 'normal', color: 'var(--app-text-muted)', marginTop: '4px', fontSize: 'var(--text-xs)' }}>
                         {description}
                     </span>
                 )}
@@ -125,19 +131,33 @@ export function FileUpload({
 
             {/* Current File Preview */}
             {currentUrl && (
-                <div className="relative">
+                <div style={{ position: 'relative', display: 'inline-block' }}>
                     {accept.includes('image') ? (
                         <img
                             src={currentUrl}
                             alt="Current file"
-                            className="w-32 h-32 object-cover rounded-lg border-2 border-gray-200"
+                            style={{
+                                width: '128px',
+                                height: '128px',
+                                objectFit: 'cover',
+                                borderRadius: 'var(--radius-lg)',
+                                border: '1px solid var(--app-border)'
+                            }}
                         />
                     ) : (
-                        <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <FileText size={32} className="text-gray-400" />
-                            <div className="flex-1">
-                                <p className="text-sm font-medium text-gray-900">Uploaded</p>
-                                <p className="text-xs text-gray-500">Click to replace</p>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 'var(--space-3)',
+                            padding: 'var(--space-4)',
+                            background: 'var(--app-bg-secondary)',
+                            borderRadius: 'var(--radius-lg)',
+                            border: '1px solid var(--app-border)'
+                        }}>
+                            <FileText size={32} color="var(--app-text-disabled)" />
+                            <div>
+                                <p style={{ fontSize: 'var(--text-sm)', fontWeight: 500 }}>Uploaded</p>
+                                <p style={{ fontSize: 'var(--text-xs)', color: 'var(--app-text-muted)' }}>Click to replace</p>
                             </div>
                         </div>
                     )}
@@ -147,11 +167,24 @@ export function FileUpload({
                             type="button"
                             onClick={handleDelete}
                             disabled={uploading}
-                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 transition disabled:opacity-50"
+                            style={{
+                                position: 'absolute',
+                                top: '-8px',
+                                right: '-8px',
+                                width: '28px',
+                                height: '28px',
+                                background: 'var(--app-error)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: 'var(--radius-full)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                opacity: uploading ? 0.5 : 1
+                            }}
                         >
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <X size={16} />
                         </button>
                     )}
                 </div>
@@ -164,11 +197,7 @@ export function FileUpload({
                 onDragOver={handleDrag}
                 onDrop={handleDrop}
                 onClick={() => fileInputRef.current?.click()}
-                className={`
-          border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition
-          ${dragActive ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300 hover:border-gray-400'}
-          ${uploading ? 'opacity-50 cursor-not-allowed' : ''}
-        `}
+                className={`app-upload-zone ${dragActive ? 'app-upload-zone--active' : ''} ${uploading ? 'app-upload-zone--disabled' : ''}`}
             >
                 <input
                     ref={fileInputRef}
@@ -176,20 +205,24 @@ export function FileUpload({
                     accept={accept}
                     onChange={handleChange}
                     disabled={uploading}
-                    className="hidden"
+                    style={{ display: 'none' }}
                 />
 
-                <div className="space-y-2">
-                    {accept.includes('image') ? <ImageIcon size={40} className="mx-auto text-gray-400" /> : <FileText size={40} className="mx-auto text-gray-400" />}
-                    <div className="text-sm text-gray-600">
+                <div>
+                    {accept.includes('image') ? (
+                        <ImageIcon size={40} className="app-upload-zone__icon" />
+                    ) : (
+                        <FileText size={40} className="app-upload-zone__icon" />
+                    )}
+                    <div>
                         {uploading ? (
-                            <p className="font-medium">Uploading...</p>
+                            <p className="app-upload-zone__text">Uploading...</p>
                         ) : (
                             <>
-                                <p className="font-medium">
+                                <p className="app-upload-zone__text">
                                     {currentUrl ? 'Click to replace' : 'Click to upload'} or drag and drop
                                 </p>
-                                <p className="text-xs text-gray-500">
+                                <p className="app-upload-zone__hint">
                                     Max {(maxSize / 1024 / 1024).toFixed(0)}MB • {accept}
                                 </p>
                             </>
@@ -200,8 +233,8 @@ export function FileUpload({
 
             {/* Error Message */}
             {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-sm text-red-800">{error}</p>
+                <div className="app-alert app-alert--error">
+                    {error}
                 </div>
             )}
         </div>

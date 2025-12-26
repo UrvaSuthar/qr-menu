@@ -1,27 +1,46 @@
+import { ShieldX } from 'lucide-react';
+import Link from 'next/link';
+import { AuthBackground } from '@/components/auth';
+import '@/styles/auth.css';
+
 export default function UnauthorizedPage() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-            <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
-                <div className="text-6xl mb-4">🚫</div>
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                    Unauthorized Access
-                </h1>
-                <p className="text-gray-600 mb-6">
-                    You don&apos;t have permission to access this page. Please log in with the correct account type.
-                </p>
-                <div className="space-y-3">
-                    <a
-                        href="/"
-                        className="block w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition"
-                    >
-                        Go to Home
-                    </a>
-                    <a
-                        href="/login"
-                        className="block w-full border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition"
-                    >
-                        Log In
-                    </a>
+        <div className="auth-page">
+            <AuthBackground />
+
+            <div className="auth-container">
+                <div className="auth-form-zone">
+                    <div className="auth-card" style={{ textAlign: 'center' }}>
+                        <div style={{ marginBottom: 'var(--auth-space-lg)' }}>
+                            <ShieldX
+                                size={64}
+                                strokeWidth={1.5}
+                                style={{ color: 'var(--auth-error)', margin: '0 auto' }}
+                            />
+                        </div>
+                        <h1 className="auth-card-title" style={{ marginBottom: 'var(--auth-space-sm)' }}>
+                            Unauthorized Access
+                        </h1>
+                        <p className="auth-card-subtitle" style={{ marginBottom: 'var(--auth-space-xl)' }}>
+                            You don&apos;t have permission to access this page. Please log in with the correct account type.
+                        </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--auth-space-sm)' }}>
+                            <Link
+                                href="/"
+                                className="auth-button auth-button--primary"
+                                style={{ textDecoration: 'none' }}
+                            >
+                                Go to Home
+                            </Link>
+                            <Link
+                                href="/login"
+                                className="auth-button auth-button--secondary"
+                                style={{ textDecoration: 'none' }}
+                            >
+                                Log In
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

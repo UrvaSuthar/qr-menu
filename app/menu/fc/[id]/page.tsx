@@ -1,16 +1,15 @@
 import { getFoodCourtById } from '@/lib/foodCourts';
 import { RestaurantGrid } from '@/components/RestaurantGrid';
 import { notFound } from 'next/navigation';
-import { MapPin, Phone } from 'lucide-react';
+import { MapPin, Phone, ChevronDown } from 'lucide-react';
+import '@/styles/app.css';
 
 export default async function FoodCourtGridByIdPage({
     params,
 }: {
     params: Promise<{ id: string }>;
 }) {
-    // Await params (Next.js 16 requirement)
     const { id } = await params;
-
     const foodCourt = await getFoodCourtById(id);
 
     if (!foodCourt) {
@@ -18,55 +17,66 @@ export default async function FoodCourtGridByIdPage({
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Hero Section - Simple & Clear */}
-            <header className="bg-white shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-                    <div className="text-center">
-                        <h1 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-3">
-                            {foodCourt.name}
-                        </h1>
-                        {foodCourt.description && (
-                            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-4">
-                                {foodCourt.description}
-                            </p>
-                        )}
+        <div className="food-page--alt">
+            {/* Hero Section */}
+            <header className="food-hero">
+                <h1 className="food-hero__title">
+                    {foodCourt.name}
+                </h1>
+                {foodCourt.description && (
+                    <p className="food-hero__description">
+                        {foodCourt.description}
+                    </p>
+                )}
 
-                        {/* Contact Info - Compact */}
-                        {(foodCourt.address || foodCourt.phone) && (
-                            <div className="mt-4 flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-600">
-                                {foodCourt.address && (
-                                    <div className="flex items-center gap-1.5">
-                                        <MapPin size={14} className="text-gray-400" />
-                                        <span>{foodCourt.address}</span>
-                                    </div>
-                                )}
-                                {foodCourt.phone && (
-                                    <a
-                                        href={`tel:${foodCourt.phone}`}
-                                        className="flex items-center gap-1.5 hover:text-red-600 font-medium"
-                                    >
-                                        <Phone size={14} className="text-gray-400" />
-                                        <span>{foodCourt.phone}</span>
-                                    </a>
-                                )}
+                {/* Contact Info */}
+                {(foodCourt.address || foodCourt.phone) && (
+                    <div style={{
+                        marginTop: 'var(--space-4)',
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        gap: 'var(--space-4)',
+                        fontSize: 'var(--text-sm)',
+                        color: 'var(--app-text-muted)'
+                    }}>
+                        {foodCourt.address && (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                                <MapPin size={14} style={{ color: 'var(--app-text-disabled)' }} />
+                                <span>{foodCourt.address}</span>
                             </div>
                         )}
+                        {foodCourt.phone && (
+                            <a
+                                href={`tel:${foodCourt.phone}`}
+                                className="food-header__meta-link"
+                                style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontWeight: 500 }}
+                            >
+                                <Phone size={14} style={{ color: 'var(--app-text-disabled)' }} />
+                                <span>{foodCourt.phone}</span>
+                            </a>
+                        )}
                     </div>
-                </div>
+                )}
             </header>
 
-            {/* Restaurant Grid - Hero */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12 pb-12">
-                {/* Simpler Instruction */}
-                <div className="text-center mb-8">
-                    <p className="text-lg sm:text-xl text-gray-700 font-medium">
-                        👇 Tap any restaurant to see their menu
+            {/* Restaurant Grid */}
+            <main style={{ maxWidth: '80rem', margin: '0 auto', padding: 'var(--space-8) var(--space-4) var(--space-12)' }}>
+                {/* Instruction */}
+                <div style={{ textAlign: 'center', marginBottom: 'var(--space-8)' }}>
+                    <p className="food-hero__instruction">
+                        <ChevronDown size={24} style={{ color: 'var(--app-food-accent)' }} />
+                        Tap any restaurant to see their menu
                     </p>
                 </div>
 
                 <RestaurantGrid restaurants={foodCourt.sub_restaurants} />
             </main>
+
+            {/* Footer */}
+            <footer className="food-footer">
+                Powered by QR Menu
+            </footer>
         </div>
     );
 }
@@ -77,9 +87,7 @@ export async function generateMetadata({
 }: {
     params: Promise<{ id: string }>;
 }) {
-    // Await params (Next.js 16 requirement)
     const { id } = await params;
-
     const foodCourt = await getFoodCourtById(id);
 
     if (!foodCourt) {

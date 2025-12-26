@@ -5,12 +5,15 @@ import { useRouter } from 'next/navigation';
 import { QRCodeGenerator } from '@/components/QRCodeGenerator';
 import { getMyRestaurant } from '@/lib/restaurants';
 import { Restaurant } from '@/types';
-import { Loader2 } from 'lucide-react';
+import '@/styles/app.css';
+import { LoadingSpinner, PageHeader, Card } from '@/components/ui';
+import { useToast } from '@/contexts/ToastContext';
 
 export default function QRCodePage() {
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const { showToast } = useToast();
 
     useEffect(() => {
         loadRestaurant();
@@ -22,7 +25,7 @@ export default function QRCodePage() {
             setRestaurant(data);
 
             if (!data) {
-                alert('Please create a restaurant first');
+                showToast('Please create a restaurant first', 'info');
                 router.push('/restaurant/settings');
             }
         } catch (err) {
@@ -33,14 +36,7 @@ export default function QRCodePage() {
     };
 
     if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <Loader2 size={48} className="mx-auto mb-4 text-gray-400 animate-spin" />
-                    <p className="text-gray-600">Loading...</p>
-                </div>
-            </div>
-        );
+        return <LoadingSpinner />;
     }
 
     if (!restaurant) {
@@ -48,30 +44,26 @@ export default function QRCodePage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="app-page app-page--alt">
             {/* Header */}
-            <header className="bg-white shadow">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => router.push('/restaurant')}
-                            className="text-gray-600 hover:text-gray-900"
-                        >
-                            ← Back to Dashboard
-                        </button>
-                        <h1 className="text-2xl font-bold text-gray-900">QR Code Generator</h1>
-                    </div>
+            <header className="app-header">
+                <div className="app-container app-container--narrow">
+                    <PageHeader
+                        title="QR Code Generator"
+                        backHref="/restaurant"
+                        backLabel="Back to Dashboard"
+                    />
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="bg-white rounded-lg shadow p-6">
+            <main className="app-container app-container--narrow app-main">
+                <Card>
                     <QRCodeGenerator
                         slug={restaurant.slug}
                         restaurantName={restaurant.name}
                     />
-                </div>
+                </Card>
             </main>
         </div>
     );

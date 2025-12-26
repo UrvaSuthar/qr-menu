@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 import { Restaurant } from '@/types';
 import { getMyFoodCourt, getSubRestaurants, deleteSubRestaurant } from '@/lib/foodCourts';
 import { SubRestaurantForm } from '@/components/SubRestaurantForm';
-import { ArrowLeft, Plus, UtensilsCrossed, Check, Loader2 } from 'lucide-react';
+import { Plus, UtensilsCrossed, Check } from 'lucide-react';
+import '@/styles/app.css';
+import { LoadingSpinner, PageHeader, Card, Button, EmptyState } from '@/components/ui';
+import { useToast } from '@/contexts/ToastContext';
 
 export default function FoodCourtRestaurantsPage() {
     const [foodCourt, setFoodCourt] = useState<Restaurant | null>(null);
@@ -14,6 +17,7 @@ export default function FoodCourtRestaurantsPage() {
     const [showForm, setShowForm] = useState(false);
     const [editingRestaurant, setEditingRestaurant] = useState<Restaurant | null>(null);
     const router = useRouter();
+    const { showToast, showConfirm } = useToast();
 
     useEffect(() => {
         loadData();
@@ -23,7 +27,7 @@ export default function FoodCourtRestaurantsPage() {
         try {
             const fc = await getMyFoodCourt();
             if (!fc) {
-                alert('Please create a food court first');
+                showToast('Please create a food court first', 'info');
                 router.push('/food-court/settings');
                 return;
             }
@@ -48,13 +52,21 @@ export default function FoodCourtRestaurantsPage() {
     };
 
     const handleDelete = async (restaurant: Restaurant) => {
-        if (!confirm(`Delete ${restaurant.name}? This cannot be undone.`)) return;
+        const confirmed = await showConfirm({
+            title: `Delete ${restaurant.name}?`,
+            description: 'This action cannot be undone. The restaurant and its menu will be permanently removed.',
+            confirmLabel: 'Delete',
+            destructive: true,
+        });
+
+        if (!confirmed) return;
 
         try {
             await deleteSubRestaurant(restaurant.id);
+            showToast('Restaurant deleted', 'success');
             await loadData();
         } catch (err: any) {
-            alert(`Error: ${err.message}`);
+            showToast(`Error: ${err.message}`, 'error');
         }
     };
 
@@ -65,40 +77,26 @@ export default function FoodCourtRestaurantsPage() {
     };
 
     if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <Loader2 size={48} className="mx-auto mb-4 text-gray-400 animate-spin" />
-                    <p className="text-gray-600">Loading...</p>
-                </div>
-            </div>
-        );
+        return <LoadingSpinner />;
     }
 
     if (!foodCourt) return null;
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="app-page">
             {/* Header */}
-            <header className="bg-white border-b border-gray-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => router.push('/food-court')}
-                            className="text-gray-600 hover:text-black flex items-center gap-1"
-                        >
-                            <ArrowLeft size={20} />
-                            Back
-                        </button>
-                        <h1 className="text-2xl font-semibold text-black">
-                            Manage Restaurants
-                        </h1>
-                    </div>
+            <header className="app-header">
+                <div className="app-container">
+                    <PageHeader
+                        title="Manage Restaurants"
+                        backHref="/food-court"
+                        backLabel="Back"
+                    />
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className="app-container app-main">
                 {showForm ? (
                     <SubRestaurantForm
                         foodCourtId={foodCourt.id}
@@ -112,99 +110,103 @@ export default function FoodCourtRestaurantsPage() {
                 ) : (
                     <>
                         {/* Add Button */}
-                        <div className="mb-6">
-                            <button
-                                onClick={handleAdd}
-                                className="px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition flex items-center gap-2"
-                            >
-                                <Plus size={20} /> Add Restaurant
-                            </button>
+                        <div style={{ marginBottom: 'var(--space-6)' }}>
+                            <Button onClick={handleAdd}>
+                                <Plus size={20} />
+                                Add Restaurant
+                            </Button>
                         </div>
 
                         {/* Restaurant List */}
                         {restaurants.length === 0 ? (
-                            <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
-                                <UtensilsCrossed size={64} className="mx-auto mb-4 text-gray-300" strokeWidth={1} />
-                                <h2 className="text-2xl font-semibold text-black mb-2">
-                                    No Restaurants Yet
-                                </h2>
-                                <p className="text-gray-600 mb-6">
-                                    Add your first restaurant to get started!
-                                </p>
-                                <button
-                                    onClick={handleAdd}
-                                    className="px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition inline-flex items-center gap-2"
-                                >
-                                    <Plus size={20} /> Add Restaurant
-                                </button>
-                            </div>
+                            <EmptyState
+                                icon={<UtensilsCrossed size={64} strokeWidth={1} />}
+                                title="No Restaurants Yet"
+                                description="Add your first restaurant to get started!"
+                                action={
+                                    <Button onClick={handleAdd}>
+                                        <Plus size={20} />
+                                        Add Restaurant
+                                    </Button>
+                                }
+                            />
                         ) : (
-                            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead className="bg-gray-50">
+                            <div className="app-table-wrapper">
+                                <table className="app-table app-table--interactive">
+                                    <thead>
                                         <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                                Logo
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                                Name
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                                Slug
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                                Menu
-                                            </th>
-                                            <th className="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                                Actions
-                                            </th>
+                                            <th>Logo</th>
+                                            <th>Name</th>
+                                            <th>Slug</th>
+                                            <th>Menu</th>
+                                            <th style={{ textAlign: 'right' }}>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200">
+                                    <tbody>
                                         {restaurants.map((restaurant) => (
                                             <tr key={restaurant.id}>
-                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                <td>
                                                     {restaurant.logo_url ? (
                                                         <img
                                                             src={restaurant.logo_url}
                                                             alt={restaurant.name}
-                                                            className="w-12 h-12 object-cover rounded border border-gray-200"
+                                                            style={{
+                                                                width: '48px',
+                                                                height: '48px',
+                                                                objectFit: 'cover',
+                                                                borderRadius: 'var(--radius-md)',
+                                                                border: '1px solid var(--app-border)'
+                                                            }}
                                                         />
                                                     ) : (
-                                                        <div className="w-12 h-12 bg-gray-50 border border-gray-200 rounded flex items-center justify-center">
-                                                            <UtensilsCrossed size={24} className="text-gray-300" />
+                                                        <div style={{
+                                                            width: '48px',
+                                                            height: '48px',
+                                                            background: 'var(--app-bg-secondary)',
+                                                            border: '1px solid var(--app-border)',
+                                                            borderRadius: 'var(--radius-md)',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center'
+                                                        }}>
+                                                            <UtensilsCrossed size={24} color="var(--app-text-disabled)" />
                                                         </div>
                                                     )}
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm font-semibold text-black">
+                                                <td>
+                                                    <span style={{ fontWeight: 500 }}>
                                                         {restaurant.name}
-                                                    </div>
+                                                    </span>
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm text-gray-500">
+                                                <td>
+                                                    <span style={{ color: 'var(--app-text-muted)' }}>
                                                         /menu/{restaurant.slug}
-                                                    </div>
+                                                    </span>
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                <td>
                                                     {restaurant.menu_pdf_url ? (
-                                                        <span className="text-green-600 flex items-center gap-1">
-                                                            <Check size={16} /> Uploaded
+                                                        <span className="app-badge app-badge--success">
+                                                            <Check size={12} />
+                                                            Uploaded
                                                         </span>
                                                     ) : (
-                                                        <span className="text-gray-400">No menu</span>
+                                                        <span className="app-badge app-badge--muted">
+                                                            No menu
+                                                        </span>
                                                     )}
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <td style={{ textAlign: 'right' }}>
                                                     <button
                                                         onClick={() => handleEdit(restaurant)}
-                                                        className="text-black hover:text-red-600 mr-4"
+                                                        className="app-link"
+                                                        style={{ marginRight: 'var(--space-4)' }}
                                                     >
                                                         Edit
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(restaurant)}
-                                                        className="text-red-600 hover:text-red-800"
+                                                        className="app-link"
+                                                        style={{ color: 'var(--app-error)' }}
                                                     >
                                                         Delete
                                                     </button>

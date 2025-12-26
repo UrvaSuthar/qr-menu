@@ -3,6 +3,7 @@
 import { QRCodeSVG } from 'qrcode.react';
 import { useState } from 'react';
 import { Check, Copy, Download, Printer, Smartphone } from 'lucide-react';
+import '@/styles/app.css';
 
 interface QRCodeGeneratorProps {
     slug: string;
@@ -13,10 +14,13 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
     const [size, setSize] = useState(256);
     const [copied, setCopied] = useState(false);
 
-    // Handle both partial slug (e.g. "pizza-place") and full URL (e.g. "http://...")
-    const publicUrl = typeof window !== 'undefined'
-        ? (slug.startsWith('http') ? slug : `${window.location.origin}/menu/${slug}`)
-        : '';
+    const baseUrl = typeof window !== 'undefined'
+        ? window.location.origin
+        : (process.env.NEXT_PUBLIC_APP_URL || 'https://qr-menu-sigma.vercel.app');
+
+    const publicUrl = slug.startsWith('http')
+        ? slug
+        : `${baseUrl}/menu/${slug}`;
 
     const downloadQR = () => {
         const svg = document.getElementById('qr-code-svg');
@@ -72,9 +76,9 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
               justify-content: center;
               height: 100vh;
               margin: 0;
-              font-family: system-ui, -apple-system, sans-serif;
+              font-family: 'Inter', system-ui, -apple-system, sans-serif;
             }
-            h1 { margin: 0 0 20px 0; }
+            h1 { margin: 0 0 20px 0; font-weight: 600; }
             p { margin: 10px 0; color: #666; }
             @media print {
               body { padding: 40px; }
@@ -85,7 +89,7 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
           <h1>${restaurantName}</h1>
           ${svg.outerHTML}
           <p>Scan to view menu</p>
-          <p style="font-size: 12px;">${publicUrl}</p>
+          <p style="font-size: 12px; color: #999;">${publicUrl}</p>
         </body>
       </html>
     `);
@@ -98,9 +102,16 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
     };
 
     return (
-        <div className="space-y-6">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
             {/* QR Code Display */}
-            <div className="flex justify-center p-8 bg-white rounded-lg border-2 border-gray-200">
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                padding: 'var(--space-8)',
+                background: 'var(--app-bg)',
+                borderRadius: 'var(--radius-xl)',
+                border: '1px solid var(--app-border)'
+            }}>
                 <QRCodeSVG
                     id="qr-code-svg"
                     value={publicUrl}
@@ -111,22 +122,14 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
             </div>
 
             {/* Size Selector */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                    QR Code Size
-                </label>
-                <div className="flex gap-2">
+            <div className="app-field">
+                <label className="app-label">QR Code Size</label>
+                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
                     {[128, 256, 512].map((s) => (
                         <button
                             key={s}
                             onClick={() => setSize(s)}
-                            className={`
-                px-4 py-2 rounded-lg font-medium transition
-                ${size === s
-                                    ? 'bg-indigo-600 text-white'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                }
-              `}
+                            className={`app-button app-button--sm ${size === s ? 'app-button--primary' : 'app-button--secondary'}`}
                         >
                             {s}px
                         </button>
@@ -135,20 +138,19 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
             </div>
 
             {/* Public URL */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Public Menu URL
-                </label>
-                <div className="flex gap-2">
+            <div className="app-field">
+                <label className="app-label">Public Menu URL</label>
+                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
                     <input
                         type="text"
                         value={publicUrl}
                         readOnly
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm"
+                        className="app-input"
+                        style={{ flex: 1, background: 'var(--app-bg-secondary)' }}
                     />
                     <button
                         onClick={copyUrl}
-                        className="px-4 py-2 border border-gray-300 hover:border-black rounded-lg transition flex items-center gap-2"
+                        className="app-button app-button--secondary app-button--sm"
                     >
                         {copied ? <><Check size={16} /> Copied</> : <><Copy size={16} /> Copy</>}
                     </button>
@@ -156,25 +158,45 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-3">
-                <button
-                    onClick={downloadQR}
-                    className="px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition flex items-center justify-center gap-2"
-                >
-                    <Download size={18} /> Download PNG
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
+                <button onClick={downloadQR} className="app-button app-button--primary">
+                    <Download size={18} />
+                    Download PNG
                 </button>
-                <button
-                    onClick={printQR}
-                    className="px-4 py-3 border border-gray-300 hover:border-black text-black rounded-lg font-semibold transition flex items-center justify-center gap-2"
-                >
-                    <Printer size={18} /> Print
+                <button onClick={printQR} className="app-button app-button--secondary">
+                    <Printer size={18} />
+                    Print
                 </button>
             </div>
 
             {/* Usage Instructions */}
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <h3 className="font-semibold text-black mb-2 flex items-center gap-2"><Smartphone size={18} /> How to use:</h3>
-                <ul className="text-sm text-gray-600 space-y-1">
+            <div style={{
+                background: 'var(--app-bg-secondary)',
+                border: '1px solid var(--app-border)',
+                borderRadius: 'var(--radius-xl)',
+                padding: 'var(--space-4)'
+            }}>
+                <h3 style={{
+                    fontWeight: 600,
+                    marginBottom: 'var(--space-2)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 'var(--space-2)',
+                    fontSize: 'var(--text-base)'
+                }}>
+                    <Smartphone size={18} />
+                    How to use:
+                </h3>
+                <ul style={{
+                    fontSize: 'var(--text-sm)',
+                    color: 'var(--app-text-muted)',
+                    listStyle: 'none',
+                    padding: 0,
+                    margin: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'var(--space-1)'
+                }}>
                     <li>1. Download or print the QR code</li>
                     <li>2. Place it on tables, menus, or storefront</li>
                     <li>3. Customers scan with their phone camera</li>

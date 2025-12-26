@@ -3,6 +3,9 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Store, FolderOpen, QrCode, LogOut } from 'lucide-react';
+import Link from 'next/link';
+import '@/styles/app.css';
+import { Banner, Steps } from '@/components/ui';
 
 export default function FoodCourtDashboard() {
     const { profile, signOut } = useAuth();
@@ -14,22 +17,22 @@ export default function FoodCourtDashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="app-page">
             {/* Header */}
-            <header className="border-b border-gray-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-6">
+            <header className="app-header">
+                <div className="app-container">
+                    <div className="app-header__inner">
                         <div>
-                            <h1 className="text-2xl font-semibold text-black">
+                            <h1 className="app-header__title">
                                 Food Court Dashboard
                             </h1>
-                            <p className="text-sm text-gray-600 mt-1">
+                            <p className="app-header__subtitle">
                                 Welcome, {profile?.full_name || 'Food Court Manager'}!
                             </p>
                         </div>
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-2 px-4 py-2 border border-gray-300 hover:border-black text-black rounded-lg transition font-medium"
+                            className="app-button app-button--secondary app-button--sm"
                         >
                             <LogOut size={18} />
                             <span className="hidden sm:inline">Logout</span>
@@ -39,77 +42,63 @@ export default function FoodCourtDashboard() {
             </header>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <main className="app-container app-main">
                 {/* Onboarding Banner */}
-                <div className="mb-12 p-8 bg-gray-50 border border-gray-200 rounded-lg">
-                    <h2 className="text-xl font-semibold text-black mb-4">
-                        Get Started in 3 Steps
-                    </h2>
-                    <ol className="space-y-3 text-gray-600">
-                        <li className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-                            <span>Set up food court details and branding</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-                            <span>Add vendors and their menus to your food court</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-6 h-6 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-                            <span>Generate QR code and place at entrance</span>
-                        </li>
-                    </ol>
+                <div className="app-section">
+                    <Banner title="Get Started in 3 Steps">
+                        <Steps items={[
+                            'Set up food court details and branding',
+                            'Add vendors and their menus to your food court',
+                            'Generate QR code and place at entrance'
+                        ]} />
+                    </Banner>
                 </div>
 
-                {/* Quick Actions */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Food Court Settings */}
-                    <a
-                        href="/food-court/settings"
-                        className="group p-8 border-2 border-gray-200 hover:border-black bg-white rounded-lg transition-all"
-                    >
-                        <div className="flex items-start justify-between mb-4">
-                            <Store size={32} className="text-red-600" strokeWidth={1.5} />
-                        </div>
-                        <h3 className="text-xl font-semibold text-black mb-2 group-hover:text-red-600 transition">
-                            Food Court Settings
-                        </h3>
-                        <p className="text-gray-600">
-                            Configure food court name, branding, and contact info
-                        </p>
-                    </a>
+                {/* Quick Actions - Bento Grid */}
+                <div className="app-section">
+                    <h2 className="app-section__title">Quick Actions</h2>
+                    <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(2, 1fr)',
+                        gap: 'var(--space-6)'
+                    }}>
+                        {/* Food Court Settings */}
+                        <Link href="/food-court/settings" className="app-card app-card--interactive">
+                            <div className="app-card__header">
+                                <Store size={32} strokeWidth={1.5} className="app-card__icon" />
+                            </div>
+                            <h3 className="app-card__title">Food Court Settings</h3>
+                            <p className="app-card__description">
+                                Configure food court name, branding, and contact info
+                            </p>
+                        </Link>
 
-                    {/* Manage Restaurants */}
-                    <a
-                        href="/food-court/restaurants"
-                        className="group p-8 border-2 border-gray-200 hover:border-black bg-white rounded-lg transition-all lg:row-span-1"
-                    >
-                        <div className="flex items-start justify-between mb-4">
-                            <FolderOpen size={32} className="text-red-600" strokeWidth={1.5} />
-                        </div>
-                        <h3 className="text-xl font-semibold text-black mb-2 group-hover:text-red-600 transition">
-                            Manage Restaurants
-                        </h3>
-                        <p className="text-gray-600">
-                            Add vendors, upload menus, and manage your food court lineup
-                        </p>
-                    </a>
+                        {/* Manage Restaurants */}
+                        <Link href="/food-court/restaurants" className="app-card app-card--interactive">
+                            <div className="app-card__header">
+                                <FolderOpen size={32} strokeWidth={1.5} className="app-card__icon" />
+                            </div>
+                            <h3 className="app-card__title">Manage Restaurants</h3>
+                            <p className="app-card__description">
+                                Add vendors, upload menus, and manage your food court lineup
+                            </p>
+                        </Link>
 
-                    {/* QR Code */}
-                    <a
-                        href="/food-court/qr-code"
-                        className="group p-8 border-2 border-gray-200 hover:border-black bg-white rounded-lg transition-all lg:col-span-2"
-                    >
-                        <div className="flex items-start justify-between mb-4">
-                            <QrCode size={32} className="text-black" strokeWidth={1.5} />
-                        </div>
-                        <h3 className="text-xl font-semibold text-black mb-2 group-hover:text-red-600 transition">
-                            Generate QR Code
-                        </h3>
-                        <p className="text-gray-600">
-                            Download your food court QR code - one scan shows all vendor menus
-                        </p>
-                    </a>
+                        {/* QR Code - Full Width */}
+                        <Link
+                            href="/food-court/qr-code"
+                            className="app-card app-card--interactive"
+                            style={{ gridColumn: 'span 2' }}
+                        >
+                            <div className="app-card__header">
+                                <QrCode size={32} strokeWidth={1.5} className="app-card__icon" />
+                            </div>
+                            <h3 className="app-card__title">Generate QR Code</h3>
+                            <p className="app-card__description">
+                                Download your food court QR code - one scan shows all vendor menus
+                            </p>
+                        </Link>
+                    </div>
                 </div>
             </main>
         </div>

@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 import { FileUpload } from '@/components/FileUpload';
 import { getMyRestaurant, createRestaurant, updateRestaurant } from '@/lib/restaurants';
 import { Restaurant } from '@/types';
-import { Loader2 } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
+import '@/styles/app.css';
+import { LoadingSpinner, PageHeader, Card, Button, Input, Textarea, Alert } from '@/components/ui';
+import { useToast } from '@/contexts/ToastContext';
 
 export default function RestaurantSettingsPage() {
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
@@ -13,6 +16,7 @@ export default function RestaurantSettingsPage() {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
+    const { showToast } = useToast();
 
     // Form state
     const [name, setName] = useState('');
@@ -72,7 +76,6 @@ export default function RestaurantSettingsPage() {
 
         try {
             if (restaurant) {
-                // Update existing
                 const updated = await updateRestaurant(restaurant.id, {
                     name,
                     slug,
@@ -85,9 +88,8 @@ export default function RestaurantSettingsPage() {
                     menu_pdf_storage_path: menuPath || null,
                 });
                 setRestaurant(updated);
-                alert('Restaurant updated successfully!');
+                showToast('Restaurant updated successfully!', 'success');
             } else {
-                // Create new
                 const created = await createRestaurant({
                     name,
                     slug,
@@ -96,7 +98,7 @@ export default function RestaurantSettingsPage() {
                     phone,
                 });
                 setRestaurant(created);
-                alert('Restaurant created successfully!');
+                showToast('Restaurant created successfully!', 'success');
             }
         } catch (err: any) {
             setError(err.message);
@@ -106,128 +108,88 @@ export default function RestaurantSettingsPage() {
     };
 
     if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <Loader2 size={48} className="mx-auto mb-4 text-gray-400 animate-spin" />
-                    <p className="text-gray-600">Loading...</p>
-                </div>
-            </div>
-        );
+        return <LoadingSpinner />;
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="app-page app-page--alt">
             {/* Header */}
-            <header className="bg-white shadow">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => router.back()}
-                            className="text-gray-600 hover:text-gray-900"
-                        >
-                            ← Back
-                        </button>
-                        <h1 className="text-2xl font-bold text-gray-900">
-                            {restaurant ? 'Restaurant Settings' : 'Create Restaurant'}
-                        </h1>
-                    </div>
+            <header className="app-header">
+                <div className="app-container app-container--narrow">
+                    <PageHeader
+                        title={restaurant ? 'Restaurant Settings' : 'Create Restaurant'}
+                        onBack={() => router.back()}
+                    />
                 </div>
             </header>
 
             {/* Form */}
-            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className="app-container app-container--narrow app-main">
                 {error && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-red-800">{error}</p>
+                    <div className="app-section">
+                        <Alert type="error" icon={<AlertCircle size={18} />}>
+                            {error}
+                        </Alert>
                     </div>
                 )}
 
-                <form onSubmit={handleSave} className="space-y-8">
+                <form onSubmit={handleSave} className="app-form" style={{ gap: 'var(--space-8)' }}>
                     {/* Basic Info */}
-                    <div className="bg-white rounded-lg shadow p-6 space-y-6">
-                        <h2 className="text-lg font-semibold text-gray-900">Basic Information</h2>
+                    <Card>
+                        <h2 className="app-card__section">Basic Information</h2>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-900 mb-2">
-                                Restaurant Name *
-                            </label>
-                            <input
-                                type="text"
+                        <div className="app-form">
+                            <Input
+                                label="Restaurant Name"
+                                required
                                 value={name}
                                 onChange={(e) => handleNameChange(e.target.value)}
-                                required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                 placeholder="My Restaurant"
                             />
-                        </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-900 mb-2">
-                                URL Slug *
-                                <span className="block text-xs font-normal text-gray-500 mt-1">
-                                    Your menu will be at: {typeof window !== 'undefined' ? window.location.origin : ''}/menu/{slug || 'your-slug'}
-                                </span>
-                            </label>
-                            <input
-                                type="text"
+                            <Input
+                                label="URL Slug"
+                                required
                                 value={slug}
                                 onChange={(e) => setSlug(generateSlug(e.target.value))}
-                                required
                                 pattern="[a-z0-9-]+"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                 placeholder="my-restaurant"
+                                hint={`Your menu will be at: ${typeof window !== 'undefined' ? window.location.origin : ''}/menu/${slug || 'your-slug'}`}
                             />
-                        </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-900 mb-2">
-                                Description
-                            </label>
-                            <textarea
+                            <Textarea
+                                label="Description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 rows={3}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                 placeholder="Tell customers about your restaurant..."
                             />
-                        </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-sm font-medium text-gray-900 mb-2">
-                                    Address
-                                </label>
-                                <input
-                                    type="text"
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-4)' }}>
+                                <Input
+                                    label="Address"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                     placeholder="123 Main St, City"
                                 />
-                            </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-900 mb-2">
-                                    Phone
-                                </label>
-                                <input
+                                <Input
+                                    label="Phone"
                                     type="tel"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                     placeholder="+1 234 567 8900"
                                 />
                             </div>
                         </div>
-                    </div>
+                    </Card>
 
                     {/* Logo Upload */}
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <h2 className="text-lg font-semibold text-gray-900 mb-4">Restaurant Logo</h2>
+                    <Card>
+                        <h2 className="app-card__section">Restaurant Logo</h2>
                         <FileUpload
                             accept="image/*"
-                            maxSize={2 * 1024 * 1024} // 2MB
+                            maxSize={2 * 1024 * 1024}
                             bucket="restaurant-logos"
                             currentUrl={logoUrl}
                             label="Upload Logo"
@@ -241,14 +203,14 @@ export default function RestaurantSettingsPage() {
                                 setLogoPath('');
                             }}
                         />
-                    </div>
+                    </Card>
 
                     {/* Menu PDF Upload */}
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <h2 className="text-lg font-semibold text-gray-900 mb-4">Menu PDF</h2>
+                    <Card>
+                        <h2 className="app-card__section">Menu PDF</h2>
                         <FileUpload
                             accept=".pdf,application/pdf"
-                            maxSize={10 * 1024 * 1024} // 10MB
+                            maxSize={10 * 1024 * 1024}
                             bucket="restaurant-menus"
                             currentUrl={menuUrl}
                             label="Upload Menu PDF"
@@ -262,26 +224,27 @@ export default function RestaurantSettingsPage() {
                                 setMenuPath('');
                             }}
                         />
-                    </div>
+                    </Card>
 
                     {/* Actions */}
-                    <div className="flex gap-4">
-                        <button
+                    <div className="app-actions">
+                        <Button
                             type="submit"
                             disabled={saving || !name || !slug}
-                            className="flex-1 bg-indigo-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            loading={saving}
+                            fullWidth
                         >
-                            {saving ? 'Saving...' : restaurant ? 'Save Changes' : 'Create Restaurant'}
-                        </button>
+                            {restaurant ? 'Save Changes' : 'Create Restaurant'}
+                        </Button>
 
                         {restaurant && (
-                            <button
+                            <Button
                                 type="button"
+                                variant="secondary"
                                 onClick={() => router.push('/restaurant/qr-code')}
-                                className="px-6 py-3 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition"
                             >
                                 Generate QR Code →
-                            </button>
+                            </Button>
                         )}
                     </div>
                 </form>
