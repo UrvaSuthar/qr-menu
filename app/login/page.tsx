@@ -22,7 +22,7 @@ export default function LoginPage() {
         try {
             await signIn(email, password);
 
-            // Fetch profile to get the user's role, then redirect
+            // Fetch profile to get the user's role
             const supabase = createClient();
             const { data: { user } } = await supabase.auth.getUser();
 
@@ -33,8 +33,10 @@ export default function LoginPage() {
                     .eq('user_id', user.id)
                     .single();
 
-                // Use window.location.href for full page reload
-                // This ensures session cookies are properly set before middleware runs
+                // Wait for session cookies to be fully written
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // Full page reload to ensure middleware has access to cookies
                 if (userProfile?.role === 'restaurant') {
                     window.location.href = '/restaurant';
                 } else if (userProfile?.role === 'food_court') {
