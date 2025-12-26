@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { signInAction } from '@/actions/auth';
+import { QrCode } from 'lucide-react';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -20,9 +21,9 @@ export default function LoginPage() {
             if (result?.error) {
                 setError(result.error);
                 setLoading(false);
+            } else if (result?.redirectTo) {
+                window.location.href = result.redirectTo;
             }
-            // If no error, server action redirected successfully
-            // Page will navigate automatically
         } catch (err: any) {
             setError(err.message || 'Login failed');
             setLoading(false);
@@ -30,11 +31,14 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-            <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+            <div className="max-w-md w-full bg-white border border-gray-200 rounded-lg p-8">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    <div className="inline-flex w-12 h-12 items-center justify-center border-2 border-black rounded-lg mb-4">
+                        <QrCode size={24} className="text-black" strokeWidth={2} />
+                    </div>
+                    <h1 className="text-3xl font-semibold text-black mb-2">
                         Welcome Back
                     </h1>
                     <p className="text-gray-600">Log in to your account</p>
@@ -43,7 +47,7 @@ export default function LoginPage() {
                 {/* Error Message */}
                 {error && (
                     <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-red-800 text-sm">{error}</p>
+                        <p className="text-red-900 text-sm">{error}</p>
                     </div>
                 )}
 
@@ -51,7 +55,7 @@ export default function LoginPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Email */}
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="email" className="block text-sm font-semibold text-black mb-2">
                             Email Address
                         </label>
                         <input
@@ -60,14 +64,14 @@ export default function LoginPage() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition"
                             placeholder="you@example.com"
                         />
                     </div>
 
                     {/* Password */}
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="password" className="block text-sm font-semibold text-black mb-2">
                             Password
                         </label>
                         <input
@@ -76,23 +80,16 @@ export default function LoginPage() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-600 focus:border-transparent transition"
                             placeholder="Enter your password"
                         />
-                    </div>
-
-                    {/* Forgot Password */}
-                    <div className="text-right">
-                        <a href="#" className="text-sm text-indigo-600 hover:text-indigo-700">
-                            Forgot password?
-                        </a>
                     </div>
 
                     {/* Submit Button */}
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-red-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-red-700 focus:ring-4 focus:ring-red-200 transition disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? 'Logging in...' : 'Log In'}
                     </button>
@@ -102,7 +99,7 @@ export default function LoginPage() {
                 <div className="mt-6 text-center">
                     <p className="text-sm text-gray-600">
                         Don&apos;t have an account?{' '}
-                        <a href="/signup" className="text-indigo-600 hover:text-indigo-700 font-medium">
+                        <a href="/signup" className="text-red-600 hover:text-red-700 font-semibold">
                             Sign up
                         </a>
                     </p>
