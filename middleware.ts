@@ -37,29 +37,29 @@ export async function middleware(request: NextRequest) {
         }
     );
 
-    // Get session
+    // Get user (authenticates with Auth server, not just cookies)
     const {
-        data: { session },
-    } = await supabase.auth.getSession();
+        data: { user },
+    } = await supabase.auth.getUser();
 
     // Protected routes that require authentication
     const isProtectedRoute =
         pathname.startsWith('/restaurant') || pathname.startsWith('/food-court');
 
     // If accessing protected route without session, redirect to login
-    if (isProtectedRoute && !session) {
+    if (isProtectedRoute && !user) {
         const loginUrl = new URL('/login', request.url);
         loginUrl.searchParams.set('redirect', pathname);
         return NextResponse.redirect(loginUrl);
     }
 
     // If user is authenticated and accessing a protected route, verify role
-    if (isProtectedRoute && session) {
+    if (isProtectedRoute && user) {
         // Fetch user profile to get role
         const { data: profile } = await supabase
             .from('user_profiles')
             .select('role')
-            .eq('user_id', session.user.id)
+            .eq('user_id', user.id)
             .single();
 
         // Restaurant route - require restaurant role
