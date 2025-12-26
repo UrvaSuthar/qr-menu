@@ -82,7 +82,7 @@ export default function FoodCourtQRCodePage() {
                     </div>
 
                     <QRCodeGenerator
-                        slug={`fc/${foodCourt.slug}`}
+                        slug={publicUrl}
                         restaurantName={foodCourt.name}
                     />
                 </div>
