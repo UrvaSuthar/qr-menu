@@ -24,7 +24,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const { data, error } = await supabase
                 .from('user_profiles')
                 .select('*')
-                .eq('user_id', userId)
+                .eq('id', userId)
                 .single();
 
             if (error) {
@@ -95,7 +95,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     full_name: fullName,
                     role: role,
                 },
-                emailRedirectTo: `${window.location.origin}/restaurant`,
+                emailRedirectTo: `${window.location.origin}/${role === 'food_court' ? 'food-court' : 'restaurant'}`,
             },
         });
 
@@ -113,8 +113,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             );
         }
 
-        // Wait a moment for the trigger to create the profile
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Poll for profile creation (trigger may take time)
+        let profileReady = false;
+        if (data.user) {
+            for (let attempt = 0; attempt < 5; attempt++) {
+                const { data: existingProfile } = await supabase
+                    .from('user_profiles')
+                    .select('id')
+                    .eq('id', data.user.id)
+                    .single();
+
+                if (existingProfile) {
+                    profileReady = true;
+                    break;
+                }
+                await new Promise(r => setTimeout(r, 300));
+            }
+
+            if (!profileReady) {
+                console.warn('Profile not created by trigger, proceeding anyway');
+            }
+        }
 
         // Update the profile with the correct role (trigger creates with 'customer' default)
         if (data.user) {
