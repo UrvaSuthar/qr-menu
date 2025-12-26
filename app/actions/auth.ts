@@ -29,13 +29,13 @@ export async function signInAction(email: string, password: string) {
         .eq('user_id', user.id)
         .single();
 
-    // Server-side redirect based on role
-    // Cookies are already in server context - no race condition!
+    // Return redirect URL instead of redirecting server-side
+    // This allows cookies to propagate to browser before navigation
     if (profile?.role === 'restaurant') {
-        redirect('/restaurant');
+        return { redirectTo: '/restaurant' };
     } else if (profile?.role === 'food_court') {
-        redirect('/food-court');
+        return { redirectTo: '/food-court' };
     } else {
-        redirect('/restaurant'); // fallback
+        return { redirectTo: '/restaurant' };
     }
 }
