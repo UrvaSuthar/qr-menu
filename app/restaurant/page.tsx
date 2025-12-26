@@ -15,20 +15,20 @@ export default function RestaurantDashboard() {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header */}
-            <header className="bg-white shadow">
+            <header className="bg-white shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-6">
+                    <div className="flex justify-between items-center py-4 sm:py-6">
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900">
+                            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                                 🍽️ Restaurant Dashboard
                             </h1>
                             <p className="text-sm text-gray-600 mt-1">
-                                Welcome back, {profile?.full_name || 'Restaurant Owner'}!
+                                Welcome, {profile?.full_name || 'Restaurant Owner'}!
                             </p>
                         </div>
                         <button
                             onClick={handleLogout}
-                            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                            className="px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition text-sm font-medium"
                         >
                             Logout
                         </button>
@@ -37,80 +37,73 @@ export default function RestaurantDashboard() {
             </header>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-600">Total Menus</p>
-                                <p className="text-2xl font-bold text-gray-900">0</p>
-                            </div>
-                            <div className="text-3xl">📋</div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-600">Menu Items</p>
-                                <p className="text-2xl font-bold text-gray-900">0</p>
-                            </div>
-                            <div className="text-3xl">🍔</div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-600">QR Scans</p>
-                                <p className="text-2xl font-bold text-gray-900">0</p>
-                            </div>
-                            <div className="text-3xl">📱</div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Quick Actions */}
-                <div className="bg-white rounded-lg shadow p-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+                {/* Quick Actions - Primary Focus */}
+                <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-6">
                         Quick Actions
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                        {/* Primary: Manage Restaurant */}
                         <a
                             href="/restaurant/settings"
-                            className="p-4 border-2 border-indigo-200 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition text-left block"
+                            className="group p-6 sm:p-8 border-2 border-green-200 bg-gradient-to-br from-green-50 to-white rounded-2xl hover:border-green-400 hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
-                            <div className="text-2xl mb-2">📁</div>
-                            <div className="font-semibold text-gray-900">
+                            <div className="text-4xl sm:text-5xl mb-4">📁</div>
+                            <div className="font-bold text-xl text-gray-900 mb-2">
                                 Manage Restaurant
                             </div>
                             <div className="text-sm text-gray-600">
                                 Upload logo, menu PDF, and update details
                             </div>
+                            <div className="mt-4 text-green-600 font-semibold group-hover:translate-x-1 transition-transform inline-block">
+                                Get Started →
+                            </div>
                         </a>
 
+                        {/* Secondary: QR Code */}
                         <a
                             href="/restaurant/qr-code"
-                            className="p-4 border-2 border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition text-left block"
+                            className="group p-6 sm:p-8 border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-white rounded-2xl hover:border-purple-400 hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
-                            <div className="text-2xl mb-2">📱</div>
-                            <div className="font-semibold text-gray-900">Generate QR Code</div>
+                            <div className="text-4xl sm:text-5xl mb-4">📱</div>
+                            <div className="font-bold text-xl text-gray-900 mb-2">
+                                Generate QR Code
+                            </div>
                             <div className="text-sm text-gray-600">
                                 Download QR code for your menu
+                            </div>
+                            <div className="mt-4 text-purple-600 font-semibold group-hover:translate-x-1 transition-transform inline-block">
+                                View QR →
                             </div>
                         </a>
                     </div>
                 </div>
 
-                {/* Info Banner */}
-                <div className="mt-8 bg-indigo-50 border border-indigo-200 rounded-lg p-6">
-                    <h3 className="text-lg font-semibold text-indigo-900 mb-2">
-                        🎉 Welcome to your Restaurant Dashboard!
-                    </h3>
-                    <p className="text-indigo-700">
-                        You&apos;re logged in as a <strong>Restaurant Owner</strong>. Start by creating your restaurant profile, then add menu categories and items. Generate QR codes to let customers view your menu instantly!
-                    </p>
+                {/* Getting Started Guide */}
+                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+                    <div className="flex items-start gap-4">
+                        <div className="text-4xl flex-shrink-0">🎉</div>
+                        <div>
+                            <h3 className="text-xl sm:text-2xl font-bold mb-3">
+                                Welcome to Your Restaurant Dashboard!
+                            </h3>
+                            <div className="space-y-2 text-indigo-100">
+                                <p className="flex items-start gap-2">
+                                    <span className="font-bold">1.</span>
+                                    <span>Upload your restaurant logo and menu PDF</span>
+                                </p>
+                                <p className="flex items-start gap-2">
+                                    <span className="font-bold">2.</span>
+                                    <span>Generate your QR code</span>
+                                </p>
+                                <p className="flex items-start gap-2">
+                                    <span className="font-bold">3.</span>
+                                    <span>Place it on tables — customers scan instantly!</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>

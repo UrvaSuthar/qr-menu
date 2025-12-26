@@ -14,21 +14,21 @@ export default function FoodCourtDashboard() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <header className="bg-white shadow">
+            {/* Header - Differentiated */}
+            <header className="bg-white shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-6">
+                    <div className="flex justify-between items-center py-4 sm:py-6">
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900">
+                            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                                 🏢 Food Court Dashboard
                             </h1>
                             <p className="text-sm text-gray-600 mt-1">
-                                Welcome back, {profile?.full_name || 'Food Court Manager'}!
+                                Welcome, {profile?.full_name || 'Food Court Manager'}!
                             </p>
                         </div>
                         <button
                             onClick={handleLogout}
-                            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                            className="px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition text-sm font-medium"
                         >
                             Logout
                         </button>
@@ -37,91 +37,96 @@ export default function FoodCourtDashboard() {
             </header>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-600">Total Vendors</p>
-                                <p className="text-2xl font-bold text-gray-900">0</p>
-                            </div>
-                            <div className="text-3xl">🏪</div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-600">Total Items</p>
-                                <p className="text-2xl font-bold text-gray-900">0</p>
-                            </div>
-                            <div className="text-3xl">🍔</div>
-                        </div>
-                    </div>
-
-                    <div className="bg-white rounded-lg shadow p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm text-gray-600">QR Scans</p>
-                                <p className="text-2xl font-bold text-gray-900">0</p>
-                            </div>
-                            <div className="text-3xl">📱</div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Quick Actions */}
-                <div className="bg-white rounded-lg shadow p-6">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+                {/* Quick Actions - Grid First */}
+                <div className="mb-8">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-6">
                         Quick Actions
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                        {/* Primary: Manage Restaurants */}
+                        <a
+                            href="/food-court/restaurants"
+                            className="group p-6 sm:p-8 border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-white rounded-2xl hover:border-orange-400 hover:shadow-xl transition-all transform hover:-translate-y-1 sm:col-span-2"
+                        >
+                            <div className="text-4xl sm:text-5xl mb-4">🏪</div>
+                            <div className="font-bold text-xl text-gray-900 mb-2">
+                                Manage Restaurants
+                            </div>
+                            <div className="text-sm text-gray-600">
+                                Add and edit sub-restaurants in your food court
+                            </div>
+                            <div className="mt-4 text-orange-600 font-semibold group-hover:translate-x-1 transition-transform inline-block">
+                                Get Started →
+                            </div>
+                        </a>
+
+                        {/* Secondary: Settings */}
                         <a
                             href="/food-court/settings"
-                            className="p-4 border-2 border-indigo-200 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition text-left block"
+                            className="group p-6 sm:p-8 border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-white rounded-2xl hover:border-blue-400 hover:shadow-xl transition-all transform hover:-translate-y-1"
                         >
-                            <div className="text-2xl mb-2">📁</div>
-                            <div className="font-semibold text-gray-900">
+                            <div className="text-4xl sm:text-5xl mb-4">📁</div>
+                            <div className="font-bold text-xl text-gray-900 mb-2">
                                 Food Court Profile
                             </div>
                             <div className="text-sm text-gray-600">
                                 Update food court details
                             </div>
-                        </a>
-
-                        <a
-                            href="/food-court/restaurants"
-                            className="p-4 border-2 border-green-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition text-left block"
-                        >
-                            <div className="text-2xl mb-2">🏪</div>
-                            <div className="font-semibold text-gray-900">Manage Restaurants</div>
-                            <div className="text-sm text-gray-600">
-                                Add and edit sub-restaurants
-                            </div>
-                        </a>
-
-                        <a
-                            href="/food-court/qr-code"
-                            className="p-4 border-2 border-purple-200 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition text-left block"
-                        >
-                            <div className="text-2xl mb-2">📱</div>
-                            <div className="font-semibold text-gray-900">Generate QR Code</div>
-                            <div className="text-sm text-gray-600">
-                                Download QR for food court
+                            <div className="mt-4 text-blue-600 font-semibold group-hover:translate-x-1 transition-transform inline-block">
+                                Edit →
                             </div>
                         </a>
                     </div>
+
+                    {/* QR Code - Full Width */}
+                    <a
+                        href="/food-court/qr-code"
+                        className="group mt-4 sm:mt-6 p-6 sm:p-8 border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-white rounded-2xl hover:border-purple-400 hover:shadow-xl transition-all transform hover:-translate-y-1 block"
+                    >
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <div className="text-4xl sm:text-5xl">📱</div>
+                                <div>
+                                    <div className="font-bold text-xl text-gray-900 mb-1">
+                                        Generate QR Code
+                                    </div>
+                                    <div className="text-sm text-gray-600">
+                                        Download QR for your entire food court grid
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="text-purple-600 font-semibold group-hover:translate-x-1 transition-transform hidden sm:block">
+                                View QR →
+                            </div>
+                        </div>
+                    </a>
                 </div>
 
-                {/* Info Banner */}
-                <div className="mt-8 bg-purple-50 border border-purple-200 rounded-lg p-6">
-                    <h3 className="text-lg font-semibold text-purple-900 mb-2">
-                        🎉 Welcome to your Food Court Dashboard!
-                    </h3>
-                    <p className="text-purple-700">
-                        You&apos;re logged in as a <strong>Food Court Manager</strong>. Manage multiple vendor menus in one place. Create your food court profile, add vendors, and generate unified QR codes for your entire food court!
-                    </p>
+                {/* Getting Started Guide */}
+                <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+                    <div className="flex items-start gap-4">
+                        <div className="text-4xl flex-shrink-0">🎉</div>
+                        <div>
+                            <h3 className="text-xl sm:text-2xl font-bold mb-3">
+                                Welcome to Your Food Court Dashboard!
+                            </h3>
+                            <div className="space-y-2 text-orange-100">
+                                <p className="flex items-start gap-2">
+                                    <span className="font-bold">1.</span>
+                                    <span>Create your food court profile with name and description</span>
+                                </p>
+                                <p className="flex items-start gap-2">
+                                    <span className="font-bold">2.</span>
+                                    <span>Add restaurants (each with their own logo and menu)</span>
+                                </p>
+                                <p className="flex items-start gap-2">
+                                    <span className="font-bold">3.</span>
+                                    <span>Generate ONE QR code — customers see the full grid!</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>
