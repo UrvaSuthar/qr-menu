@@ -12,8 +12,9 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
     const [size, setSize] = useState(256);
     const [copied, setCopied] = useState(false);
 
+    // Handle both partial slug (e.g. "pizza-place") and full URL (e.g. "http://...")
     const publicUrl = typeof window !== 'undefined'
-        ? `${window.location.origin}/menu/${slug}`
+        ? (slug.startsWith('http') ? slug : `${window.location.origin}/menu/${slug}`)
         : '';
 
     const downloadQR = () => {
