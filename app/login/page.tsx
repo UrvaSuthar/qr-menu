@@ -22,7 +22,14 @@ export default function LoginPage() {
         try {
             await signIn(email, password);
 
-            // Fetch profile to get the user's role
+            // Force Next.js to refresh the server session
+            // This ensures middleware has access to the updated session
+            router.refresh();
+
+            // Wait a moment for refresh to complete
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            // Fetch profile to get role
             const supabase = createClient();
             const { data: { user } } = await supabase.auth.getUser();
 
@@ -33,24 +40,20 @@ export default function LoginPage() {
                     .eq('user_id', user.id)
                     .single();
 
-                // Wait for session cookies to be fully written
-                await new Promise(resolve => setTimeout(resolve, 500));
-
-                // Full page reload to ensure middleware has access to cookies
+                // Now redirect based on role
                 if (userProfile?.role === 'restaurant') {
-                    window.location.href = '/restaurant';
+                    router.push('/restaurant');
                 } else if (userProfile?.role === 'food_court') {
-                    window.location.href = '/food-court';
+                    router.push('/food-court');
                 } else {
-                    // Fallback to restaurant if role is unclear
-                    window.location.href = '/restaurant';
+                    router.push('/restaurant');
                 }
             }
         } catch (err: any) {
             setError(err.message || 'Invalid email or password');
             setLoading(false);
         }
-        // Don't set loading to false here - page is redirecting
+        // Don't set loading to false - redirecting
     };
 
     return (
