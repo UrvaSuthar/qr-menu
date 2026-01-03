@@ -1,9 +1,9 @@
 # QR Menu Platform
 
-![License](https://img.shields.io/github/license/UrvaSuthar/qr-menu)
-![Issues](https://img.shields.io/github/issues/UrvaSuthar/qr-menu)
-![Pull Requests](https://img.shields.io/github/issues-pr/UrvaSuthar/qr-menu)
-![Last Commit](https://img.shields.io/github/last-commit/UrvaSuthar/qr-menu)
+![License](https://img.shields.io/github/license/UrvaSuthar/qr-menu?style=flat&logo=github&color=blue&cacheSeconds=3600)
+![Issues](https://img.shields.io/github/issues/UrvaSuthar/qr-menu?style=flat&logo=github&color=red)
+![Pull Requests](https://img.shields.io/github/issues-pr/UrvaSuthar/qr-menu?style=flat&logo=github&color=orange)
+![Last Commit](https://img.shields.io/github/last-commit/UrvaSuthar/qr-menu?style=flat&logo=github)
 
 A modern, QR-based restaurant menu platform built with Next.js 14 and Supabase. This solution allows restaurants and food courts to easily manage their menus and allows customers to view them by simply scanning a QR code.
 
