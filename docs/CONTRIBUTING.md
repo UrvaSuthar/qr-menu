@@ -30,6 +30,12 @@ This project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md). By participatin
 - Supabase account (free tier)
 - Git
 
+### Recommended Dev Tools (Optional)
+- **Git Clients**: 
+  - [Lazygit](https://github.com/jesseduffield/lazygit) (Terminal UI - Highly Recommended 🚀)
+  - [GitKraken](https://www.gitkraken.com/) or [SourceTree](https://www.sourcetreeapp.com/) (GUI)
+- **Editor**: VS Code with [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extensions.
+
 ### Installation
 
 1. Install dependencies:
