@@ -25,7 +25,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -43,13 +44,22 @@
     "three": "^0.182.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.3.0",
+    "@commitlint/config-conventional": "^20.3.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }
