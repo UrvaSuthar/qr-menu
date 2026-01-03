@@ -1,16 +1,27 @@
-# QR Menu Platform - Sprint 1 Implementation
+# QR Menu Platform
 
-## Project Overview
+![License](https://img.shields.io/github/license/UrvaSuthar/qr-menu)
+![Issues](https://img.shields.io/github/issues/UrvaSuthar/qr-menu)
+![Pull Requests](https://img.shields.io/github/issues-pr/UrvaSuthar/qr-menu)
+![Last Commit](https://img.shields.io/github/last-commit/UrvaSuthar/qr-menu)
 
-A QR-based restaurant menu platform built with Next.js 14 and Supabase.
+A modern, QR-based restaurant menu platform built with Next.js 14 and Supabase. This solution allows restaurants and food courts to easily manage their menus and allows customers to view them by simply scanning a QR code.
 
-## Tech Stack
+## 🚀 Features
+
+- **Authentication**: Secure email/password signup with role selection (Restaurant, Food Court, Customer)
+- **Role-Based Dashboards**: tailored interfaces for single restaurants vs multi-vendor food courts
+- **Real-time Updates**: Instant menu updates using Supabase real-time capabilities
+- **Responsive Design**: Mobile-first approach optimized for all devices
+- **Secure**: Row Level Security (RLS) enabled for data protection
+
+## 🛠 Tech Stack
 
 - **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS
 - **Backend**: Supabase (Auth, PostgreSQL, Storage)
-- **Deployment**: Vercel (planned)
+- **Deployment**: Vercel
 
-## Getting Started
+## 🏁 Getting Started
 
 ### Prerequisites
 
@@ -19,87 +30,50 @@ A QR-based restaurant menu platform built with Next.js 14 and Supabase.
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/UrvaSuthar/qr-menu.git
+   cd qr-menu
+   ```
+
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
 3. **Configure Environment Variables**
-   - Create a `.env.local` file in the project root
-   - Add your Supabase credentials (see `ENV_SETUP.md` for details):
-     ```bash
-     NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
-     NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
-     ```
+   
+   Copy the example environment file:
+   ```bash
+   cp .env.example .env.local
+   ```
+   fill in your Supabase credentials in `.env.local`.
 
 4. **Set up Supabase Database**
    - Create a new Supabase project
-   - Run the SQL migrations in `supabase/migrations/` folder
+   - Run the SQL migrations found in `supabase/migrations/`
    - Enable Row Level Security (RLS)
 
-5. Run the development server:
+5. **Run the development server**
    ```bash
    npm run dev
    ```
 
 6. Open [http://localhost:3000](http://localhost:3000)
 
-## Project Structure
+## 🤝 Contributing
 
-```
-qr-menu/
-├── app/                      # Next.js App Router
-│   ├── contexts/            # React contexts (Auth)
-│   ├── lib/                 # Utilities and configs
-│   ├── types/               # TypeScript definitions
-│   ├── login/               # Login page
-│   ├── signup/              # Signup page
-│   ├── restaurant/          # Restaurant dashboard
-│   ├── food-court/          # Food court dashboard
-│   └── unauthorized/        # Unauthorized access page
-├── middleware.ts            # Route protection
-├── ENV_SETUP.md            # Environment setup guide
-└── public/                  # Static assets
-```
+We welcome contributions! Please see our [Contributing Guidelines](docs/CONTRIBUTING.md) for details on how to get started.
 
-## Features (Sprint 1)
+- Please adhere to our [Code of Conduct](docs/CODE_OF_CONDUCT.md).
+- For security issues, please see our [Security Policy](docs/SECURITY.md).
 
-✅ **Authentication**
-- Email/password signup with role selection
-- Login with role-based redirects
-- Logout functionality
+## 📄 License
 
-✅ **Role-Based Routing**
-- Restaurant dashboard (`/restaurant`)
-- Food court dashboard (`/food-court`)
-- Middleware route protection
-- Unauthorized access handling
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-✅ **User Roles**
-- Restaurant: Single venue management
-- Food Court: Multi-vendor management
-- Customer: Public menu viewing (no auth required)
+## 🙏 Acknowledgments
 
-## Database Schema
-
-See `architecture.md` for complete schema. Key tables:
-- `user_profiles`: User info with roles
-- `restaurants`: Restaurant/food court profiles
-- `categories`: Menu categories
-- `menu_items`: Individual menu items
-
-## Next Steps (Sprint 2)
-
-- Restaurant CRUD operations
-- Menu item management
-- QR code generation
-- Public menu display
-
-## Contributing
-
-This is an MVP implementation. See `task.md` for current progress.
-
-## License
-
-MIT
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Supabase Documentation](https://supabase.com/docs)
+- [Tailwind CSS](https://tailwindcss.com)

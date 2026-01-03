@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import "./styles/design-system.css";
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -9,6 +9,13 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+});
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["SOFT", "WONK", "opsz"], // Enable variable axes for character
 });
 
 export const metadata: Metadata = {
@@ -24,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} antialiased`}
+        className={`${inter.variable} ${fraunces.variable} antialiased`}
         style={{ fontFamily: 'var(--font-inter)' }}
       >
         <AuthProvider>
