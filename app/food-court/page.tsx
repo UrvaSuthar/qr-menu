@@ -15,22 +15,22 @@ export default function FoodCourtDashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        checkFoodCourt();
-    }, []);
-
-    const checkFoodCourt = async () => {
-        try {
-            const foodCourt = await getMyFoodCourt();
-            if (!foodCourt) {
-                router.push('/onboarding');
-            } else {
+        const checkFoodCourt = async () => {
+            try {
+                const foodCourt = await getMyFoodCourt();
+                if (!foodCourt) {
+                    router.push('/onboarding');
+                } else {
+                    setLoading(false);
+                }
+            } catch (error) {
+                console.error('Error checking food court:', error);
                 setLoading(false);
             }
-        } catch (error) {
-            console.error('Error checking food court:', error);
-            setLoading(false);
-        }
-    };
+        };
+
+        checkFoodCourt();
+    }, [router]);
 
     const handleLogout = async () => {
         await signOut();
@@ -62,6 +62,7 @@ export default function FoodCourtDashboard() {
                         <button
                             onClick={handleLogout}
                             className="app-button app-button--secondary app-button--sm"
+                            aria-label="Logout"
                         >
                             <LogOut size={18} />
                             <span className="hidden sm:inline">Logout</span>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Settings, QrCode, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import '@/styles/app.css';
-import { Banner, Steps, Card, LoadingSpinner } from '@/components/ui';
+import { Banner, Steps, LoadingSpinner } from '@/components/ui';
 import { useEffect, useState } from 'react';
 import { getMyRestaurant } from '@/lib/restaurants';
 
@@ -15,22 +15,22 @@ export default function RestaurantDashboard() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        checkRestaurant();
-    }, []);
-
-    const checkRestaurant = async () => {
-        try {
-            const restaurant = await getMyRestaurant();
-            if (!restaurant) {
-                router.push('/onboarding');
-            } else {
+        const checkRestaurant = async () => {
+            try {
+                const restaurant = await getMyRestaurant();
+                if (!restaurant) {
+                    router.push('/onboarding');
+                } else {
+                    setLoading(false);
+                }
+            } catch (error) {
+                console.error('Error checking restaurant:', error);
                 setLoading(false);
             }
-        } catch (error) {
-            console.error('Error checking restaurant:', error);
-            setLoading(false);
-        }
-    };
+        };
+
+        checkRestaurant();
+    }, [router]);
 
     const handleLogout = async () => {
         await signOut();
@@ -62,6 +62,7 @@ export default function RestaurantDashboard() {
                         <button
                             onClick={handleLogout}
                             className="app-button app-button--secondary app-button--sm"
+                            aria-label="Logout"
                         >
                             <LogOut size={18} />
                             <span className="hidden sm:inline">Logout</span>

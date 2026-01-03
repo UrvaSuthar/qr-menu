@@ -32,5 +32,5 @@ jobs:
       - name: 🏗️ Verify Build (Type Check)
         run: npm run build
         env:
-          # Skip these checks during build because we lint explicitly above
+          # Disable telemetry during build
           NEXT_TELEMETRY_DISABLED: 1
