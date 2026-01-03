@@ -18,90 +18,70 @@ export default async function PublicMenuPage({
     logQRScan(restaurant.id).catch(console.error);
 
     return (
-        <div className="food-page">
-            {/* Header */}
-            <header className="food-header">
-                <div className="food-header__inner">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-                        {/* Logo or placeholder */}
-                        {restaurant.logo_url ? (
-                            <img
-                                src={restaurant.logo_url}
-                                alt={restaurant.name}
-                                className="food-header__logo"
-                            />
-                        ) : (
-                            <div className="food-header__logo-placeholder">
-                                <UtensilsCrossed size={28} strokeWidth={1.5} />
-                            </div>
-                        )}
-                        <div>
-                            <h1 className="food-header__title">
-                                {restaurant.name}
-                            </h1>
-                            {restaurant.description && (
-                                <p className="food-header__description">
-                                    {restaurant.description}
-                                </p>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Contact Info */}
-                    {(restaurant.address || restaurant.phone) && (
-                        <div className="food-header__meta">
-                            {restaurant.address && (
-                                <div className="food-header__meta-item">
-                                    <MapPin size={16} style={{ color: 'var(--app-text-disabled)' }} />
-                                    <span>{restaurant.address}</span>
-                                </div>
-                            )}
-                            {restaurant.phone && (
-                                <div className="food-header__meta-item">
-                                    <Phone size={16} style={{ color: 'var(--app-text-disabled)' }} />
-                                    <a href={`tel:${restaurant.phone}`} className="food-header__meta-link">
-                                        {restaurant.phone}
-                                    </a>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
-            </header>
-
-            {/* Menu Display */}
-            <main style={{ maxWidth: '56rem', margin: '0 auto', padding: 'var(--space-8) var(--space-4)' }}>
-                {restaurant.menu_pdf_url ? (
-                    <div className="food-menu-card">
-                        <div className="food-menu-header">
-                            <FileText size={18} />
-                            <span>Menu</span>
-                        </div>
-                        <div style={{ width: '100%', height: 'calc(100vh - 300px)', minHeight: '600px' }}>
-                            <iframe
-                                src={`${restaurant.menu_pdf_url}#view=FitH&pagemode=none&toolbar=0&navpanes=0`}
-                                style={{ width: '100%', height: '100%', border: 'none' }}
-                                title="Restaurant Menu"
-                            />
-                        </div>
-                    </div>
+        <div style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', overflow: 'hidden', background: '#000' }}>
+            {/* Floating Logo */}
+            <div style={{
+                position: 'absolute',
+                top: '20px',
+                left: '20px',
+                zIndex: 50, // Increased z-index
+                width: '60px',
+                height: '60px',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                border: '2px solid rgba(255,255,255,0.8)',
+                background: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                {restaurant.logo_url ? (
+                    <img
+                        src={restaurant.logo_url}
+                        alt={restaurant.name}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                 ) : (
-                    <div className="food-menu-card food-empty">
-                        <ClipboardList size={64} className="food-empty__icon" strokeWidth={1} />
-                        <h2 className="food-empty__title">
+                    <UtensilsCrossed size={32} color="#ccc" />
+                )}
+            </div>
+
+            {/* Content */}
+            {restaurant.menu_pdf_url ? (
+                <iframe
+                    src={`${restaurant.menu_pdf_url}#view=FitH&pagemode=none&toolbar=0&navpanes=0`}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        background: '#fff' // Ensure white background for PDF placeholder
+                    }}
+                    title={`${restaurant.name} Menu`}
+                />
+            ) : (
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%',
+                    color: '#fff',
+                    gap: '1rem',
+                    textAlign: 'center',
+                    padding: '2rem'
+                }}>
+                    <ClipboardList size={64} style={{ opacity: 0.5 }} strokeWidth={1} />
+                    <div>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '0.5rem' }}>
                             Menu Coming Soon
                         </h2>
-                        <p className="food-empty__description">
-                            The restaurant is working on uploading their menu.
+                        <p style={{ color: 'rgba(255,255,255,0.6)' }}>
+                            {restaurant.name} is uploading their menu.
                         </p>
                     </div>
-                )}
-            </main>
-
-            {/* Footer */}
-            <footer className="food-footer">
-                Powered by QR Menu
-            </footer>
+                </div>
+            )}
         </div>
     );
 }

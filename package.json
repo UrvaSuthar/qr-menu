@@ -23,9 +23,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "analyze": "cross-env ANALYZE=true next build",
+    "sonar": "sonar-scanner",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "prepare": "husky"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -43,13 +46,25 @@
     "three": "^0.182.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.3.0",
+    "@commitlint/config-conventional": "^20.3.0",
+    "@next/bundle-analyzer": "^16.1.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "sonarqube-scanner": "^4.3.2",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }

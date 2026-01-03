@@ -57,8 +57,8 @@ export function FileUpload({
 
             const publicUrl = await uploadFile(bucket, storagePath, file);
             onUploadComplete(publicUrl, storagePath);
-        } catch (err: any) {
-            setError(err.message || 'Failed to upload file');
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'Failed to upload file');
         } finally {
             setUploading(false);
         }
@@ -110,8 +110,8 @@ export function FileUpload({
 
             await deleteFile(bucket, path);
             onDelete();
-        } catch (err: any) {
-            setError(err.message || 'Failed to delete file');
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'Failed to delete file');
         } finally {
             setUploading(false);
         }

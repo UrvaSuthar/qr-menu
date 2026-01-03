@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FileUpload } from '@/components/FileUpload';
+import { FileUpload } from '@/components/ui/FileUpload';
 import { getMyRestaurant, createRestaurant, updateRestaurant } from '@/lib/restaurants';
 import { Restaurant } from '@/types';
 import { AlertCircle } from 'lucide-react';
@@ -48,8 +48,8 @@ export default function RestaurantSettingsPage() {
                 setMenuUrl(data.menu_pdf_url || '');
                 setMenuPath(data.menu_pdf_storage_path || '');
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'Failed to load restaurant');
         } finally {
             setLoading(false);
         }
@@ -100,8 +100,8 @@ export default function RestaurantSettingsPage() {
                 setRestaurant(created);
                 showToast('Restaurant created successfully!', 'success');
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'An error occurred');
         } finally {
             setSaving(false);
         }

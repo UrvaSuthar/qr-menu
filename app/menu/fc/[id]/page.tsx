@@ -1,5 +1,5 @@
 import { getFoodCourtById } from '@/lib/foodCourts';
-import { RestaurantGrid } from '@/components/RestaurantGrid';
+import { RestaurantGrid } from '@/components/features/restaurant';
 import { notFound } from 'next/navigation';
 import { MapPin, Phone, ChevronDown } from 'lucide-react';
 import '@/styles/app.css';

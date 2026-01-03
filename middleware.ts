@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
                     return request.cookies.getAll();
                 },
                 setAll(cookiesToSet) {
-                    cookiesToSet.forEach(({ name, value, options }) =>
+                    cookiesToSet.forEach(({ name, value }) =>
                         request.cookies.set(name, value)
                     );
                     response = NextResponse.next({
@@ -44,7 +44,10 @@ export async function middleware(request: NextRequest) {
 
     // Protected routes that require authentication
     const isProtectedRoute =
-        pathname.startsWith('/restaurant') || pathname.startsWith('/food-court');
+        pathname.startsWith('/restaurant') ||
+        pathname.startsWith('/food-court') ||
+        pathname.startsWith('/api/restaurant') ||
+        pathname.startsWith('/api/food-court');
 
     // If accessing protected route without session, redirect to login
     if (isProtectedRoute && !session) {
