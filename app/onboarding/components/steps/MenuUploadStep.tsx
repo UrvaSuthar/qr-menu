@@ -1,11 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { updateRestaurant, uploadFile } from '@/lib/restaurants';
-import { Card, Button, LoadingSpinner } from '@/components/ui';
-import { FileUpload } from '@/components/FileUpload';
+import { updateRestaurant } from '@/lib/restaurants';
+import { Card, LoadingSpinner } from '@/components/ui';
+import { FileUpload } from '@/components/ui/FileUpload';
 import { useToast } from '@/contexts/ToastContext';
-import { ArrowRight } from 'lucide-react';
 
 interface MenuUploadStepProps {
     restaurantId: string;
@@ -26,8 +25,8 @@ export function MenuUploadStep({ restaurantId, onComplete, onSkip }: MenuUploadS
             });
             showToast('Menu uploaded!', 'success');
             onComplete();
-        } catch (error: any) {
-            showToast(error.message, 'error');
+        } catch (error: unknown) {
+            showToast(error instanceof Error ? error.message : 'Failed to update menu', 'error');
             setLoading(false);
         }
     };

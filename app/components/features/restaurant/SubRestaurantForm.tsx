@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Restaurant } from '@/types';
-import { FileUpload } from './FileUpload';
+import { FileUpload } from '@/components/ui/FileUpload';
 import { addSubRestaurant, updateSubRestaurant } from '@/lib/foodCourts';
 import { AlertCircle } from 'lucide-react';
 import '@/styles/app.css';
@@ -72,8 +72,8 @@ export function SubRestaurantForm({
                 });
             }
             onSave();
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'An error occurred');
         } finally {
             setSaving(false);
         }

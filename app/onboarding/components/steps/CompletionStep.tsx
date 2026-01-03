@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, Button } from '@/components/ui';
-import { QRCodeGenerator } from '@/components/QRCodeGenerator';
+import { QRCodeGenerator } from '@/components/ui/QRCodeGenerator';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getRestaurantById } from '@/lib/restaurants';
@@ -50,7 +50,7 @@ export function CompletionStep({ role, entityId, onDashboard }: CompletionStepPr
                 </div>
             </div>
 
-            <h2 className="text-2xl font-bold mb-2">You're all set!</h2>
+            <h2 className="text-2xl font-bold mb-2">You&apos;re all set!</h2>
             <p className="text-[var(--app-text-muted)] mb-8">
                 {entityName} has been set up successfully. Here is your QR code.
             </p>

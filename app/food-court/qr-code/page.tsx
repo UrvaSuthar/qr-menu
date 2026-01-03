@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { QRCodeGenerator } from '@/components/QRCodeGenerator';
+import { QRCodeGenerator } from '@/components/ui/QRCodeGenerator';
 import { getMyFoodCourt } from '@/lib/foodCourts';
 import { Restaurant } from '@/types';
 import { Info } from 'lucide-react';
@@ -72,7 +72,7 @@ export default function FoodCourtQRCodePage() {
                             <div>
                                 <strong>Food Court QR Code</strong>
                                 <p style={{ marginTop: '4px', opacity: 0.9 }}>
-                                    This QR code links to your food court's restaurant grid, where customers can browse all your sub-restaurants and select which menu to view.
+                                    This QR code links to your food court&apos;s restaurant grid, where customers can browse all your sub-restaurants and select which menu to view.
                                 </p>
                                 <p style={{ marginTop: '8px', fontSize: '0.875rem' }}>
                                     <strong>URL:</strong> {publicUrl}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { QRCodeGenerator } from '@/components/QRCodeGenerator';
+import { QRCodeGenerator } from '@/components/ui/QRCodeGenerator';
 import { getMyRestaurant } from '@/lib/restaurants';
 import { Restaurant } from '@/types';
 import '@/styles/app.css';

@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Restaurant } from '@/types';
 import { getMyFoodCourt, getSubRestaurants, deleteSubRestaurant } from '@/lib/foodCourts';
-import { SubRestaurantForm } from '@/components/SubRestaurantForm';
+import { SubRestaurantForm } from '@/components/features/restaurant';
 import { Plus, UtensilsCrossed, Check } from 'lucide-react';
 import '@/styles/app.css';
-import { LoadingSpinner, PageHeader, Card, Button, EmptyState } from '@/components/ui';
+import { LoadingSpinner, PageHeader, Button, EmptyState } from '@/components/ui';
 import { useToast } from '@/contexts/ToastContext';
 
 export default function FoodCourtRestaurantsPage() {
@@ -65,8 +65,8 @@ export default function FoodCourtRestaurantsPage() {
             await deleteSubRestaurant(restaurant.id);
             showToast('Restaurant deleted', 'success');
             await loadData();
-        } catch (err: any) {
-            showToast(`Error: ${err.message}`, 'error');
+        } catch (err: unknown) {
+            showToast(`Error: ${err instanceof Error ? err.message : 'Failed to delete'}`, 'error');
         }
     };
 
