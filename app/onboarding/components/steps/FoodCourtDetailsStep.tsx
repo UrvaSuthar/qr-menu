@@ -76,7 +76,7 @@ export function FoodCourtDetailsStep({ onComplete }: FoodCourtDetailsStepProps) 
                         required
                     />
                     <p className="text-sm text-[var(--app-text-muted)] mt-1">
-                        Your food court page will be at: qr-menu.vercel.app/menu/fc/{slug || 'your-food-court'}
+                        Your food court page will be at /fc/{slug || 'your-food-court'}
                     </p>
                 </div>
 

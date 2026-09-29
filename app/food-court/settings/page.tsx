@@ -6,8 +6,8 @@ import { createFoodCourt, getMyFoodCourt } from '@/lib/foodCourts';
 import { updateRestaurant } from '@/lib/restaurants';
 import { Restaurant } from '@/types';
 import { AlertCircle } from 'lucide-react';
-import '@/styles/app.css';
-import { LoadingSpinner, PageHeader, Card, Button, Input, Textarea, Alert } from '@/components/ui';
+import { AppShell } from '@/components/layout/AppShell';
+import { LoadingSpinner, Card, Button, Input, Textarea, Alert } from '@/components/ui';
 import { useToast } from '@/contexts/ToastContext';
 
 export default function FoodCourtSettingsPage() {
@@ -100,19 +100,7 @@ export default function FoodCourtSettingsPage() {
     }
 
     return (
-        <div className="app-page app-page--alt">
-            {/* Header */}
-            <header className="app-header">
-                <div className="app-container app-container--narrow">
-                    <PageHeader
-                        title={foodCourt ? 'Food Court Settings' : 'Create Food Court'}
-                        onBack={() => router.back()}
-                    />
-                </div>
-            </header>
-
-            {/* Form */}
-            <main className="app-container app-container--narrow app-main">
+        <AppShell role="food_court" title={foodCourt ? 'Settings' : 'Create food court'} subtitle="Name, branding and contact details." narrow>
                 {error && (
                     <div className="app-section">
                         <Alert type="error" icon={<AlertCircle size={18} />}>
@@ -121,7 +109,7 @@ export default function FoodCourtSettingsPage() {
                     </div>
                 )}
 
-                <form onSubmit={handleSave} className="app-form" style={{ gap: 'var(--space-8)' }}>
+                <form onSubmit={handleSave} className="app-form gap-8">
                     {/* Basic Info */}
                     <Card>
                         <h2 className="app-card__section">Basic Information</h2>
@@ -152,7 +140,7 @@ export default function FoodCourtSettingsPage() {
                                 placeholder="A collection of amazing restaurants under one roof..."
                             />
 
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-4)' }}>
+                            <div className="grid gap-4 sm:grid-cols-2">
                                 <Input
                                     label="Address"
                                     value={address}
@@ -193,7 +181,6 @@ export default function FoodCourtSettingsPage() {
                         )}
                     </div>
                 </form>
-            </main>
-        </div>
+            </AppShell>
     );
 }

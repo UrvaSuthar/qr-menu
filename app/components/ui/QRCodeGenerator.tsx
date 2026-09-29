@@ -102,33 +102,26 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-            {/* QR Code Display */}
-            <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                padding: 'var(--space-8)',
-                background: 'var(--app-bg)',
-                borderRadius: 'var(--radius-xl)',
-                border: '1px solid var(--app-border)'
-            }}>
+        <div className="flex flex-col gap-6">
+            <div className="app-qr">
                 <QRCodeSVG
                     id="qr-code-svg"
                     value={publicUrl}
                     size={size}
                     level="H"
                     includeMargin
+                    className="app-qr__svg"
                 />
             </div>
 
-            {/* Size Selector */}
             <div className="app-field">
-                <label className="app-label">QR Code Size</label>
-                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                <span className="app-label" id="qr-size-label">QR Code Size</span>
+                <div className="flex gap-2" role="group" aria-labelledby="qr-size-label">
                     {[128, 256, 512].map((s) => (
                         <button
                             key={s}
                             onClick={() => setSize(s)}
+                            aria-pressed={size === s}
                             className={`app-button app-button--sm ${size === s ? 'app-button--primary' : 'app-button--secondary'}`}
                         >
                             {s}px
@@ -137,28 +130,26 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
                 </div>
             </div>
 
-            {/* Public URL */}
             <div className="app-field">
-                <label className="app-label">Public Menu URL</label>
-                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                <label className="app-label" htmlFor="qr-public-url">Public Menu URL</label>
+                <div className="flex gap-2">
                     <input
+                        id="qr-public-url"
                         type="text"
                         value={publicUrl}
                         readOnly
-                        className="app-input"
-                        style={{ flex: 1, background: 'var(--app-bg-secondary)' }}
+                        className="app-input min-w-0 flex-1 bg-paper-2"
                     />
                     <button
                         onClick={copyUrl}
-                        className="app-button app-button--secondary app-button--sm"
+                        className="app-button app-button--secondary app-button--sm self-center"
                     >
                         {copied ? <><Check size={16} /> Copied</> : <><Copy size={16} /> Copy</>}
                     </button>
                 </div>
             </div>
 
-            {/* Action Buttons */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
+            <div className="grid grid-cols-2 gap-3">
                 <button onClick={downloadQR} className="app-button app-button--primary">
                     <Download size={18} />
                     Download PNG
@@ -169,39 +160,17 @@ export function QRCodeGenerator({ slug, restaurantName }: QRCodeGeneratorProps) 
                 </button>
             </div>
 
-            {/* Usage Instructions */}
-            <div style={{
-                background: 'var(--app-bg-secondary)',
-                border: '1px solid var(--app-border)',
-                borderRadius: 'var(--radius-xl)',
-                padding: 'var(--space-4)'
-            }}>
-                <h3 style={{
-                    fontWeight: 600,
-                    marginBottom: 'var(--space-2)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 'var(--space-2)',
-                    fontSize: 'var(--text-base)'
-                }}>
-                    <Smartphone size={18} />
+            <div className="app-banner p-5">
+                <h3 className="mb-2 flex items-center gap-2 text-base font-semibold">
+                    <Smartphone size={18} aria-hidden="true" />
                     How to use:
                 </h3>
-                <ul style={{
-                    fontSize: 'var(--text-sm)',
-                    color: 'var(--app-text-muted)',
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'var(--space-1)'
-                }}>
+                <ol className="flex flex-col gap-1 text-sm text-muted">
                     <li>1. Download or print the QR code</li>
                     <li>2. Place it on tables, menus, or storefront</li>
                     <li>3. Customers scan with their phone camera</li>
                     <li>4. Menu opens instantly - no app needed!</li>
-                </ul>
+                </ol>
             </div>
         </div>
     );

@@ -45,22 +45,24 @@ export function CompletionStep({ role, entityId, onDashboard }: CompletionStepPr
     return (
         <Card className="max-w-xl mx-auto text-center">
             <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 rounded-full bg-[var(--app-success-light)] flex items-center justify-center text-[var(--app-success)]">
+                <div className="w-16 h-16 rounded-full bg-[var(--app-success-bg)] flex items-center justify-center text-[var(--app-success)]">
                     <CheckCircle size={32} />
                 </div>
             </div>
 
-            <h2 className="text-2xl font-bold mb-2">You&apos;re all set!</h2>
+            <h2 className="mb-2 text-3xl">You&apos;re all set!</h2>
             <p className="text-[var(--app-text-muted)] mb-8">
-                {entityName} has been set up successfully. Here is your QR code.
+                {entityName || (role === 'food_court' ? 'Your food court' : 'Your restaurant')} has been set up successfully. Here is your QR code.
             </p>
 
-            <div className="mb-8 p-4 bg-[var(--app-bg-secondary)] rounded-[var(--radius-xl)] border border-[var(--app-border)] inline-block">
-                {qrSlug && (
+            <div className="mb-8 text-left">
+                {qrSlug ? (
                     <QRCodeGenerator
                         slug={qrSlug}
                         restaurantName={entityName}
                     />
+                ) : (
+                    <div className="app-qr h-[308px] animate-pulse" aria-hidden="true" />
                 )}
             </div>
 

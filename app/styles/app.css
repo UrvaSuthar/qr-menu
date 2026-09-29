@@ -1,6 +1,7 @@
 /* ============================================
-   QR MENU - UNIFIED DESIGN SYSTEM
-   Nothing-inspired, BMAD UX aligned
+   QR MENU DESIGN SYSTEM: ink + cream editorial
+   Single source of tokens and component classes.
+   Tailwind sees the same tokens via @theme in app/globals.css.
    ============================================ */
 
 /* ============================================
@@ -8,82 +9,76 @@
    ============================================ */
 
 :root {
-    /* === App Theme (Light Mode for Dashboards) === */
-    --app-bg: #FFFFFF;
-    --app-bg-secondary: #FAFAFA;
-    --app-bg-tertiary: #F5F5F5;
-    --app-bg-elevated: #FFFFFF;
+    /* Ink + cream editorial palette (see docs/superpowers/specs/2026-09-30-redesign-design.md) */
+    --app-bg: #F6F1E7;              /* paper */
+    --app-bg-secondary: #EFE8DA;    /* paper, one step deeper */
+    --app-bg-tertiary: #E7DFCF;
+    --app-bg-elevated: #FFFDF8;     /* card */
+    --app-bg-ink: #0B0B0C;
 
-    /* Warm Background for Menu Pages */
-    --app-bg-warm: #FFFCFA;
-    --app-bg-warm-secondary: #FFF9F5;
+    --app-bg-warm: #F6F1E7;
+    --app-bg-warm-secondary: #EFE8DA;
 
-    /* Borders */
-    --app-border: rgba(0, 0, 0, 0.08);
-    --app-border-strong: rgba(0, 0, 0, 0.15);
-    --app-border-focus: rgba(0, 0, 0, 0.4);
+    --app-border: rgb(11 11 12 / 0.12);
+    --app-border-strong: rgb(11 11 12 / 0.24);
+    --app-border-focus: #0B0B0C;
 
-    /* Text */
-    --app-text-primary: #0A0A0A;
-    --app-text-secondary: #525252;
-    --app-text-muted: #737373;
-    --app-text-disabled: #A3A3A3;
+    --app-text-primary: #0B0B0C;    /* ink */
+    --app-text-secondary: #3F3A33;
+    --app-text-muted: #6B645A;
+    --app-text-disabled: #9A9286;
 
-    /* Accent (Primary Actions - Admin) */
-    --app-accent: #0A0A0A;
-    --app-accent-hover: #262626;
-    --app-accent-text: #FFFFFF;
+    /* Primary actions are ink; red is the single accent (never body text) */
+    --app-accent: #0B0B0C;
+    --app-accent-hover: #2A2622;
+    --app-accent-text: #FFFDF8;
 
-    /* Food Accent (Secondary - Customer Facing) */
-    --app-food-accent: #DC2626;
-    --app-food-accent-hover: #B91C1C;
-    --app-food-accent-light: #FEF2F2;
-    --app-food-accent-bg: rgba(220, 38, 38, 0.08);
-    --app-food-accent-border: rgba(220, 38, 38, 0.2);
+    --app-food-accent: #D7261E;
+    --app-food-accent-hover: #B51F18;
+    --app-food-accent-light: #FBE9E6;
+    --app-food-accent-bg: rgb(215 38 30 / 0.08);
+    --app-food-accent-border: rgb(215 38 30 / 0.28);
 
-    /* Status Colors */
-    --app-success: #22C55E;
-    --app-success-bg: rgba(34, 197, 94, 0.1);
-    --app-success-border: rgba(34, 197, 94, 0.3);
+    --app-success: #1F7A4D;
+    --app-success-bg: rgb(31 122 77 / 0.10);
+    --app-success-border: rgb(31 122 77 / 0.28);
 
-    --app-error: #EF4444;
-    --app-error-bg: rgba(239, 68, 68, 0.1);
-    --app-error-border: rgba(239, 68, 68, 0.3);
+    --app-error: #B42318;
+    --app-error-bg: rgb(180 35 24 / 0.08);
+    --app-error-border: rgb(180 35 24 / 0.28);
 
-    --app-info: #3B82F6;
-    --app-info-bg: rgba(59, 130, 246, 0.1);
-    --app-info-border: rgba(59, 130, 246, 0.3);
+    --app-info: #1D4E89;
+    --app-info-bg: rgb(29 78 137 / 0.08);
+    --app-info-border: rgb(29 78 137 / 0.24);
 
-    --app-warning: #F59E0B;
-    --app-warning-bg: rgba(245, 158, 11, 0.1);
-    --app-warning-border: rgba(245, 158, 11, 0.3);
+    --app-warning: #8A5A00;
+    --app-warning-bg: rgb(176 115 0 / 0.10);
+    --app-warning-border: rgb(176 115 0 / 0.28);
 
     /* === Typography === */
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: var(--font-fraunces), Georgia, 'Times New Roman', serif;
 
-    /* Font Sizes */
     --text-xs: 0.75rem;
-    --text-sm: 0.8125rem;
-    --text-base: 0.9375rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
     --text-lg: 1.125rem;
     --text-xl: 1.25rem;
     --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-    --text-4xl: 2.25rem;
+    --text-3xl: 2rem;
+    --text-4xl: 2.5rem;
     --text-5xl: 3rem;
-    --text-display: 3.5rem;
+    --text-display: 4.5rem;
 
-    /* Font Weights */
     --font-normal: 400;
     --font-medium: 500;
     --font-semibold: 600;
 
-    /* Letter Spacing */
     --tracking-tighter: -0.03em;
     --tracking-tight: -0.02em;
     --tracking-normal: 0;
     --tracking-wide: 0.02em;
-    --tracking-wider: 0.03em;
+    --tracking-wider: 0.08em;
 
     /* === Spacing === */
     --space-0: 0;
@@ -100,37 +95,74 @@
     --space-20: 5rem;
     --space-24: 6rem;
 
-    /* === Radii (Slightly warmer/softer) === */
+    /* === Shape === */
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 12px;
     --radius-xl: 14px;
-    --radius-2xl: 18px;
+    --radius-2xl: 20px;
     --radius-full: 9999px;
 
-    /* === Transitions (Slightly slower for satisfying feel) === */
-    --transition-fast: 200ms ease;
-    --transition-base: 300ms ease;
-    --transition-slow: 450ms ease;
+    --transition-fast: 180ms cubic-bezier(0.2, 0, 0, 1);
+    --transition-base: 280ms cubic-bezier(0.2, 0, 0, 1);
+    --transition-slow: 450ms cubic-bezier(0.2, 0, 0, 1);
 
-    /* === Shadows === */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* Warm shadows (brown-tinted, never grey) */
+    --shadow-sm: 0 1px 2px rgb(60 40 20 / 0.06);
+    --shadow-md: 0 1px 2px rgb(60 40 20 / 0.06), 0 8px 24px rgb(60 40 20 / 0.07);
+    --shadow-lg: 0 2px 4px rgb(60 40 20 / 0.06), 0 20px 48px rgb(60 40 20 / 0.12);
 }
 
 /* ============================================
    BASE STYLES
    ============================================ */
 
+body {
+    background: var(--app-bg);
+    color: var(--app-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.font-display,
+.app-page-title,
+.app-card__title,
+.app-banner__title,
+.app-empty__title,
+.food-hero__title,
+.food-empty__title,
+.confirm-modal__title {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+/* Large display sizes tighten up */
+h1,
+.font-display,
+.food-hero__title {
+    letter-spacing: var(--tracking-tight);
+}
+
+:focus-visible {
+    outline: 2px solid var(--app-food-accent);
+    outline-offset: 2px;
+}
+
+::selection {
+    background: var(--app-food-accent-light);
+    color: var(--app-text-primary);
+}
+
 .app-page {
     min-height: 100vh;
     background-color: var(--app-bg);
     font-family: var(--font-sans);
     color: var(--app-text-primary);
-}
-
-.app-page--alt {
-    background-color: var(--app-bg-secondary);
 }
 
 /* ============================================
@@ -162,31 +194,6 @@
 /* ============================================
    HEADER
    ============================================ */
-
-.app-header {
-    border-bottom: 1px solid var(--app-border);
-    background-color: var(--app-bg);
-}
-
-.app-header__inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--space-6) 0;
-}
-
-.app-header__title {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-primary);
-    letter-spacing: var(--tracking-tight);
-}
-
-.app-header__subtitle {
-    font-size: var(--text-sm);
-    color: var(--app-text-muted);
-    margin-top: var(--space-1);
-}
 
 /* Page Header with Back Button */
 .app-page-header {
@@ -225,7 +232,8 @@
    ============================================ */
 
 .app-main {
-    padding: var(--space-8) 0 var(--space-12);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-12);
 }
 
 .app-section {
@@ -236,41 +244,30 @@
     margin-bottom: 0;
 }
 
-.app-section__title {
-    font-size: var(--text-xl);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-primary);
-    margin-bottom: var(--space-6);
-    letter-spacing: var(--tracking-tight);
-}
-
 /* ============================================
    CARDS
    ============================================ */
 
 .app-card {
-    background: var(--app-bg);
+    display: block;
+    background: var(--app-bg-elevated);
     border: 1px solid var(--app-border);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    color: inherit;
+    text-decoration: none;
 }
 
 .app-card--interactive {
     cursor: pointer;
-    transition: border-color var(--transition-fast);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .app-card--interactive:hover {
     border-color: var(--app-border-strong);
-}
-
-.app-card--interactive:focus {
-    outline: 2px solid var(--app-accent);
-    outline-offset: 2px;
-}
-
-.app-card__header {
-    margin-bottom: var(--space-4);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .app-card__icon {
@@ -314,13 +311,17 @@
     padding: 0 var(--space-6);
     font-family: var(--font-sans);
     font-size: var(--text-base);
-    font-weight: var(--font-medium);
-    border-radius: var(--radius-lg);
-    border: none;
+    font-weight: var(--font-semibold);
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
     text-decoration: none;
     white-space: nowrap;
+}
+
+.app-button:active:not(:disabled) {
+    transform: scale(0.98);
 }
 
 .app-button:disabled {
@@ -338,21 +339,15 @@
     background: var(--app-accent-hover);
 }
 
-.app-button--primary:focus {
-    outline: 2px solid var(--app-accent);
-    outline-offset: 2px;
-}
-
 /* Secondary Button */
 .app-button--secondary {
-    background: transparent;
+    background: var(--app-bg-elevated);
     color: var(--app-text-primary);
-    border: 1px solid var(--app-border-strong);
+    border-color: var(--app-border-strong);
 }
 
 .app-button--secondary:hover:not(:disabled) {
-    border-color: var(--app-accent);
-    color: var(--app-accent);
+    border-color: var(--app-text-primary);
 }
 
 /* Ghost Button */
@@ -437,7 +432,7 @@
     font-family: var(--font-sans);
     font-size: var(--text-base);
     color: var(--app-text-primary);
-    background: var(--app-bg);
+    background: var(--app-bg-elevated);
     border: 1px solid var(--app-border);
     border-radius: var(--radius-lg);
     transition: border-color var(--transition-fast);
@@ -453,7 +448,8 @@
 }
 
 .app-input:focus {
-    border-color: var(--app-accent);
+    border-color: var(--app-border-focus);
+    box-shadow: 0 0 0 3px rgb(11 11 12 / 0.08);
 }
 
 .app-input:disabled {
@@ -594,61 +590,9 @@
     }
 }
 
-.app-grid--4 {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-@media (min-width: 1024px) {
-    .app-grid--4 {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
 /* ============================================
    TABLES
    ============================================ */
-
-.app-table-wrapper {
-    border: 1px solid var(--app-border);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-}
-
-.app-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.app-table th {
-    padding: var(--space-3) var(--space-6);
-    text-align: left;
-    font-size: var(--text-xs);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-muted);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wider);
-    background: var(--app-bg-secondary);
-    border-bottom: 1px solid var(--app-border);
-}
-
-.app-table td {
-    padding: var(--space-4) var(--space-6);
-    font-size: var(--text-sm);
-    color: var(--app-text-primary);
-    border-bottom: 1px solid var(--app-border);
-}
-
-.app-table tr:last-child td {
-    border-bottom: none;
-}
-
-.app-table--interactive tbody tr {
-    transition: background var(--transition-fast);
-}
-
-.app-table--interactive tbody tr:hover {
-    background: var(--app-bg-secondary);
-}
 
 /* ============================================
    EMPTY STATE
@@ -657,8 +601,9 @@
 .app-empty {
     padding: var(--space-12);
     text-align: center;
-    border: 1px solid var(--app-border);
+    border: 1px dashed var(--app-border-strong);
     border-radius: var(--radius-xl);
+    background: var(--app-bg-elevated);
 }
 
 .app-empty__icon {
@@ -725,7 +670,8 @@
    ============================================ */
 
 .app-upload-zone {
-    border: 2px dashed var(--app-border);
+    background: var(--app-bg-elevated);
+    border: 2px dashed var(--app-border-strong);
     border-radius: var(--radius-xl);
     padding: var(--space-8);
     text-align: center;
@@ -775,10 +721,6 @@
     gap: var(--space-4);
 }
 
-.app-actions--end {
-    justify-content: flex-end;
-}
-
 /* ============================================
    BADGE / TAG
    ============================================ */
@@ -789,8 +731,9 @@
     gap: var(--space-1);
     padding: var(--space-1) var(--space-2);
     font-size: var(--text-xs);
-    font-weight: var(--font-medium);
-    border-radius: var(--radius-sm);
+    font-weight: var(--font-semibold);
+    border-radius: var(--radius-full);
+    padding: var(--space-1) var(--space-3);
 }
 
 .app-badge--success {
@@ -809,45 +752,21 @@
 }
 
 /* ============================================
-   LINK
-   ============================================ */
-
-.app-link {
-    color: var(--app-text-secondary);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-}
-
-.app-link:hover {
-    color: var(--app-text-primary);
-}
-
-.app-link--primary {
-    color: var(--app-accent);
-    font-weight: var(--font-medium);
-}
-
-/* ============================================
    DIVIDER
    ============================================ */
-
-.app-divider {
-    height: 1px;
-    background: var(--app-border);
-    margin: var(--space-6) 0;
-}
 
 /* ============================================
    REDUCED MOTION
    ============================================ */
 
 @media (prefers-reduced-motion: reduce) {
-    .app-spinner {
-        animation: none;
-    }
-
-    * {
-        transition-duration: 0ms !important;
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
@@ -867,17 +786,14 @@
     }
 
     .app-card {
-        padding: var(--space-4);
-        border-radius: var(--radius-lg);
+        padding: var(--space-5);
     }
 
     .app-banner {
         padding: var(--space-6);
     }
 
-    .app-header__title {
-        font-size: var(--text-xl);
-    }
+    
 
     .app-page-title {
         font-size: var(--text-xl);
@@ -885,320 +801,348 @@
 }
 
 /* ============================================
-   FOOD PAGE STYLES
-   Warm, appetizing customer-facing pages
+   DINER VIEWS: what people see after scanning
    ============================================ */
 
+/* Full-screen menu (MenuViewer.tsx) */
+.menu-view {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+}
+
+.menu-view--empty {
+    position: static;
+    min-height: 100vh;
+    background: var(--app-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-view__pdf {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #fff;
+}
+
+.menu-pill {
+    position: fixed;
+    top: calc(env(safe-area-inset-top, 0px) + 12px);
+    left: 12px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    max-width: calc(100vw - 24px);
+    padding: 6px 6px 6px 6px;
+    padding-right: var(--space-4);
+    background: rgb(255 253 248 / 0.94);
+    backdrop-filter: saturate(1.4) blur(12px);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
+}
+
+.menu-view--empty .menu-pill {
+    position: sticky;
+    align-self: flex-start;
+    margin: calc(env(safe-area-inset-top, 0px) + 12px) 12px 0;
+}
+
+.menu-pill__back,
+.menu-pill__call {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    color: var(--app-text-primary);
+    text-decoration: none;
+}
+
+.menu-pill__back:hover {
+    background: var(--app-bg-secondary);
+}
+
+.menu-pill__call {
+    margin-right: calc(-1 * var(--space-2));
+    background: var(--app-bg-ink);
+    color: var(--app-accent-text);
+}
+
+.menu-pill__logo {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1px solid var(--app-border);
+    background: #fff;
+}
+
+.menu-pill__logo--initials {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--app-bg-ink);
+    border-color: var(--app-bg-ink);
+    color: var(--app-accent-text);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.menu-pill__name {
+    min-width: 0;
+    max-width: 60vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.menu-empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-12) var(--space-6);
+    text-align: center;
+}
+
+.menu-empty__icon {
+    color: var(--app-text-muted);
+    margin-bottom: var(--space-2);
+}
+
+.menu-empty__title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 600;
+}
+
+.menu-empty__text {
+    max-width: 28rem;
+    color: var(--app-text-muted);
+    margin-bottom: var(--space-4);
+}
+
+/* Food court page (FoodCourtView.tsx) */
 .food-page {
     min-height: 100vh;
-    background-color: var(--app-bg-warm);
-    font-family: var(--font-sans);
+    background: var(--app-bg);
     color: var(--app-text-primary);
 }
 
-.food-page--alt {
-    background-color: var(--app-bg-warm-secondary);
-}
-
-/* Food Header */
-.food-header {
-    background: var(--app-bg);
+.food-hero {
+    padding: var(--space-16) var(--space-4) var(--space-10);
+    text-align: center;
     border-bottom: 1px solid var(--app-border);
 }
 
-.food-header__inner {
-    max-width: 56rem;
-    margin: 0 auto;
-    padding: var(--space-6) var(--space-4);
+.food-hero__title {
+    margin-top: var(--space-2);
+    font-size: var(--text-4xl);
+    line-height: 1.05;
+    overflow-wrap: anywhere;
 }
 
-.food-header__logo {
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--app-border);
+@media (min-width: 640px) {
+    .food-hero__title {
+        font-size: var(--text-display);
+    }
 }
 
-.food-header__logo-placeholder {
-    width: 64px;
-    height: 64px;
-    background: var(--app-bg-secondary);
-    border: 1px solid var(--app-border);
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--app-text-disabled);
-}
-
-.food-header__title {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-primary);
-    letter-spacing: var(--tracking-tight);
-}
-
-.food-header__description {
-    font-size: var(--text-base);
+.food-hero__description {
+    max-width: 40rem;
+    margin: var(--space-4) auto 0;
+    font-size: var(--text-lg);
     color: var(--app-text-muted);
-    margin-top: var(--space-1);
 }
 
-.food-header__meta {
-    margin-top: var(--space-4);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--app-border);
+.food-hero__meta {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2) var(--space-5);
+    margin-top: var(--space-6);
     font-size: var(--text-sm);
     color: var(--app-text-muted);
 }
 
-.food-header__meta-item {
-    display: flex;
+.food-hero__meta-item {
+    display: inline-flex;
     align-items: center;
     gap: var(--space-2);
 }
 
 .food-header__meta-link {
-    color: var(--app-text-muted);
+    color: var(--app-text-primary);
+    font-weight: var(--font-semibold);
     text-decoration: none;
-    transition: color var(--transition-fast);
 }
 
 .food-header__meta-link:hover {
-    color: var(--app-food-accent);
+    text-decoration: underline;
 }
 
-/* Food Cards (Restaurant Grid) */
-.food-card {
-    background: var(--app-bg);
-    border: 1px solid var(--app-border);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    transition: border-color var(--transition-fast), transform var(--transition-fast);
+.food-main {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: var(--space-10) var(--space-4) var(--space-16);
 }
 
-.food-card:hover {
-    border-color: var(--app-food-accent-border);
-    transform: translateY(-2px);
-}
-
-.food-card__image {
-    aspect-ratio: 1;
-    background: var(--app-bg-secondary);
-    padding: var(--space-6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.food-card__image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform var(--transition-base);
-}
-
-.food-card:hover .food-card__image img {
-    transform: scale(1.05);
-}
-
-.food-card__badge {
-    position: absolute;
-    top: var(--space-3);
-    right: var(--space-3);
-    background: var(--app-accent);
-    color: var(--app-accent-text);
-    font-size: var(--text-xs);
-    font-weight: var(--font-medium);
-    padding: var(--space-1) var(--space-2);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-}
-
-.food-card__content {
-    padding: var(--space-4);
-    background: var(--app-bg);
-    border-top: 1px solid var(--app-border);
-}
-
-.food-card__title {
-    font-size: var(--text-lg);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-primary);
-    text-align: center;
-    transition: color var(--transition-fast);
-    line-height: 1.3;
-}
-
-.food-card:hover .food-card__title {
-    color: var(--app-food-accent);
-}
-
-.food-card__cta {
-    text-align: center;
-    font-size: var(--text-sm);
-    font-weight: var(--font-semibold);
-    color: var(--app-food-accent);
-    padding: var(--space-2);
-    opacity: 0;
-    transition: opacity var(--transition-fast);
-}
-
-@media (max-width: 640px) {
-    .food-card__cta {
-        opacity: 1;
-    }
-}
-
-.food-card:hover .food-card__cta {
-    opacity: 1;
-}
-
-/* Food Button (Red accent) */
-.food-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    height: 48px;
-    padding: 0 var(--space-6);
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
-    font-weight: var(--font-medium);
-    border-radius: var(--radius-lg);
-    border: none;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    text-decoration: none;
-    white-space: nowrap;
-    background: var(--app-food-accent);
-    color: white;
-}
-
-.food-button:hover {
-    background: var(--app-food-accent-hover);
-}
-
-/* Menu Display */
-.food-menu-card {
-    background: var(--app-bg);
-    border: 1px solid var(--app-border);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-}
-
-.food-menu-header {
-    padding: var(--space-4);
-    background: var(--app-food-accent);
-    color: white;
-    font-weight: var(--font-semibold);
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-}
-
-/* Food Empty State */
-.food-empty {
-    padding: var(--space-16);
-    text-align: center;
-}
-
-.food-empty__icon {
-    color: var(--app-text-disabled);
+.food-main__title {
     margin-bottom: var(--space-6);
-}
-
-.food-empty__title {
-    font-size: var(--text-3xl);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-primary);
-    margin-bottom: var(--space-3);
-}
-
-.food-empty__description {
-    font-size: var(--text-lg);
-    color: var(--app-text-muted);
-}
-
-/* Food Court Hero */
-.food-hero {
-    background: var(--app-bg);
-    border-bottom: 1px solid var(--app-border);
-    padding: var(--space-12) var(--space-4);
+    font-size: var(--text-2xl);
     text-align: center;
 }
 
-.food-hero__title {
-    font-size: var(--text-4xl);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-primary);
-    margin-bottom: var(--space-3);
-    letter-spacing: var(--tracking-tight);
-}
-
-@media (min-width: 640px) {
-    .food-hero__title {
-        font-size: var(--text-5xl);
-    }
-}
-
-.food-hero__description {
-    font-size: var(--text-lg);
-    color: var(--app-text-muted);
-    max-width: 40rem;
-    margin: 0 auto var(--space-4);
-}
-
-.food-hero__instruction {
-    font-size: var(--text-xl);
-    font-weight: var(--font-medium);
-    color: var(--app-text-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-}
-
-/* Food Grid */
 .food-grid {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: var(--space-4);
-}
-
-@media (min-width: 480px) {
-    .food-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 @media (min-width: 768px) {
     .food-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-6);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-5);
     }
 }
 
 @media (min-width: 1024px) {
     .food-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 
-/* Food Footer */
-.food-footer {
-    border-top: 1px solid var(--app-border);
-    padding: var(--space-6) var(--space-4);
-    text-align: center;
+.food-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--app-bg-elevated);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.food-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--app-border-strong);
+}
+
+.food-card__image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-5);
+    background: var(--app-bg-secondary);
+}
+
+.food-card__image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.food-card__initials {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    font-weight: 600;
+    color: var(--app-text-secondary);
+}
+
+.food-card__badge {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 2px var(--space-2);
+    background: var(--app-bg-ink);
+    color: var(--app-accent-text);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    border-radius: var(--radius-full);
+}
+
+.food-card__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4) var(--space-4);
+}
+
+.food-card__title {
+    font-size: var(--text-base);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.food-card__cta {
+    margin-top: auto;
     font-size: var(--text-sm);
-    color: var(--app-text-disabled);
+    font-weight: var(--font-semibold);
+    color: var(--app-text-muted);
+}
+
+.food-card:hover .food-card__cta {
+    color: var(--app-text-primary);
+}
+
+.food-empty {
+    padding: var(--space-16) var(--space-4);
+    text-align: center;
+}
+
+.food-empty__icon {
+    color: var(--app-text-muted);
+    margin: 0 auto var(--space-4);
+}
+
+.food-empty__title {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-2);
+}
+
+.food-empty__description {
+    color: var(--app-text-muted);
+}
+
+.food-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-6) var(--space-4);
+    border-top: 1px solid var(--app-border);
+    font-size: var(--text-sm);
+    color: var(--app-text-muted);
 }
 
 /* ============================================
@@ -1230,10 +1174,10 @@
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-4);
-    background: var(--app-bg);
+    background: var(--app-bg-elevated);
     border: 1px solid var(--app-border);
     border-radius: var(--radius-xl);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-lg);
     animation: toast-slide-in 0.3s ease;
 }
 
@@ -1302,7 +1246,7 @@
 .confirm-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgb(11 11 12 / 0.45);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
@@ -1323,7 +1267,7 @@
 }
 
 .confirm-modal {
-    background: var(--app-bg);
+    background: var(--app-bg-elevated);
     border: 1px solid var(--app-border);
     border-radius: var(--radius-2xl);
     padding: var(--space-8);
@@ -1372,4 +1316,767 @@
     .confirm-modal__actions .app-button {
         width: 100%;
     }
+}
+/* ============================================
+   OWNER APP SHELL (AppShell.tsx)
+   ============================================ */
+
+.app-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgb(255 253 248 / 0.92);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--app-border);
+}
+
+.app-topbar__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 64px;
+    flex-wrap: wrap;
+}
+
+.app-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--app-text-primary);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.app-logo__mark {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--app-bg-ink);
+    color: var(--app-accent-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-logo__word {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-lg);
+    letter-spacing: -0.01em;
+}
+
+.app-nav {
+    display: flex;
+    gap: var(--space-1);
+    margin-left: var(--space-4);
+    margin-right: auto;
+}
+
+.app-nav__link {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--app-text-secondary);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.app-nav__link:hover {
+    background: var(--app-bg-secondary);
+    color: var(--app-text-primary);
+}
+
+.app-nav__link--active,
+.app-nav__link--active:hover {
+    background: var(--app-bg-ink);
+    color: var(--app-accent-text);
+}
+
+/* Under 640px the nav drops to its own scrollable row below the logo */
+@media (max-width: 639px) {
+    .app-topbar__inner {
+        padding-top: var(--space-3);
+        padding-bottom: var(--space-3);
+        row-gap: var(--space-3);
+        justify-content: space-between;
+    }
+
+    .app-nav {
+        order: 3;
+        width: 100%;
+        margin: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .app-nav::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.app-titlebar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-8) 0 0;
+}
+
+.app-titlebar .app-page-title {
+    font-size: var(--text-3xl);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+}
+
+.app-titlebar__subtitle {
+    margin-top: var(--space-1);
+    color: var(--app-text-muted);
+    font-size: var(--text-base);
+}
+
+/* Public link row (PublicLink.tsx) */
+.app-publink {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+    background: var(--app-bg);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-full);
+    min-width: 0;
+}
+
+.app-publink__url {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--text-sm);
+    color: var(--app-text-secondary);
+}
+
+/* Dashboard status card */
+.app-status {
+    display: grid;
+    gap: var(--space-4);
+}
+
+.app-status__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+.app-status__name {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.app-eyebrow {
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--app-text-muted);
+}
+
+/* Food court stall list (food-court/restaurants) */
+.app-stalls {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.app-stall {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: var(--app-bg-elevated);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.app-stall__logo {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--app-border);
+    object-fit: cover;
+    background: var(--app-bg-secondary);
+}
+
+.app-stall__logo--empty {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--app-text-muted);
+}
+
+.app-stall__body {
+    min-width: 0;
+}
+
+.app-stall__name {
+    font-weight: var(--font-semibold);
+    overflow-wrap: anywhere;
+}
+
+.app-stall__slug {
+    font-size: var(--text-sm);
+    color: var(--app-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.app-stall__actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.app-stall__delete {
+    color: var(--app-error);
+}
+
+@media (max-width: 639px) {
+    .app-stall {
+        grid-template-columns: auto 1fr;
+    }
+
+    .app-stall .app-badge {
+        justify-self: start;
+        grid-column: 2;
+    }
+
+    .app-stall__actions {
+        grid-column: 1 / -1;
+    }
+
+    .app-stall__actions .app-button {
+        flex: 1;
+    }
+}
+
+/* File upload (FileUpload.tsx) */
+.app-upload-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app-upload-zone:focus-within {
+    outline: 2px solid var(--app-food-accent);
+    outline-offset: 2px;
+}
+
+.app-upload__description {
+    display: block;
+    margin-top: var(--space-1);
+    font-size: var(--text-xs);
+    font-weight: var(--font-normal);
+    color: var(--app-text-muted);
+}
+
+.app-upload__current {
+    position: relative;
+    align-self: flex-start;
+}
+
+.app-upload__image {
+    width: 112px;
+    height: 112px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--app-border);
+}
+
+.app-upload__file {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--app-bg-secondary);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-lg);
+    color: var(--app-text-muted);
+}
+
+.app-upload__file p:first-child {
+    color: var(--app-text-primary);
+}
+
+.app-upload__remove {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--app-bg-elevated);
+    border-radius: var(--radius-full);
+    background: var(--app-error);
+    color: #fff;
+    cursor: pointer;
+}
+
+.app-upload__remove:disabled {
+    opacity: 0.5;
+}
+
+/* QR code display (QRCodeGenerator.tsx): white behind the code for reliable scanning */
+.app-qr {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-6);
+    background: #fff;
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-xl);
+}
+
+.app-qr__svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Horizontal stepper (Steps variant="progress") */
+.app-steps--progress {
+    flex-direction: row;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+    list-style: none;
+    padding: 0;
+}
+
+.app-steps--progress .app-step {
+    flex: 1;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-full);
+    background: var(--app-bg-secondary);
+    color: var(--app-text-muted);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.app-steps--progress .app-step__number {
+    background: var(--app-bg-elevated);
+    color: var(--app-text-muted);
+    border: 1px solid var(--app-border-strong);
+}
+
+.app-steps--progress .app-step--active {
+    background: var(--app-bg-ink);
+    color: var(--app-accent-text);
+}
+
+.app-steps--progress .app-step--active .app-step__number {
+    background: var(--app-food-accent);
+    border-color: var(--app-food-accent);
+    color: #fff;
+}
+
+.app-steps--progress .app-step--completed .app-step__number {
+    background: var(--app-bg-ink);
+    border-color: var(--app-bg-ink);
+    color: var(--app-accent-text);
+}
+
+/* On phones only the active step keeps its label */
+@media (max-width: 639px) {
+    .app-steps--progress .app-step:not(.app-step--active) {
+        flex: 0 0 auto;
+    }
+
+    .app-steps--progress .app-step:not(.app-step--active) > span:last-child {
+        display: none;
+    }
+}
+
+/* ============================================
+   LANDING PAGE (app/page.tsx, components/landing)
+   ============================================ */
+
+.land-wrap {
+    width: 100%;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 var(--space-5);
+}
+
+@media (min-width: 1024px) {
+    .land-wrap {
+        padding: 0 var(--space-8);
+    }
+}
+
+.land-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgb(246 241 231 / 0.9);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--app-border);
+}
+
+.land-hero {
+    padding: var(--space-16) 0 var(--space-20);
+}
+
+@media (min-width: 1024px) {
+    .land-hero {
+        padding: var(--space-20) 0 var(--space-24);
+    }
+}
+
+.land-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 7vw, 5.25rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    max-width: 14ch;
+}
+
+.land-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.2vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+}
+
+.land-lede {
+    margin-top: var(--space-6);
+    max-width: 34rem;
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: var(--app-text-secondary);
+}
+
+.land-lede--inverse {
+    color: rgb(255 253 248 / 0.7);
+}
+
+.land-cta {
+    height: 52px;
+    padding: 0 var(--space-8);
+}
+
+.land-section {
+    padding: var(--space-20) 0;
+}
+
+.land-section--tint {
+    background: var(--app-bg-secondary);
+}
+
+/* Hero object: the paper menu with a QR sticker landing on it */
+.land-menu {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 380px);
+    padding: var(--space-8) var(--space-8) var(--space-10);
+    background: #F3EDE2;
+    color: #2B251D;
+    border-radius: 4px;
+    transform: rotate(-3deg);
+    box-shadow: 0 1px 2px rgb(60 40 20 / 0.1), 0 30px 60px -20px rgb(60 40 20 / 0.35);
+}
+
+.land-menu__name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.land-menu__est {
+    margin-top: 2px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #6B645A;
+}
+
+.land-menu__section {
+    margin: var(--space-5) 0 var(--space-2);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    color: #6B645A;
+}
+
+.land-menu__row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    line-height: 1.9;
+}
+
+.land-menu__row i {
+    flex: 1;
+    border-bottom: 2px dotted rgb(59 52 43 / 0.28);
+}
+
+.land-menu__stain {
+    position: absolute;
+    right: 22px;
+    bottom: 64px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 6px solid rgb(120 78 38 / 0.16);
+    box-shadow: inset 0 0 0 2px rgb(120 78 38 / 0.06);
+    filter: blur(0.6px);
+}
+
+.land-sticker {
+    position: absolute;
+    left: -28px;
+    bottom: -34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 10px 10px 8px;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 40px -8px rgb(11 11 12 / 0.35);
+    transform: rotate(7deg);
+    animation: land-stick 700ms cubic-bezier(0.2, 0.9, 0.2, 1.2) 250ms backwards;
+}
+
+.land-sticker__caption {
+    font-size: 11px;
+    font-weight: var(--font-semibold);
+    color: var(--app-text-primary);
+}
+
+/* The one orchestrated moment: the sticker lands on the menu */
+@keyframes land-stick {
+    from {
+        transform: translate(-40px, -60px) rotate(-14deg) scale(1.25);
+    }
+}
+
+@media (max-width: 639px) {
+    .land-menu {
+        width: min(100%, 320px);
+        padding: var(--space-6) var(--space-6) var(--space-8);
+    }
+
+    .land-sticker {
+        left: -12px;
+    }
+}
+
+/* How it works */
+.land-steps {
+    display: grid;
+    gap: var(--space-10);
+    margin-top: var(--space-12);
+    list-style: none;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .land-steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-8);
+    }
+}
+
+.land-step {
+    padding-top: var(--space-5);
+    border-top: 2px solid var(--app-text-primary);
+}
+
+.land-step__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+.land-step__title {
+    margin-top: var(--space-4);
+    font-size: var(--text-xl);
+}
+
+.land-step__desc {
+    margin-top: var(--space-2);
+    max-width: 30ch;
+    color: var(--app-text-secondary);
+    line-height: 1.6;
+}
+
+/* Features: a quiet two-column list, not cards */
+.land-features {
+    display: grid;
+    gap: var(--space-8) var(--space-10);
+}
+
+@media (min-width: 640px) {
+    .land-features {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.land-feature__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.land-feature__desc {
+    margin-top: var(--space-2);
+    color: var(--app-text-secondary);
+    line-height: 1.6;
+}
+
+/* Food court band (ink) */
+.land-band {
+    padding: var(--space-20) 0;
+    background: var(--app-bg-ink);
+    color: var(--app-accent-text);
+}
+
+.land-stalls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    max-width: 26rem;
+    padding: var(--space-4);
+    background: var(--app-bg);
+    border-radius: var(--radius-2xl);
+    justify-self: center;
+    width: 100%;
+}
+
+.land-stall {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: var(--app-bg-elevated);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-lg);
+}
+
+.land-stall__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-md);
+    background: var(--app-bg-secondary);
+    color: var(--app-text-secondary);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+}
+
+.land-stall__line {
+    height: 8px;
+    width: 70%;
+    border-radius: var(--radius-full);
+    background: var(--app-bg-tertiary);
+}
+
+/* Film */
+.land-film {
+    margin-top: var(--space-10);
+    overflow: hidden;
+    border-radius: var(--radius-2xl);
+    background: var(--app-bg-ink);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Final call to action */
+.land-final {
+    padding: var(--space-16) var(--space-8);
+    border: 2px solid var(--app-text-primary);
+    border-radius: var(--radius-2xl);
+    background: var(--app-bg-elevated);
+    text-align: left;
+}
+
+@media (max-width: 639px) {
+    .land-final {
+        padding: var(--space-10) var(--space-5);
+    }
+}
+
+.app-hint--error {
+    color: var(--app-error);
+}
+
+/* Message pages (unauthorized, not found) */
+.msg-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-4);
+    background: var(--app-bg);
+}
+
+.msg-card {
+    width: 100%;
+    max-width: 30rem;
+    padding: var(--space-10) var(--space-8);
+    background: var(--app-bg-elevated);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.msg-card__icon {
+    color: var(--app-text-muted);
+}
+
+.msg-card__title {
+    margin-top: var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    line-height: 1.1;
+}
+
+.msg-card__text {
+    margin-top: var(--space-3);
+    color: var(--app-text-secondary);
+    line-height: 1.6;
+}
+
+.msg-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
 }

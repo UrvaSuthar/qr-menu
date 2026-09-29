@@ -76,7 +76,7 @@ export function RestaurantDetailsStep({ onComplete }: RestaurantDetailsStepProps
                         required
                     />
                     <p className="text-sm text-[var(--app-text-muted)] mt-1">
-                        Your menu will be at: qr-menu.vercel.app/menu/{slug || 'your-restaurant'}
+                        Your menu will be at /menu/{slug || 'your-restaurant'}
                     </p>
                 </div>
 

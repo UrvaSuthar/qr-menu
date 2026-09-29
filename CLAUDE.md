@@ -43,7 +43,12 @@ Next.js 16 App Router + React 19 + Tailwind 4, backed entirely by Supabase (Auth
   - `/menu/r/[id]`: restaurant by id.
   - `/menu/fc/[id]`: food court by id.
 
-**UI.** Shared primitives live in `app/components/ui` (barrel `index.tsx`). Feature components live in `app/components/{auth,landing,layout,features}`. Styling mixes Tailwind classes with hand-written CSS in `app/styles/` (`design-system.css` is global; `app.css` / `auth.css` are imported per page). Toasts go through `ToastContext`.
+**UI.**
+- One design system: ink + cream editorial, with Fraunces for headings, Inter for UI and a single red accent. The spec is `docs/superpowers/specs/2026-09-30-redesign-design.md`.
+- Tokens and component classes live in `app/styles/app.css` (`app-*` shared, `food-*`/`menu-*` diner views, `land-*` landing), imported once in `app/layout.tsx`. The same tokens are exposed to Tailwind via `@theme` in `app/globals.css` (`bg-paper`, `bg-card`, `bg-ink`, `text-muted`, `border-line`, `font-display`). `app/styles/auth.css` covers the login and signup pages.
+- Use the tokens; don't hard-code colours or add inline `style={{}}` objects (there are none).
+- Owner pages render inside `components/layout/AppShell` (top bar, role nav, title). Diner pages use `components/features/menu/MenuViewer` (PDF plus name pill) and `FoodCourtView`.
+- Shared primitives are in `app/components/ui` (barrel `index.tsx`). Toasts go through `ToastContext`.
 
 ## Database
 

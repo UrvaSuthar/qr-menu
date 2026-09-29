@@ -1,7 +1,7 @@
 'use client';
 
 import '@/styles/app.css';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useId } from 'react';
 import { Label } from './Label';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -12,7 +12,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
     ({ label, hint, error, id, required, className = '', ...props }, ref) => {
-        const inputId = id || props.name;
+        const autoId = useId();
+        const inputId = id || props.name || autoId;
         const inputClass = `app-input ${error ? 'app-input--error' : ''} ${className}`.trim();
 
         return (
@@ -24,7 +25,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 )}
                 <input ref={ref} id={inputId} className={inputClass} {...props} />
                 {hint && !error && <p className="app-hint">{hint}</p>}
-                {error && <p className="app-hint" style={{ color: 'var(--app-error)' }}>{error}</p>}
+                {error && <p className="app-hint app-hint--error" role="alert">{error}</p>}
             </div>
         );
     }

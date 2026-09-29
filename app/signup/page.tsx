@@ -4,17 +4,17 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserRole } from '@/types';
-import { Mail, Lock, User, AlertCircle } from 'lucide-react';
+import { Mail, Lock, User, AlertCircle, QrCode } from 'lucide-react';
 import Link from 'next/link';
 
 import '@/styles/auth.css';
 import {
-    AuthBackground,
     AuthInput,
     AuthButton,
     RoleSelector,
     PasswordRules,
 } from '@/components/auth';
+import { BrandPanel } from '@/components/auth/brand-panel';
 
 export default function SignupPage() {
     const [fullName, setFullName] = useState('');
@@ -107,23 +107,15 @@ export default function SignupPage() {
     };
 
     return (
-        <div className="auth-page">
-            <AuthBackground />
-
-            <div className="auth-container">
-                {/* Brand Zone - Left side on desktop */}
-                <div className="auth-brand">
-                    <h1 className="auth-brand-title">
-                        QR Menu
-                    </h1>
-                    <p className="auth-brand-tagline">
-                        Create your digital menu in minutes.
-                        Perfect for restaurants, cafes, and food courts.
-                    </p>
-                </div>
+        <main className="auth-page">
+<div className="auth-container">
 
                 {/* Form Zone */}
                 <div className="auth-form-zone">
+                    <Link href="/" className="auth-home-link" aria-label="QR Menu home">
+                        <span className="auth-brand-mark"><QrCode size={16} /></span>
+                        QR Menu
+                    </Link>
                     <div className="auth-card">
                         {/* Header */}
                         <div className="auth-card-header">
@@ -213,7 +205,9 @@ export default function SignupPage() {
                         </div>
                     </div>
                 </div>
+
+                <BrandPanel title="Your menu is stuck in the past. Let’s fix that." line="Free forever · No credit card · 5 min setup" />
             </div>
-        </div>
+        </main>
     );
 }

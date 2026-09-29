@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { Restaurant } from '@/types';
 import { getMyFoodCourt, getSubRestaurants, deleteSubRestaurant } from '@/lib/foodCourts';
 import { SubRestaurantForm } from '@/components/features/restaurant';
-import { Plus, UtensilsCrossed, Check } from 'lucide-react';
-import '@/styles/app.css';
-import { LoadingSpinner, PageHeader, Button, EmptyState } from '@/components/ui';
+import { Plus, UtensilsCrossed, Check, Store } from 'lucide-react';
+import { AppShell } from '@/components/layout/AppShell';
+import { LoadingSpinner, Button, EmptyState } from '@/components/ui';
 import { useToast } from '@/contexts/ToastContext';
 
 export default function FoodCourtRestaurantsPage() {
@@ -83,20 +83,7 @@ export default function FoodCourtRestaurantsPage() {
     if (!foodCourt) return null;
 
     return (
-        <div className="app-page">
-            {/* Header */}
-            <header className="app-header">
-                <div className="app-container">
-                    <PageHeader
-                        title="Manage Restaurants"
-                        backHref="/food-court"
-                        backLabel="Back"
-                    />
-                </div>
-            </header>
-
-            {/* Main Content */}
-            <main className="app-container app-main">
+        <AppShell role="food_court" title="Restaurants" subtitle="The stalls diners see when they scan your QR code.">
                 {showForm ? (
                     <SubRestaurantForm
                         foodCourtId={foodCourt.id}
@@ -109,20 +96,18 @@ export default function FoodCourtRestaurantsPage() {
                     />
                 ) : (
                     <>
-                        {/* Add Button */}
-                        <div style={{ marginBottom: 'var(--space-6)' }}>
+                        <div className="app-section">
                             <Button onClick={handleAdd}>
                                 <Plus size={20} />
                                 Add Restaurant
                             </Button>
                         </div>
 
-                        {/* Restaurant List */}
                         {restaurants.length === 0 ? (
                             <EmptyState
-                                icon={<UtensilsCrossed size={64} strokeWidth={1} />}
-                                title="No Restaurants Yet"
-                                description="Add your first restaurant to get started!"
+                                icon={<UtensilsCrossed size={48} strokeWidth={1} />}
+                                title="No restaurants yet"
+                                description="Add your first stall. Diners will see it the moment they scan."
                                 action={
                                     <Button onClick={handleAdd}>
                                         <Plus size={20} />
@@ -131,95 +116,40 @@ export default function FoodCourtRestaurantsPage() {
                                 }
                             />
                         ) : (
-                            <div className="app-table-wrapper">
-                                <table className="app-table app-table--interactive">
-                                    <thead>
-                                        <tr>
-                                            <th>Logo</th>
-                                            <th>Name</th>
-                                            <th>Slug</th>
-                                            <th>Menu</th>
-                                            <th style={{ textAlign: 'right' }}>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {restaurants.map((restaurant) => (
-                                            <tr key={restaurant.id}>
-                                                <td>
-                                                    {restaurant.logo_url ? (
-                                                        <img
-                                                            src={restaurant.logo_url}
-                                                            alt={restaurant.name}
-                                                            style={{
-                                                                width: '48px',
-                                                                height: '48px',
-                                                                objectFit: 'cover',
-                                                                borderRadius: 'var(--radius-md)',
-                                                                border: '1px solid var(--app-border)'
-                                                            }}
-                                                        />
-                                                    ) : (
-                                                        <div style={{
-                                                            width: '48px',
-                                                            height: '48px',
-                                                            background: 'var(--app-bg-secondary)',
-                                                            border: '1px solid var(--app-border)',
-                                                            borderRadius: 'var(--radius-md)',
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center'
-                                                        }}>
-                                                            <UtensilsCrossed size={24} color="var(--app-text-disabled)" />
-                                                        </div>
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    <span style={{ fontWeight: 500 }}>
-                                                        {restaurant.name}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <span style={{ color: 'var(--app-text-muted)' }}>
-                                                        /menu/{restaurant.slug}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    {restaurant.menu_pdf_url ? (
-                                                        <span className="app-badge app-badge--success">
-                                                            <Check size={12} />
-                                                            Uploaded
-                                                        </span>
-                                                    ) : (
-                                                        <span className="app-badge app-badge--muted">
-                                                            No menu
-                                                        </span>
-                                                    )}
-                                                </td>
-                                                <td style={{ textAlign: 'right' }}>
-                                                    <button
-                                                        onClick={() => handleEdit(restaurant)}
-                                                        className="app-link"
-                                                        style={{ marginRight: 'var(--space-4)' }}
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDelete(restaurant)}
-                                                        className="app-link"
-                                                        style={{ color: 'var(--app-error)' }}
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                            <ul className="app-stalls">
+                                {restaurants.map((restaurant) => (
+                                    <li key={restaurant.id} className="app-stall">
+                                        {restaurant.logo_url ? (
+                                            // eslint-disable-next-line @next/next/no-img-element
+                                            <img src={restaurant.logo_url} alt="" className="app-stall__logo" />
+                                        ) : (
+                                            <span className="app-stall__logo app-stall__logo--empty" aria-hidden="true">
+                                                <Store size={20} />
+                                            </span>
+                                        )}
+                                        <div className="app-stall__body">
+                                            <p className="app-stall__name">{restaurant.name}</p>
+                                            <p className="app-stall__slug">/menu/{restaurant.slug}</p>
+                                        </div>
+                                        {restaurant.menu_pdf_url ? (
+                                            <span className="app-badge app-badge--success"><Check size={12} />Menu</span>
+                                        ) : (
+                                            <span className="app-badge app-badge--muted">No menu</span>
+                                        )}
+                                        <div className="app-stall__actions">
+                                            <button onClick={() => handleEdit(restaurant)} className="app-button app-button--secondary app-button--sm">
+                                                Edit
+                                            </button>
+                                            <button onClick={() => handleDelete(restaurant)} className="app-button app-button--ghost app-button--sm app-stall__delete" aria-label={`Delete ${restaurant.name}`}>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
                         )}
                     </>
                 )}
-            </main>
-        </div>
+            </AppShell>
     );
 }

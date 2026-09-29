@@ -1,48 +1,20 @@
-import { ShieldX } from 'lucide-react';
 import Link from 'next/link';
-import { AuthBackground } from '@/components/auth';
-import '@/styles/auth.css';
+import { ShieldX } from 'lucide-react';
 
 export default function UnauthorizedPage() {
     return (
-        <div className="auth-page">
-            <AuthBackground />
-
-            <div className="auth-container">
-                <div className="auth-form-zone">
-                    <div className="auth-card" style={{ textAlign: 'center' }}>
-                        <div style={{ marginBottom: 'var(--auth-space-lg)' }}>
-                            <ShieldX
-                                size={64}
-                                strokeWidth={1.5}
-                                style={{ color: 'var(--auth-error)', margin: '0 auto' }}
-                            />
-                        </div>
-                        <h1 className="auth-card-title" style={{ marginBottom: 'var(--auth-space-sm)' }}>
-                            Unauthorized Access
-                        </h1>
-                        <p className="auth-card-subtitle" style={{ marginBottom: 'var(--auth-space-xl)' }}>
-                            You don&apos;t have permission to access this page. Please log in with the correct account type.
-                        </p>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--auth-space-sm)' }}>
-                            <Link
-                                href="/"
-                                className="auth-button auth-button--primary"
-                                style={{ textDecoration: 'none' }}
-                            >
-                                Go to Home
-                            </Link>
-                            <Link
-                                href="/login"
-                                className="auth-button auth-button--secondary"
-                                style={{ textDecoration: 'none' }}
-                            >
-                                Log In
-                            </Link>
-                        </div>
-                    </div>
+        <main className="msg-page">
+            <div className="msg-card">
+                <ShieldX size={48} strokeWidth={1.5} className="msg-card__icon" aria-hidden="true" />
+                <h1 className="msg-card__title">This page is for a different account type</h1>
+                <p className="msg-card__text">
+                    Restaurant and food court dashboards are separate. Log in with the account that owns this page.
+                </p>
+                <div className="msg-card__actions">
+                    <Link href="/login" className="app-button app-button--primary">Log in</Link>
+                    <Link href="/" className="app-button app-button--secondary">Go to home</Link>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }

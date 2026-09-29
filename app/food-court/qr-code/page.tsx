@@ -6,8 +6,8 @@ import { QRCodeGenerator } from '@/components/ui/QRCodeGenerator';
 import { getMyFoodCourt } from '@/lib/foodCourts';
 import { Restaurant } from '@/types';
 import { Info } from 'lucide-react';
-import '@/styles/app.css';
-import { LoadingSpinner, PageHeader, Card, Alert } from '@/components/ui';
+import { AppShell } from '@/components/layout/AppShell';
+import { LoadingSpinner, Card, Alert } from '@/components/ui';
 import { useToast } from '@/contexts/ToastContext';
 
 export default function FoodCourtQRCodePage() {
@@ -52,29 +52,16 @@ export default function FoodCourtQRCodePage() {
     const publicUrl = `${baseUrl}/menu/fc/${foodCourt.id}`;
 
     return (
-        <div className="app-page app-page--alt">
-            {/* Header */}
-            <header className="app-header">
-                <div className="app-container app-container--narrow">
-                    <PageHeader
-                        title="Food Court QR Code"
-                        backHref="/food-court"
-                        backLabel="Back to Dashboard"
-                    />
-                </div>
-            </header>
-
-            {/* Main Content */}
-            <main className="app-container app-container--narrow app-main">
+        <AppShell role="food_court" title="QR code" subtitle="One scan shows every stall." narrow>
                 <Card>
-                    <div style={{ marginBottom: 'var(--space-6)' }}>
+                    <div className="app-section">
                         <Alert type="info" icon={<Info size={18} />}>
                             <div>
                                 <strong>Food Court QR Code</strong>
-                                <p style={{ marginTop: '4px', opacity: 0.9 }}>
+                                <p className="mt-1">
                                     This QR code links to your food court&apos;s restaurant grid, where customers can browse all your sub-restaurants and select which menu to view.
                                 </p>
-                                <p style={{ marginTop: '8px', fontSize: '0.875rem' }}>
+                                <p className="mt-2 text-sm break-all">
                                     <strong>URL:</strong> {publicUrl}
                                 </p>
                             </div>
@@ -86,7 +73,6 @@ export default function FoodCourtQRCodePage() {
                         restaurantName={foodCourt.name}
                     />
                 </Card>
-            </main>
-        </div>
+            </AppShell>
     );
 }
