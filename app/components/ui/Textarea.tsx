@@ -1,6 +1,7 @@
 'use client';
 
 import '@/styles/app.css';
+import { useId } from 'react';
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     label?: string;
@@ -9,7 +10,8 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 export function Textarea({ label, hint, error, id, className = '', ...props }: TextareaProps) {
-    const inputId = id || props.name;
+    const autoId = useId();
+    const inputId = id || props.name || autoId;
     const inputClass = `app-input app-textarea ${error ? 'app-input--error' : ''} ${className}`.trim();
 
     return (

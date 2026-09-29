@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
-import "./styles/design-system.css";
+import "./styles/app.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ToastProvider } from "@/contexts/ToastContext";
 
@@ -29,10 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body
-        className={`${inter.variable} ${fraunces.variable} antialiased`}
-        style={{ fontFamily: 'var(--font-inter)' }}
+        className="antialiased bg-paper text-ink"
       >
         <AuthProvider>
           <ToastProvider>
