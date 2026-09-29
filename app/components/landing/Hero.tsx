@@ -45,7 +45,7 @@ export function Hero() {
                     }}
                 >
                     Your menu is stuck in the past.
-                    <span style={{ color: 'rgba(255, 255, 255, 0.5)', display: 'block' }}>Let's fix that.</span>
+                    <span style={{ color: 'rgba(255, 255, 255, 0.5)', display: 'block' }}>Let&apos;s fix that.</span>
                 </motion.h1>
 
                 <motion.p
@@ -62,7 +62,7 @@ export function Hero() {
                     }}
                 >
                     Upload your PDF (yes, even the one with the coffee stain).<br />
-                    We'll turn it into a QR code that your customers actually enjoy scanning.
+                    We&apos;ll turn it into a QR code that your customers actually enjoy scanning.
                 </motion.p>
 
                 <motion.div

@@ -100,8 +100,8 @@ export default function SignupPage() {
                     router.push('/food-court');
                 }
             }, 500);
-        } catch (err: any) {
-            setError(err.message || 'An error occurred during signup');
+        } catch (err) {
+            setError((err as Error).message || 'An error occurred during signup');
             setLoading(false);
         }
     };

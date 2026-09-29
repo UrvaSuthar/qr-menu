@@ -40,8 +40,8 @@ export default function FoodCourtSettingsPage() {
                 setAddress(data.address || '');
                 setPhone(data.phone || '');
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            setError((err as Error).message);
         } finally {
             setLoading(false);
         }
@@ -88,8 +88,8 @@ export default function FoodCourtSettingsPage() {
                 setFoodCourt(created);
                 showToast('Food court created successfully!', 'success');
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            setError((err as Error).message);
         } finally {
             setSaving(false);
         }

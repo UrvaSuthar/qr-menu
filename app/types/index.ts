@@ -1,3 +1,5 @@
+import type { User } from '@supabase/supabase-js';
+
 /**
  * User role types for the QR Menu platform
  */
@@ -80,7 +82,7 @@ export interface MenuItem {
  * Authentication context type
  */
 export interface AuthContextType {
-  user: any | null;
+  user: User | null;
   profile: UserProfile | null;
   loading: boolean;
   signUp: (email: string, password: string, fullName: string, role: UserRole) => Promise<void>;
