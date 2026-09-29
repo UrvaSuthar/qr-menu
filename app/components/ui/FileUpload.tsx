@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useId } from 'react';
 import { uploadFile, deleteFile } from '@/lib/restaurants';
 import { FileText, ImageIcon, X } from 'lucide-react';
 import '@/styles/app.css';
@@ -30,6 +30,7 @@ export function FileUpload({
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
     const [dragActive, setDragActive] = useState(false);
+    const inputId = useId();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { showConfirm } = useToast();
 
@@ -118,46 +119,23 @@ export function FileUpload({
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-            {/* Label */}
-            <label className="app-label">
+        <div className="flex flex-col gap-3">
+            <label className="app-label" htmlFor={inputId}>
                 {label}
-                {description && (
-                    <span style={{ display: 'block', fontWeight: 'normal', color: 'var(--app-text-muted)', marginTop: '4px', fontSize: 'var(--text-xs)' }}>
-                        {description}
-                    </span>
-                )}
+                {description && <span className="app-upload__description">{description}</span>}
             </label>
 
-            {/* Current File Preview */}
             {currentUrl && (
-                <div style={{ position: 'relative', display: 'inline-block' }}>
+                <div className="app-upload__current">
                     {accept.includes('image') ? (
-                        <img
-                            src={currentUrl}
-                            alt="Current file"
-                            style={{
-                                width: '128px',
-                                height: '128px',
-                                objectFit: 'cover',
-                                borderRadius: 'var(--radius-lg)',
-                                border: '1px solid var(--app-border)'
-                            }}
-                        />
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={currentUrl} alt="Current file" className="app-upload__image" />
                     ) : (
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 'var(--space-3)',
-                            padding: 'var(--space-4)',
-                            background: 'var(--app-bg-secondary)',
-                            borderRadius: 'var(--radius-lg)',
-                            border: '1px solid var(--app-border)'
-                        }}>
-                            <FileText size={32} color="var(--app-text-disabled)" />
+                        <div className="app-upload__file">
+                            <FileText size={28} aria-hidden="true" />
                             <div>
-                                <p style={{ fontSize: 'var(--text-sm)', fontWeight: 500 }}>Uploaded</p>
-                                <p style={{ fontSize: 'var(--text-xs)', color: 'var(--app-text-muted)' }}>Click to replace</p>
+                                <p className="text-sm font-semibold">Uploaded</p>
+                                <p className="text-xs text-muted">Upload again to replace</p>
                             </div>
                         </div>
                     )}
@@ -167,22 +145,8 @@ export function FileUpload({
                             type="button"
                             onClick={handleDelete}
                             disabled={uploading}
-                            style={{
-                                position: 'absolute',
-                                top: '-8px',
-                                right: '-8px',
-                                width: '28px',
-                                height: '28px',
-                                background: 'var(--app-error)',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: 'var(--radius-full)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                cursor: 'pointer',
-                                opacity: uploading ? 0.5 : 1
-                            }}
+                            className="app-upload__remove"
+                            aria-label="Remove file"
                         >
                             <X size={16} />
                         </button>
@@ -190,7 +154,6 @@ export function FileUpload({
                 </div>
             )}
 
-            {/* Upload Zone */}
             <div
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
@@ -201,39 +164,35 @@ export function FileUpload({
             >
                 <input
                     ref={fileInputRef}
+                    id={inputId}
                     type="file"
                     accept={accept}
                     onChange={handleChange}
                     disabled={uploading}
-                    style={{ display: 'none' }}
+                    className="sr-only"
                 />
 
-                <div>
-                    {accept.includes('image') ? (
-                        <ImageIcon size={40} className="app-upload-zone__icon" />
-                    ) : (
-                        <FileText size={40} className="app-upload-zone__icon" />
-                    )}
-                    <div>
-                        {uploading ? (
-                            <p className="app-upload-zone__text">Uploading...</p>
-                        ) : (
-                            <>
-                                <p className="app-upload-zone__text">
-                                    {currentUrl ? 'Click to replace' : 'Click to upload'} or drag and drop
-                                </p>
-                                <p className="app-upload-zone__hint">
-                                    Max {(maxSize / 1024 / 1024).toFixed(0)}MB • {accept}
-                                </p>
-                            </>
-                        )}
-                    </div>
-                </div>
+                {accept.includes('image') ? (
+                    <ImageIcon size={36} className="app-upload-zone__icon" aria-hidden="true" />
+                ) : (
+                    <FileText size={36} className="app-upload-zone__icon" aria-hidden="true" />
+                )}
+                {uploading ? (
+                    <p className="app-upload-zone__text">Uploading…</p>
+                ) : (
+                    <>
+                        <p className="app-upload-zone__text">
+                            {currentUrl ? 'Click to replace' : 'Click to upload'} or drag and drop
+                        </p>
+                        <p className="app-upload-zone__hint">
+                            Max {(maxSize / 1024 / 1024).toFixed(0)}MB • {accept}
+                        </p>
+                    </>
+                )}
             </div>
 
-            {/* Error Message */}
             {error && (
-                <div className="app-alert app-alert--error">
+                <div className="app-alert app-alert--error" role="alert">
                     {error}
                 </div>
             )}

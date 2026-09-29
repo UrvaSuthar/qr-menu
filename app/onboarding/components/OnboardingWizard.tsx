@@ -40,9 +40,9 @@ export function OnboardingWizard({ role }: OnboardingWizardProps) {
 
         return (
             <div className="space-y-8">
-                <Steps items={steps} currentStep={currentStep} />
+                <Steps items={steps} currentStep={currentStep} variant="progress" />
 
-                <div className="mt-8">
+                <div>
                     {currentStep === 1 && (
                         <RestaurantDetailsStep
                             onComplete={(id: string) => {
@@ -78,9 +78,9 @@ export function OnboardingWizard({ role }: OnboardingWizardProps) {
 
         return (
             <div className="space-y-8">
-                <Steps items={steps} currentStep={currentStep} />
+                <Steps items={steps} currentStep={currentStep} variant="progress" />
 
-                <div className="mt-8">
+                <div>
                     {currentStep === 1 && (
                         <FoodCourtDetailsStep
                             onComplete={(id: string) => {

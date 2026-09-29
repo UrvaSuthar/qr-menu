@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { getMyRestaurant } from '@/lib/restaurants';
 import { getMyFoodCourt } from '@/lib/foodCourts';
 import { LoadingSpinner } from '@/components/ui';
+import { QrCode } from 'lucide-react';
 import { OnboardingWizard } from './components/OnboardingWizard';
 
 export default function OnboardingPage() {
@@ -60,17 +61,20 @@ export default function OnboardingPage() {
     if (!profile) return null;
 
     return (
-        <div className="min-h-screen bg-[var(--app-bg)] flex flex-col">
-            <header className="border-b border-[var(--app-border)] bg-[var(--app-bg)] p-4">
-                <div className="max-w-4xl mx-auto flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[var(--app-primary)] text-white flex items-center justify-center font-bold">
-                        QR
-                    </div>
-                    <span className="font-semibold text-lg">Setup Your {profile.role === 'food_court' ? 'Food Court' : 'Restaurant'}</span>
+        <div className="app-page flex flex-col">
+            <header className="app-topbar">
+                <div className="app-container app-container--narrow app-topbar__inner">
+                    <span className="app-logo">
+                        <span className="app-logo__mark"><QrCode size={18} strokeWidth={2} /></span>
+                        <span className="app-logo__word">QR Menu</span>
+                    </span>
+                    <span className="ml-auto text-sm text-muted">
+                        Set up your {profile.role === 'food_court' ? 'food court' : 'restaurant'}
+                    </span>
                 </div>
             </header>
 
-            <main className="flex-1 max-w-4xl mx-auto w-full p-4 md:p-8">
+            <main className="app-container app-container--narrow app-main w-full flex-1">
                 <OnboardingWizard role={profile.role} />
             </main>
         </div>
