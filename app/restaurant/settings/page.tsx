@@ -6,8 +6,8 @@ import { FileUpload } from '@/components/ui/FileUpload';
 import { getMyRestaurant, createRestaurant, updateRestaurant } from '@/lib/restaurants';
 import { Restaurant } from '@/types';
 import { AlertCircle } from 'lucide-react';
-import '@/styles/app.css';
-import { LoadingSpinner, PageHeader, Card, Button, Input, Textarea, Alert } from '@/components/ui';
+import { AppShell } from '@/components/layout/AppShell';
+import { LoadingSpinner, Card, Button, Input, Textarea, Alert } from '@/components/ui';
 import { useToast } from '@/contexts/ToastContext';
 
 export default function RestaurantSettingsPage() {
@@ -112,19 +112,7 @@ export default function RestaurantSettingsPage() {
     }
 
     return (
-        <div className="app-page app-page--alt">
-            {/* Header */}
-            <header className="app-header">
-                <div className="app-container app-container--narrow">
-                    <PageHeader
-                        title={restaurant ? 'Restaurant Settings' : 'Create Restaurant'}
-                        onBack={() => router.back()}
-                    />
-                </div>
-            </header>
-
-            {/* Form */}
-            <main className="app-container app-container--narrow app-main">
+        <AppShell role="restaurant" title={restaurant ? 'Settings' : 'Create restaurant'} subtitle="Details, menu PDF and logo." narrow>
                 {error && (
                     <div className="app-section">
                         <Alert type="error" icon={<AlertCircle size={18} />}>
@@ -133,7 +121,7 @@ export default function RestaurantSettingsPage() {
                     </div>
                 )}
 
-                <form onSubmit={handleSave} className="app-form" style={{ gap: 'var(--space-8)' }}>
+                <form onSubmit={handleSave} className="app-form gap-8">
                     {/* Basic Info */}
                     <Card>
                         <h2 className="app-card__section">Basic Information</h2>
@@ -165,7 +153,7 @@ export default function RestaurantSettingsPage() {
                                 placeholder="Tell customers about your restaurant..."
                             />
 
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-4)' }}>
+                            <div className="grid gap-4 sm:grid-cols-2">
                                 <Input
                                     label="Address"
                                     value={address}
@@ -248,7 +236,6 @@ export default function RestaurantSettingsPage() {
                         )}
                     </div>
                 </form>
-            </main>
-        </div>
+            </AppShell>
     );
 }

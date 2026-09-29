@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { QRCodeGenerator } from '@/components/ui/QRCodeGenerator';
 import { getMyRestaurant } from '@/lib/restaurants';
 import { Restaurant } from '@/types';
-import '@/styles/app.css';
-import { LoadingSpinner, PageHeader, Card } from '@/components/ui';
+import { AppShell } from '@/components/layout/AppShell';
+import { LoadingSpinner, Card } from '@/components/ui';
 import { useToast } from '@/contexts/ToastContext';
 
 export default function QRCodePage() {
@@ -44,27 +44,13 @@ export default function QRCodePage() {
     }
 
     return (
-        <div className="app-page app-page--alt">
-            {/* Header */}
-            <header className="app-header">
-                <div className="app-container app-container--narrow">
-                    <PageHeader
-                        title="QR Code Generator"
-                        backHref="/restaurant"
-                        backLabel="Back to Dashboard"
-                    />
-                </div>
-            </header>
-
-            {/* Main Content */}
-            <main className="app-container app-container--narrow app-main">
+        <AppShell role="restaurant" title="QR code" subtitle="Print it on tables, walls, anywhere." narrow>
                 <Card>
                     <QRCodeGenerator
                         slug={restaurant.slug}
                         restaurantName={restaurant.name}
                     />
                 </Card>
-            </main>
-        </div>
+            </AppShell>
     );
 }
