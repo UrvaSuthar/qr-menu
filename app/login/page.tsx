@@ -4,15 +4,15 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { createClient } from '@/lib/supabase/client';
-import { Mail, Lock, AlertCircle } from 'lucide-react';
+import { Mail, Lock, AlertCircle, QrCode } from 'lucide-react';
 import Link from 'next/link';
 
 import '@/styles/auth.css';
 import {
-    AuthBackground,
     AuthInput,
     AuthButton,
 } from '@/components/auth';
+import { BrandPanel } from '@/components/auth/brand-panel';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -65,22 +65,14 @@ export default function LoginPage() {
 
     return (
         <div className="auth-page">
-            <AuthBackground />
-
-            <div className="auth-container">
-                {/* Brand Zone - Left side on desktop */}
-                <div className="auth-brand">
-                    <h1 className="auth-brand-title">
-                        QR Menu
-                    </h1>
-                    <p className="auth-brand-tagline">
-                        Digital menus for modern restaurants.
-                        Create, customize, and share your menu with a single QR code.
-                    </p>
-                </div>
+<div className="auth-container">
 
                 {/* Form Zone */}
                 <div className="auth-form-zone">
+                    <Link href="/" className="auth-home-link" aria-label="QR Menu home">
+                        <span className="auth-brand-mark"><QrCode size={16} /></span>
+                        QR Menu
+                    </Link>
                     <div className="auth-card">
                         {/* Header */}
                         <div className="auth-card-header">
@@ -151,6 +143,8 @@ export default function LoginPage() {
                         </div>
                     </div>
                 </div>
+
+                <BrandPanel title="Your menu, one scan away." line="Update the PDF any time. Your QR code never changes." />
             </div>
         </div>
     );

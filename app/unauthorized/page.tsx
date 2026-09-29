@@ -1,12 +1,10 @@
 import { ShieldX } from 'lucide-react';
 import Link from 'next/link';
-import { AuthBackground } from '@/components/auth';
 import '@/styles/auth.css';
 
 export default function UnauthorizedPage() {
     return (
         <div className="auth-page">
-            <AuthBackground />
 
             <div className="auth-container">
                 <div className="auth-form-zone">
