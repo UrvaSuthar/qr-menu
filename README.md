@@ -51,8 +51,8 @@ A modern, QR-based restaurant menu platform built with Next.js 14 and Supabase. 
 
 4. **Set up Supabase Database**
    - Create a new Supabase project
-   - Run the SQL migrations found in `supabase/migrations/`
-   - Enable Row Level Security (RLS)
+   - Run `supabase/schema.sql` in the SQL editor (tables, RLS, storage buckets). The files in `supabase/migrations/` are history only.
+   - Under Authentication → Sign In / Providers → Email, turn off "Confirm email" unless you've configured a custom SMTP server
 
 5. **Run the development server**
    ```bash

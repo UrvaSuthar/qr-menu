@@ -26,7 +26,7 @@ export async function signInAction(email: string, password: string) {
     const { data: profile } = await supabase
         .from('user_profiles')
         .select('role')
-        .eq('user_id', user.id)
+        .eq('id', user.id)
         .single();
 
     // Return redirect URL instead of redirecting server-side
