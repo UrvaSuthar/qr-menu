@@ -1,16 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { UploadCloud, ArrowRight, Smartphone } from 'lucide-react';
 
 export function HowItWorks() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
 
     const steps = [
         {

@@ -1,6 +1,6 @@
 import { getRestaurantBySlug, logQRScan } from '@/lib/restaurants';
 import { notFound } from 'next/navigation';
-import { MapPin, Phone, FileText, ClipboardList, UtensilsCrossed } from 'lucide-react';
+import { ClipboardList, UtensilsCrossed } from 'lucide-react';
 import '@/styles/app.css';
 
 export default async function PublicMenuPage({

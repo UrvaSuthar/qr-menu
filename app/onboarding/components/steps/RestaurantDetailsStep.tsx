@@ -47,8 +47,8 @@ export function RestaurantDetailsStep({ onComplete }: RestaurantDetailsStepProps
             });
             showToast('Restaurant created!', 'success');
             onComplete(restaurant.id);
-        } catch (error: any) {
-            showToast(error.message, 'error');
+        } catch (error) {
+            showToast((error as Error).message, 'error');
         } finally {
             setLoading(false);
         }

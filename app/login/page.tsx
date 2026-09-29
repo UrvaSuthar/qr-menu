@@ -57,8 +57,8 @@ export default function LoginPage() {
                     }
                 }, 500);
             }
-        } catch (err: any) {
-            setError(err.message || 'Invalid email or password');
+        } catch (err) {
+            setError((err as Error).message || 'Invalid email or password');
             setLoading(false);
         }
     };

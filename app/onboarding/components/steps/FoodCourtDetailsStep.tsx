@@ -47,8 +47,8 @@ export function FoodCourtDetailsStep({ onComplete }: FoodCourtDetailsStepProps) 
             });
             showToast('Food Court created!', 'success');
             onComplete(foodCourt.id);
-        } catch (error: any) {
-            showToast(error.message, 'error');
+        } catch (error) {
+            showToast((error as Error).message, 'error');
         } finally {
             setLoading(false);
         }

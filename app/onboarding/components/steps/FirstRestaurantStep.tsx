@@ -42,8 +42,8 @@ export function FirstRestaurantStep({ foodCourtId, onComplete }: FirstRestaurant
             });
             showToast('Restaurant added!', 'success');
             onComplete();
-        } catch (error: any) {
-            showToast(error.message, 'error');
+        } catch (error) {
+            showToast((error as Error).message, 'error');
         } finally {
             setLoading(false);
         }
