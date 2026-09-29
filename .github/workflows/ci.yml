@@ -34,3 +34,6 @@ jobs:
         env:
           # Disable telemetry during build
           NEXT_TELEMETRY_DISABLED: 1
+          # Prerendering creates a Supabase client, which needs a URL and key but makes no requests.
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
