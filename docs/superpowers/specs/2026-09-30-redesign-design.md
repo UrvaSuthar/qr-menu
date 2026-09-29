@@ -41,15 +41,18 @@ This matches the two launch videos, so the site and the marketing look the same.
 
 ## Implementation approach
 
-**Chosen: tokens in Tailwind v4 `@theme`, with the existing `app/components/ui` primitives restyled and used on every page.**
-- The tokens live once in `app/globals.css` (`@theme`), which replaces the Geist/Arial leftovers there.
-- `Button`, `Input`, `Textarea`, `Card`, `Badge`, `Alert`, `PageHeader`, `EmptyState`, `Steps`, `LoadingSpinner` and `FileUpload` are restyled with the tokens. `Input` and `Textarea` get `id`/`htmlFor` wiring, since labels are currently not linked to their inputs.
-- Pages drop their inline `style={{…}}` objects (117 today) and page-specific CSS in favour of the primitives and Tailwind classes.
-- `app/styles/app.css`, `auth.css` and `design-system.css` shrink to nothing and are deleted once nothing imports them. `auth-background.tsx` (the animated grid) goes too.
+**Chosen: retoken the existing class system in place, and expose the same tokens to Tailwind.**
+- Almost every page is already styled through `app-*`/`food-*` classes in `app/styles/app.css` and `auth-*` classes in `auth.css`, all driven by `--app-*` variables, and pages use those variables in Tailwind arbitrary values too.
+- The palette, type and component rules are rewritten there. Tailwind `@theme` in `globals.css` gets the same tokens (`bg-paper`, `text-ink`, `font-display`, …).
+- `design-system.css` merges into `app.css` and is deleted, as is `auth-background.tsx`.
+- `Input` and `Textarea` get `useId()` so their labels are always linked.
+- Pages that need a new structure are rebuilt: the landing page, auth, a shared owner `AppShell`, and the diner views. Inline `style={{…}}` objects are removed as each page is touched.
+
+(Revised during planning: the first draft proposed deleting `app.css` and converting to Tailwind classes. That gives the same visual result with much more churn, because the primitives already encapsulate the classes.)
 
 **Rejected alternatives:**
-- shadcn/ui: a new dependency and a component rewrite, for a product with about 12 primitives.
-- Re-skinning the CSS variables only: fast, but keeps three parallel style systems.
+- shadcn/ui: a new dependency and a component rewrite, for about 12 primitives.
+- Converting everything to Tailwind classes: see the note above.
 
 ## Surfaces
 
