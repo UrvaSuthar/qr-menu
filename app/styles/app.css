@@ -1837,3 +1837,325 @@ h1,
         display: none;
     }
 }
+
+/* ============================================
+   LANDING PAGE (app/page.tsx, components/landing)
+   ============================================ */
+
+.land-wrap {
+    width: 100%;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 var(--space-5);
+}
+
+@media (min-width: 1024px) {
+    .land-wrap {
+        padding: 0 var(--space-8);
+    }
+}
+
+.land-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgb(246 241 231 / 0.9);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--app-border);
+}
+
+.land-hero {
+    padding: var(--space-16) 0 var(--space-20);
+}
+
+@media (min-width: 1024px) {
+    .land-hero {
+        padding: var(--space-20) 0 var(--space-24);
+    }
+}
+
+.land-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 7vw, 5.25rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    max-width: 14ch;
+}
+
+.land-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.2vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+}
+
+.land-lede {
+    margin-top: var(--space-6);
+    max-width: 34rem;
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: var(--app-text-secondary);
+}
+
+.land-lede--inverse {
+    color: rgb(255 253 248 / 0.7);
+}
+
+.land-cta {
+    height: 52px;
+    padding: 0 var(--space-8);
+}
+
+.land-section {
+    padding: var(--space-20) 0;
+}
+
+.land-section--tint {
+    background: var(--app-bg-secondary);
+}
+
+/* Hero object: the paper menu with a QR sticker landing on it */
+.land-menu {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 380px);
+    padding: var(--space-8) var(--space-8) var(--space-10);
+    background: #F3EDE2;
+    color: #2B251D;
+    border-radius: 4px;
+    transform: rotate(-3deg);
+    box-shadow: 0 1px 2px rgb(60 40 20 / 0.1), 0 30px 60px -20px rgb(60 40 20 / 0.35);
+}
+
+.land-menu__name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.land-menu__est {
+    margin-top: 2px;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #8A7F70;
+}
+
+.land-menu__section {
+    margin: var(--space-5) 0 var(--space-2);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    color: #8A7F70;
+}
+
+.land-menu__row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    line-height: 1.9;
+}
+
+.land-menu__row i {
+    flex: 1;
+    border-bottom: 2px dotted rgb(59 52 43 / 0.28);
+}
+
+.land-menu__stain {
+    position: absolute;
+    right: 22px;
+    bottom: 64px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 6px solid rgb(120 78 38 / 0.16);
+    box-shadow: inset 0 0 0 2px rgb(120 78 38 / 0.06);
+    filter: blur(0.6px);
+}
+
+.land-sticker {
+    position: absolute;
+    left: -28px;
+    bottom: -34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: 10px 10px 8px;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 40px -8px rgb(11 11 12 / 0.35);
+    transform: rotate(7deg);
+    animation: land-stick 700ms cubic-bezier(0.2, 0.9, 0.2, 1.2) 250ms backwards;
+}
+
+.land-sticker__caption {
+    font-size: 11px;
+    font-weight: var(--font-semibold);
+    color: var(--app-text-primary);
+}
+
+/* The one orchestrated moment: the sticker lands on the menu */
+@keyframes land-stick {
+    from {
+        transform: translate(-40px, -60px) rotate(-14deg) scale(1.25);
+    }
+}
+
+@media (max-width: 639px) {
+    .land-menu {
+        width: min(100%, 320px);
+        padding: var(--space-6) var(--space-6) var(--space-8);
+    }
+
+    .land-sticker {
+        left: -12px;
+    }
+}
+
+/* How it works */
+.land-steps {
+    display: grid;
+    gap: var(--space-10);
+    margin-top: var(--space-12);
+    list-style: none;
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .land-steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-8);
+    }
+}
+
+.land-step {
+    padding-top: var(--space-5);
+    border-top: 2px solid var(--app-text-primary);
+}
+
+.land-step__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+.land-step__title {
+    margin-top: var(--space-4);
+    font-size: var(--text-xl);
+}
+
+.land-step__desc {
+    margin-top: var(--space-2);
+    max-width: 30ch;
+    color: var(--app-text-secondary);
+    line-height: 1.6;
+}
+
+/* Features: a quiet two-column list, not cards */
+.land-features {
+    display: grid;
+    gap: var(--space-8) var(--space-10);
+}
+
+@media (min-width: 640px) {
+    .land-features {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.land-feature__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.land-feature__desc {
+    margin-top: var(--space-2);
+    color: var(--app-text-secondary);
+    line-height: 1.6;
+}
+
+/* Food court band (ink) */
+.land-band {
+    padding: var(--space-20) 0;
+    background: var(--app-bg-ink);
+    color: var(--app-accent-text);
+}
+
+.land-stalls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-3);
+    max-width: 26rem;
+    padding: var(--space-4);
+    background: var(--app-bg);
+    border-radius: var(--radius-2xl);
+    justify-self: center;
+    width: 100%;
+}
+
+.land-stall {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: var(--app-bg-elevated);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-lg);
+}
+
+.land-stall__tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-md);
+    background: var(--app-bg-secondary);
+    color: var(--app-text-secondary);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+}
+
+.land-stall__line {
+    height: 8px;
+    width: 70%;
+    border-radius: var(--radius-full);
+    background: var(--app-bg-tertiary);
+}
+
+/* Film */
+.land-film {
+    margin-top: var(--space-10);
+    overflow: hidden;
+    border-radius: var(--radius-2xl);
+    background: var(--app-bg-ink);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Final call to action */
+.land-final {
+    padding: var(--space-16) var(--space-8);
+    border: 2px solid var(--app-text-primary);
+    border-radius: var(--radius-2xl);
+    background: var(--app-bg-elevated);
+    text-align: left;
+}
+
+@media (max-width: 639px) {
+    .land-final {
+        padding: var(--space-10) var(--space-5);
+    }
+}

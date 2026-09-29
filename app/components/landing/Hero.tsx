@@ -1,101 +1,53 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, QrCode } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
+
+const SITE_URL = 'https://qr-menu-sigma.vercel.app';
+
+/** The subject itself: a stained paper menu getting its QR sticker. */
+function PaperMenu() {
+    return (
+        <div className="land-menu" aria-hidden="true">
+            <p className="land-menu__name">The Corner Kitchen</p>
+            <p className="land-menu__est">Est. 2009</p>
+            <p className="land-menu__section">Starters</p>
+            <p className="land-menu__row"><span>Tomato soup</span><i /><span>6.50</span></p>
+            <p className="land-menu__row"><span>Garlic bread</span><i /><span>4.00</span></p>
+            <p className="land-menu__row"><span>Bruschetta</span><i /><span>7.00</span></p>
+            <p className="land-menu__section">Mains</p>
+            <p className="land-menu__row"><span>Mushroom risotto</span><i /><span>14.00</span></p>
+            <p className="land-menu__row"><span>Grilled chicken</span><i /><span>16.50</span></p>
+            <p className="land-menu__row"><span>Fish &amp; chips</span><i /><span>15.00</span></p>
+            <p className="land-menu__section">Desserts</p>
+            <p className="land-menu__row"><span>Apple crumble</span><i /><span>6.00</span></p>
+            <span className="land-menu__stain" />
+            <div className="land-sticker">
+                <QRCodeSVG value={SITE_URL} size={112} level="M" fgColor="#0B0B0C" bgColor="#FFFFFF" />
+                <span className="land-sticker__caption">Scan for the menu</span>
+            </div>
+        </div>
+    );
+}
 
 export function Hero() {
     return (
-        <section style={{ padding: '8rem 1.5rem 8rem', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ maxWidth: '60rem', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 10 }}>
-
-                {/* Animated Icon */}
-                <motion.div
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ duration: 0.8, type: "spring" }}
-                    style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '80px',
-                        height: '80px',
-                        marginBottom: '2rem',
-                        borderRadius: '50%',
-                        border: '2px solid rgba(255, 255, 255, 0.2)',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        backdropFilter: 'blur(10px)'
-                    }}
-                >
-                    <QrCode size={40} color="#FAFAFA" strokeWidth={1.5} />
-                </motion.div>
-
-                {/* Staggered Text Reveal */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    style={{
-                        fontSize: 'clamp(3rem, 8vw, 4.5rem)',
-                        fontWeight: 700,
-                        color: '#FAFAFA',
-                        marginBottom: '1.5rem',
-                        lineHeight: 1.1,
-                        letterSpacing: '-0.03em'
-                    }}
-                >
-                    Your menu is stuck in the past.
-                    <span style={{ color: 'rgba(255, 255, 255, 0.5)', display: 'block' }}>Let&apos;s fix that.</span>
-                </motion.h1>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    style={{
-                        fontSize: '1.25rem',
-                        color: 'rgba(255, 255, 255, 0.6)',
-                        marginBottom: '2.5rem',
-                        maxWidth: '38rem',
-                        margin: '0 auto 2.5rem',
-                        lineHeight: 1.6
-                    }}
-                >
-                    Upload your PDF (yes, even the one with the coffee stain).<br />
-                    We&apos;ll turn it into a QR code that your customers actually enjoy scanning.
-                </motion.p>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                >
-                    <Link
-                        href="/signup"
-                        className="group"
-                        style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.75rem',
-                            padding: '1.125rem 2.5rem',
-                            background: '#FAFAFA',
-                            color: '#0A0A0A',
-                            borderRadius: '100px',
-                            fontWeight: 600,
-                            textDecoration: 'none',
-                            fontSize: '1.125rem',
-                            transition: 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                    >
-                        Create Your QR Menu
-                        <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
-                    </Link>
-                    <p style={{ marginTop: '1.5rem', fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.4)' }}>
-                        Free forever · No credit card · 5 min setup
+        <section className="land-hero">
+            <div className="land-wrap grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+                <div>
+                    <h1 className="land-display">
+                        Your menu is stuck in the past.
+                        <span className="block">Let&apos;s fix that.</span>
+                    </h1>
+                    <p className="land-lede">
+                        Upload your PDF (yes, even the one with the coffee stain). We&apos;ll turn it into a QR code
+                        that your customers actually enjoy scanning.
                     </p>
-                </motion.div>
+                    <div className="mt-8 flex flex-wrap items-center gap-3">
+                        <Link href="/signup" className="app-button app-button--primary land-cta">Create your QR menu</Link>
+                        <Link href="/login" className="app-button app-button--secondary land-cta">Log in</Link>
+                    </div>
+                    <p className="mt-5 text-sm text-muted">Free forever. No credit card. About five minutes to set up.</p>
+                </div>
+                <PaperMenu />
             </div>
         </section>
     );
