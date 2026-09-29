@@ -44,7 +44,7 @@ export function MenuUploadStep({ restaurantId, onComplete, onSkip }: MenuUploadS
                     description="Upload your menu in PDF format (max 5MB)"
                     accept="application/pdf"
                     maxSize={5 * 1024 * 1024} // 5MB
-                    bucket="menus"
+                    bucket="restaurant-menus"
                     onUploadComplete={handleUploadComplete}
                 />
 
