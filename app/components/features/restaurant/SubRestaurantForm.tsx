@@ -86,7 +86,7 @@ export function SubRestaurantForm({
             </h2>
 
             {error && (
-                <div style={{ marginBottom: 'var(--space-6)' }}>
+                <div className="mb-6">
                     <Alert type="error" icon={<AlertCircle size={18} />}>
                         {error}
                     </Alert>

@@ -25,7 +25,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                 )}
                 <input ref={ref} id={inputId} className={inputClass} {...props} />
                 {hint && !error && <p className="app-hint">{hint}</p>}
-                {error && <p className="app-hint" style={{ color: 'var(--app-error)' }}>{error}</p>}
+                {error && <p className="app-hint app-hint--error" role="alert">{error}</p>}
             </div>
         );
     }

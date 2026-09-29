@@ -23,7 +23,7 @@ export function Textarea({ label, hint, error, id, className = '', ...props }: T
             )}
             <textarea id={inputId} className={inputClass} {...props} />
             {hint && !error && <p className="app-hint">{hint}</p>}
-            {error && <p className="app-hint" style={{ color: 'var(--app-error)' }}>{error}</p>}
+            {error && <p className="app-hint app-hint--error" role="alert">{error}</p>}
         </div>
     );
 }

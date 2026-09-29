@@ -129,13 +129,10 @@ h2,
 h3,
 .font-display,
 .app-page-title,
-.app-header__title,
-.app-section__title,
 .app-card__title,
 .app-banner__title,
 .app-empty__title,
 .food-hero__title,
-.food-header__title,
 .food-empty__title,
 .confirm-modal__title {
     font-family: var(--font-display);
@@ -168,10 +165,6 @@ h1,
     color: var(--app-text-primary);
 }
 
-.app-page--alt {
-    background-color: var(--app-bg-secondary);
-}
-
 /* ============================================
    LAYOUT
    ============================================ */
@@ -201,31 +194,6 @@ h1,
 /* ============================================
    HEADER
    ============================================ */
-
-.app-header {
-    border-bottom: 1px solid var(--app-border);
-    background-color: var(--app-bg-elevated);
-}
-
-.app-header__inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--space-6) 0;
-}
-
-.app-header__title {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-primary);
-    letter-spacing: var(--tracking-tight);
-}
-
-.app-header__subtitle {
-    font-size: var(--text-sm);
-    color: var(--app-text-muted);
-    margin-top: var(--space-1);
-}
 
 /* Page Header with Back Button */
 .app-page-header {
@@ -276,14 +244,6 @@ h1,
     margin-bottom: 0;
 }
 
-.app-section__title {
-    font-size: var(--text-xl);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-primary);
-    margin-bottom: var(--space-6);
-    letter-spacing: var(--tracking-tight);
-}
-
 /* ============================================
    CARDS
    ============================================ */
@@ -308,10 +268,6 @@ h1,
     border-color: var(--app-border-strong);
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
-}
-
-.app-card__header {
-    margin-bottom: var(--space-4);
 }
 
 .app-card__icon {
@@ -634,61 +590,9 @@ h1,
     }
 }
 
-.app-grid--4 {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-@media (min-width: 1024px) {
-    .app-grid--4 {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
 /* ============================================
    TABLES
    ============================================ */
-
-.app-table-wrapper {
-    border: 1px solid var(--app-border);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-}
-
-.app-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.app-table th {
-    padding: var(--space-3) var(--space-6);
-    text-align: left;
-    font-size: var(--text-xs);
-    font-weight: var(--font-semibold);
-    color: var(--app-text-muted);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wider);
-    background: var(--app-bg-secondary);
-    border-bottom: 1px solid var(--app-border);
-}
-
-.app-table td {
-    padding: var(--space-4) var(--space-6);
-    font-size: var(--text-sm);
-    color: var(--app-text-primary);
-    border-bottom: 1px solid var(--app-border);
-}
-
-.app-table tr:last-child td {
-    border-bottom: none;
-}
-
-.app-table--interactive tbody tr {
-    transition: background var(--transition-fast);
-}
-
-.app-table--interactive tbody tr:hover {
-    background: var(--app-bg-secondary);
-}
 
 /* ============================================
    EMPTY STATE
@@ -817,10 +721,6 @@ h1,
     gap: var(--space-4);
 }
 
-.app-actions--end {
-    justify-content: flex-end;
-}
-
 /* ============================================
    BADGE / TAG
    ============================================ */
@@ -852,33 +752,8 @@ h1,
 }
 
 /* ============================================
-   LINK
-   ============================================ */
-
-.app-link {
-    color: var(--app-text-secondary);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-}
-
-.app-link:hover {
-    color: var(--app-text-primary);
-}
-
-.app-link--primary {
-    color: var(--app-accent);
-    font-weight: var(--font-medium);
-}
-
-/* ============================================
    DIVIDER
    ============================================ */
-
-.app-divider {
-    height: 1px;
-    background: var(--app-border);
-    margin: var(--space-6) 0;
-}
 
 /* ============================================
    REDUCED MOTION
@@ -918,9 +793,7 @@ h1,
         padding: var(--space-6);
     }
 
-    .app-header__title {
-        font-size: var(--text-xl);
-    }
+    
 
     .app-page-title {
         font-size: var(--text-xl);
@@ -1944,7 +1817,7 @@ h1,
     text-align: center;
     font-size: 11px;
     letter-spacing: 0.3em;
-    color: #8A7F70;
+    color: #6B645A;
 }
 
 .land-menu__section {
@@ -1952,7 +1825,7 @@ h1,
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.24em;
-    color: #8A7F70;
+    color: #6B645A;
 }
 
 .land-menu__row {
@@ -2158,4 +2031,52 @@ h1,
     .land-final {
         padding: var(--space-10) var(--space-5);
     }
+}
+
+.app-hint--error {
+    color: var(--app-error);
+}
+
+/* Message pages (unauthorized, not found) */
+.msg-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-4);
+    background: var(--app-bg);
+}
+
+.msg-card {
+    width: 100%;
+    max-width: 30rem;
+    padding: var(--space-10) var(--space-8);
+    background: var(--app-bg-elevated);
+    border: 1px solid var(--app-border);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.msg-card__icon {
+    color: var(--app-text-muted);
+}
+
+.msg-card__title {
+    margin-top: var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    line-height: 1.1;
+}
+
+.msg-card__text {
+    margin-top: var(--space-3);
+    color: var(--app-text-secondary);
+    line-height: 1.6;
+}
+
+.msg-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
 }

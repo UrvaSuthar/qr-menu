@@ -35,7 +35,7 @@ export function MenuViewer({ restaurant, backHref }: MenuViewerProps) {
 
     if (!restaurant.menu_pdf_url) {
         return (
-            <div className="menu-view menu-view--empty">
+            <main className="menu-view menu-view--empty">
                 {pill}
                 <div className="menu-empty">
                     <ClipboardList size={56} strokeWidth={1} className="menu-empty__icon" aria-hidden="true" />
@@ -47,18 +47,18 @@ export function MenuViewer({ restaurant, backHref }: MenuViewerProps) {
                         </a>
                     )}
                 </div>
-            </div>
+            </main>
         );
     }
 
     return (
-        <div className="menu-view">
+        <main className="menu-view">
             {pill}
             <iframe
                 src={`${restaurant.menu_pdf_url}#view=FitH&pagemode=none&toolbar=0&navpanes=0`}
                 className="menu-view__pdf"
                 title={`${restaurant.name} menu`}
             />
-        </div>
+        </main>
     );
 }
